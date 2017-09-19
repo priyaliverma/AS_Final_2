@@ -1,0 +1,120 @@
+body {
+	font-family: "Cabin", sans-serif;
+}
+
+h1 {
+	font-size: 2vw;
+	padding-top: 1vw;
+}
+
+hr {
+	border-top: 1vw solid rgba(0, 0, 0, 0.9);
+	padding: 0;
+	margin: 0;
+	margin-top: 2vw; 
+	width: 100%;
+	margin-left: -1%;
+	position: relative;
+}
+
+img {
+	position: absolute;
+	top: 1vw;
+	width: 22.5%;
+	height: auto;
+	left: 80%;
+}
+
+.editable_div {
+	display: inline-block;
+}
+
+#right_container{
+	float: right;
+	width: 60%;
+}
+
+.table_header {
+	border: none;
+	padding-top: 0.75vw;
+	padding-bottom: 0.5vw;
+}
+
+.table_content {
+	height: 5vw;
+}
+
+table.table_calendar {
+	font-size: 1vw;
+	border-collapse: collapse;
+	width: 80%;
+	margin: 0 auto;
+}
+
+
+td, th {
+	border: 0.1em solid cornflowerblue;
+	padding: 0;
+	width: 11.42%;
+}
+
+
+textarea {
+	height: 100%;
+	display: inline-block;
+	position: relative;
+	border: none;
+	text-align: center;
+}
+
+textarea:focus {
+	border: 1px solid cornflowerblue;
+}
+
+#left_container {
+	width: 40%;
+    float: left;
+}
+
+table.ui-datepicker-calendar{
+    font-size: 0.75vw;
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+}
+
+table.ui-datepicker-calendar td {
+	padding: 1vw;
+	border: 1px solid rgba(0, 10, 125, 0.2);
+	text-decoration: none;
+}
+
+table.ui-datepicker-calendar th {
+	padding: 0.15vw;
+	font-style: bold;
+	background-color: cornflowerblue;
+
+}
+
+
+#datepicker {
+	margin: 0 auto;
+	width: 80%;
+}
+
+#summary {
+	border: 1px solid black;
+	font-size: 1vw;
+	padding: 2vw;
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 2vw;
+
+}
+
+#dummy_divider {
+	border-top: 1px solid rgba(0, 0, 0, 0.3);
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 2vw;
+}

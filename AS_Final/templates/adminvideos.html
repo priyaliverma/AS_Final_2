@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-workouts">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+        </ul>
+<!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <div class="container">
+      <div class="jumbotron" style="margin-top:0px; margin-bottom:50px; display:inline-block; width:100%; height:1000px; padding-right:0px;">
+        <h1 style="margin-bottom:10px; margin-top:0px; display:inline-block;">Upload | <a href="/admin-videos-library">Library</a></h1> 
+        <br>
+
+        <br>
+    <div style="margin-right:10px; height:700px; width:1000px; display:inline-block;">
+      <div style="display:inline-block; margin-right:0px; width:50%;">
+<!--           <form method="POST" enctype="multipart/form-data" style="height:10px; margin-bottom:0px;">{% csrf_token %}
+            <input type="submit" name="Clear" class="btn btn-sm btn-primary" style="margin-top:5px; display:inline-block;" role="button" value="Clear All">
+          </form><br>        
+ -->          <form method="POST" style="margin-bottom:0px;" enctype="multipart/form-data">{% csrf_token %} 
+            <!-- <div name="Upload_Box" style="border:solid; width:300px; display:inline-block;"> -->
+          Upload Video:<br>
+            <input type="file" name="VideoUpload" id="Video_File">
+            <!-- </div> -->
+            <br>
+          Upload Thumbnail (leave blank to use default thumbnail):<br>
+            <input type="file" style="margin-bottom:5px;" name="Thumbnail" id="Thumbnail">
+            <br><br>
+            Default Thumbnail:
+            <br>
+            <img style="width:200px;" src="/static/videos/Thumbnails/Default_Thumbnail.png">
+            <!-- <br> -->
+            <!-- <form method="GET"> -->
+              <!-- <input type="submit" name="VideoUploadSubmit" class="btn btn-sm btn-primary" style="margin-top:5px; display:inline-block;" role="button" value="Upload"> -->
+            <!-- </form> -->
+          <br>
+          <br>
+          <input type="text" name="Title" placeholder="Title" style="width:370px;" id="Title">
+          <!-- <input type="text" name="search" placeholder="Title"> -->
+          <br>
+<!--           General Description<br>
+          <textarea rows="4" cols="50" name="Description" placeholder="Description"></textarea> 
+          <br>
+ --><!--           Tags:
+          <br>
+          <input type="text" name="Tag" placeholder="Enter New Tag" style="margin-top:10px; width:200px; display:inline-block;">
+          <input type="submit" class="btn btn-sm btn-primary" style="margin-bottom:5px; display:inline-block; margin-left:5px;" role="button" value="Add Tag">
+          <br>
+ -->          
+          <!-- <p style="font-size:20px; display:inline-block;">Exercise Type:</p> -->
+          <!-- <p style="font-size:15px; margin-left:0px; display:inline-block;">Type:</p> -->
+<!--           <select style="display:inline-block; margin-left:0px; font-size:15px;" onchange="this.form.submit()" placeholder="Select Level" id='select_level' name="Exercise">
+          {%for Exercise in Exercise_Types %}
+            <option>{{Exercise}}</option>
+          {% endfor %}
+          </select>
+ -->          
+<!--           Tags (Separate by comma)<br>
+          <input type="text" name="Tags" placeholder="Tag 1, Tag 2, etc." style="margin-top:5px; width:370px;">
+ -->          <!-- <br> -->
+          <!-- <p style="font-size:15px; display:inline-block;">Level:</p> -->
+<!--           <select style="display:inline-block; margin-left:0px; font-size:12px;" onchange="this.form.submit()" placeholder="Select Level" id='select_level' name="Level">
+          {%for Display in Level_Display %}
+            <option>{{Display}}</option>
+          {% endfor %}
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+ -->          <!-- <br> -->
+<!--           <input type="submit" class="btn btn-sm btn-primary" style="display:inline-block; margin-top:10px; margin-left:0px; padding:3px; margin-right:0px; display:inline-block;" role="button" name="AddVideo" value="Add Exercise">
+ -->          <br><br>
+          <input type="submit" onclick="check_null()"
+          class="btn btn-md btn-primary" style="margin-right:50px; display:inline-block;" role="button" name="AddVideo" value="Add Video">
+        </div>
+
+        <div style="display:inline-block; vertical-align:top; margin-left:10px; margin-right:0px;">
+        <h4>Select Exercise Type:</h4>
+          <!-- <form method="POST">{% csrf_token %} -->
+<!--           <p style="margin:0px; width:300px; font-size:12px;">
+          Changing this will refresh the page 
+          - make sure you've saved any information on the left before doing so</p>
+ -->          <select style="display:inline-block; margin-left:0px; font-size:15px;" onchange="this.form.submit()" placeholder="Select Level" id='select_level' name="Exercise">
+          {%for Exercise in Selected_Exercise %}
+            <option>{{Exercise}}</option>
+          {% endfor %}
+          {%for Exercise in Exercise_Types %}
+            <option>{{Exercise}}</option>
+          {% endfor %}
+          </select>
+          <br>
+          {%for Display in Level_Display %}
+            <input type="checkbox" name="Exercise_List" value="{{Display.1}}">{{Display.0}}<br>
+          {% endfor %}          
+<!--           <input type="submit" class="btn btn-sm btn-primary" style="display:inline-block; margin-top:10px; margin-left:0px; padding:3px; margin-right:0px; display:inline-block;" role="button" name="AddExercises" value="Add Exercise">
+ --> 
+          <!-- </form> -->
+        </div>
+          </form>
+<!--         <div style="vertical-align:top; width:200px; display:inline-block; margin-left:20px; margin-right:0px;">
+        <h4>Current Exercises:</h4>
+          {%for Exercise in Current_Exercises %}
+          {{Exercise}}<br>
+          {% endfor %}
+        </div>
+ -->      </div>
+
+        <!-- <br> -->
+        <!-- <input type="submit" class="btn btn-sm btn-primary" style="margin-left:10px; margin-top:-5px;" role="button" value="Create"> -->
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+    function check_null() {
+        var Inputs = document.getElementsByTagName("Input");
+        var Video_File = document.getElementById("Video_File");
+        var Title = document.getElementById("Title");
+        if (Title.value == "" || Video_File.files.length == 0) {
+            event.preventDefault(); 
+            alert("Please fill in all required fields: Upload Video, Title")
+
+        }
+    }
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

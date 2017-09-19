@@ -1,0 +1,186 @@
+body {
+	font-family: "Cabin", sans-serif;
+}
+
+hr {
+	width: 100%; 
+	border: none; 
+	border-top: 1px solid white;
+}
+
+#banner {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+#desc-container {
+	width: 100%; 
+	display: flex; 
+	position: absolute; 
+	top: 0;
+	left: 0;
+	z-index: 9999;
+}
+
+#left_desc {
+	width: 26%;
+	margin-top: 4%;
+	padding-top: 10%;
+	padding-left: 2%;
+	padding-right: 2%;
+	
+	opacity: 0;
+	font-size: 1.05vw;
+	line-height: normal; 
+	color: rgba(0, 13, 84, 1); /* dark blue */
+	background-color: rgba(255, 255, 255, 0.3); 
+
+    -webkit-transition: opacity 1.5s ease-in;
+       -moz-transition: opacity 1.5s ease-in;
+        -ms-transition: opacity 1.5s ease-in;
+         -o-transition: opacity 1.5s ease-in;
+            transition: opacity 1.5s ease-in;
+}
+
+#left_desc span {
+	color: white;
+}
+
+
+#left_desc:hover {
+	opacity: 1;
+	font-size: 1.05vw;
+	line-height: normal; 
+	-webkit-transition: opacity 1.5s ease-in;
+       -moz-transition: opacity 1.5s ease-in;
+        -ms-transition: opacity 1.5s ease-in;
+         -o-transition: opacity 1.5s ease-in;
+            transition: opacity 1.5s ease-in;
+}
+
+
+#desc{
+	text-align: center;
+	margin-top: 40%;
+	z-index: 9999;
+	width: 40%;
+}
+
+#right_desc {
+	width: 26%;
+	margin-top: 4%;
+	padding-top: 12%;
+	padding-left: 2%;
+	padding-right: 2%;
+
+	opacity: 0;
+	font-size: 1.05vw;
+	line-height: normal; 
+	color: rgba(0, 13, 84, 1); /* dark blue */ 
+	background-color: rgba(255, 255, 255, 0.3); 
+
+    -webkit-transition: opacity 1.5s ease-in;
+       -moz-transition: opacity 1.5s ease-in;
+        -ms-transition: opacity 1.5s ease-in;
+         -o-transition: opacity 1.5s ease-in;
+            transition: opacity 1.5s ease-in;
+	 
+}
+
+#right_desc:hover {
+	opacity: 1;
+	font-size: 1.05vw;
+	line-height: normal; 
+	-webkit-transition: opacity 1.5s ease-in;
+       -moz-transition: opacity 1.5s ease-in;
+        -ms-transition: opacity 1.5s ease-in;
+         -o-transition: opacity 1.5s ease-in;
+            transition: opacity 1.5s ease-in;
+}
+
+h3 {
+	font-size: 2.5vw !important;
+	font-weight: 600;
+	margin: 0 !important;
+	line-height: 0px; 
+	padding-top: 3vw;
+}
+
+h6 {
+	font-size: 1.25vw !important; 
+	line-height: 0px !important; 
+	padding-top: 1vw;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Cabin", sans-serif;
+}
+
+.mdl-button {
+	font-family: "Cabin", sans-serif;
+	font-size: 1.15vw;
+	top: -1.5vw;
+	margin: 0;
+	line-height: 0px !important;
+	height: 2.5vw !important;
+	margin-top: 2vw; 
+	margin-left:1vw;
+}
+
+@media (min-width: 840px) {
+	.mdl-grid {
+    	padding: 0px;
+    }
+}
+
+.mdl-cell .mdl-cell--12-col {
+	margin: 0px;
+	padding: 0px;
+}
+
+#modal_button_container {
+	margin: 0px;
+}
+
+.modal-input-container {
+	width: 75%;
+	border-radius: 0.5vw;
+	text-align: left;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	border: 1px solid cornflowerblue;
+	margin: 1vw;
+	font-size: 1.25vw;
+}
+
+.modal-input-container:hover {
+	border: 1px solid orange;
+}
+
+
+.modal-input-label {
+	background: rgba(33, 49, 138, 0.9);
+	display: inline-block;
+	height: 100%;
+	border-radius: 0.3vw;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	font-family: 'Cabin', sans-serif;
+	width: 20%;
+	overflow: auto;
+	float: left;
+	color: white;
+}
+
+.modal-input {
+	font-family:'Cabin', sans-serif;
+	padding: 0.2vw;
+	padding-left: 1vw;
+	width: 70%; 
+	float: right;
+	background-color: transparent;
+}
+

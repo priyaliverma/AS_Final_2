@@ -1,0 +1,45 @@
+{% load static %}
+{{Placeholders.3.0.3}}
+
+<h2>Users</h2>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    /*border-collapse: collapse;*/
+}
+</style>
+
+<form method="GET">
+<table style="border: 1px solid black;">
+  <tr>
+    <th style="width:250px !important; text-align:left;">Email (Click to View Profile)</th>
+    <!-- <th style="width:100px !important; text-align:left;">Email</th> -->
+    <th style="width:100px !important; text-align:left;">First Name</th>
+    <th style="width:100px !important; text-align:left;">Last Name</th>
+    <th style="width:100px !important; text-align:left;">Squat</th>
+    <th style="width:100px !important; text-align:left;">Hinge</th>
+    <th style="width:100px !important; text-align:left;">UB Hor Press</th>
+    <th style="width:150px !important; text-align:left;">Last Workout (Date)</th>
+    <th style="width:150px !important; text-align:left;">Next Workout (Date)</th>
+  </tr>
+  {% for User in Users %}
+  <tr>
+    <td><a href="/profile">{{User}}</a></td>
+<!--     {% for Exercise in Exercises_1 %}
+    <td><input style="width:210px;" type="text" name="L1{{Exercise.2}}" placeholder="{{Exercise.1.0}}"></td> 
+    {% endfor %}
+ --> </tr>
+  {% endfor %}
+</table>
+<br>
+</form>
+<br>
+<!-- <h3 style="display:inline-block;">Level 1</h3> 
+<input style="display:inline-block;" type="number" name="workout_level" placeholder="Level Number">
+<br>
+<h3 style="display:inline-block;">Level 2</h3>
+<h3>Level 3</h3>
+<h3>Level 4</h3>
+<h3>Level 5</h3>
+ -->

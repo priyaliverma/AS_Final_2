@@ -1,0 +1,141 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Include Vue.js Source Code -->
+<script src='https://unpkg.com/vue'></script>
+<!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
+<!-- Include HTML Code -->
+<!-- Head --> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
+    <link rel="stylesheet" href="{% static 'userpage/userprofile.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
+
+    <title>User Profile</title>
+<style>
+
+td, th {
+    padding-left:1vw;
+    /*width:15vw;*/
+}
+
+#small {
+    /*width:5vw;*/
+}
+
+</style>
+
+</head>
+
+
+<!-- Body --> 
+<body>
+    <div id='header-left'>
+        <h1>Stats</h1>
+    </div>
+
+    <div id='header-right'>
+        <ul id='nav-bar'>
+            <li><a href="{%url 'userpage' %}">Home</a></li>
+            <li><a href="{%url 'videos' %}">Videos</a></li>
+            <li><a href="{%url 'tutorial' %}">Tutorial</a></li>
+            <li><a href="/tutorial/#RPE_Table">RPE Table</a></li>
+            <!-- <li><a href="{%url 'pastworkouts' %}">Past Workouts</a></li> -->
+            <li><a href="{%url 'user_stats' %}" class='page-active'>Stats</a></li>
+            <li><a href="{%url 'userprofile' %}">Profile</a></li>
+            <!-- <li><a href="{%url 'contact' %}">Contact & Support</a></li> -->
+            <li><a href="{%url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
+
+    <div id="userprofile-container">
+
+        <div class='userprofile-row'>
+
+            <div id='profile-summary-container' style="margin-left:2vw;">
+
+                <!-- <div class="profile-summary-left" style="margin-left:2vw; width:100%;"> -->
+                <br>
+                    <a href="/profile-view">Back To Profile</a>
+                    <h4 style="">Viewing Workout {{Workout_Level}}, {{Workout_Info}} <br><br>From date: {{Workout_Date}}</h4>
+                <!-- </div> -->
+                
+            </div>
+        </div>
+
+        <hr class='userprofile-row-divider'>
+
+        <div class='userprofile-row'>
+            <div class='userprofile-col-12' id='' style="padding-left:2vw;">
+                <h1 style="text-align:left;">Workout Stats</h1>
+                <table style="text-align:left; margin-bottom:2vw;">
+                <tr>
+                    <th id="small">
+                    Pattern
+                    </th>
+                    <th id="small">
+                    Exercise Name
+                    </th>
+                    <th style="">
+                    Sets
+                    </th>
+                </tr>
+                {% for Pattern in Patterns %}
+                <tr>
+                <td id="small">{{Pattern.Type}}</td>
+                <td id="small">{{Pattern.Exercise_Name}}</td>
+
+                <td>
+                {% for Set in Pattern.Sets %}
+                <!-- {{Set.Set_String}} -->
+                {{Set.Set_Info}}
+                <br>
+                {% endfor %}
+                </td>
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+
+<!--             <div class='userprofile-col-3' id='training-background'> 
+                <h1> Training Background <h1>
+            </div>
+ -->
+        </div>
+
+        <hr class='userprofile-row-divider'>
+
+        <div class='userprofile-row'>
+            <div id='userprofile-stats'>
+                <h1>Stats</h1>
+            </div>
+        </div>
+
+    </div>
+
+    
+</body>
+
+</html>
+
+

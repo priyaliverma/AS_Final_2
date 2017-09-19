@@ -1,0 +1,50 @@
+{% load static %}
+{{Placeholders.3.0.3}}
+
+<h2>User Name</h2>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    /*border-collapse: collapse;*/
+}
+</style>
+
+<form method="GET">
+<div style="width:50%; display:inline-block;">
+  <img src='{% static "adminuserprofilepage/Profile_Placeholder.png" %}'>
+  <h2>Profile Information</h2>
+  Email:
+  <br>
+  First Name:
+  <br>
+  Last Name:
+  <br>
+  Level:
+  <br>
+  <h2>Exercise Stats</h2>
+  Squat:
+  <br>
+  Hinge:
+  <br>
+  UB Hor Press:
+</div>
+<div style="float:right; width:40%; display:inline-block;">
+  <div name="Next_Workout" style="height:200px;">
+    <h2>Next Workout</h2>
+  </div>
+  <div name="Last_Workout" style="height:200px;">
+    <h2>Last Workout</h2>
+  </div>
+</div>
+<br>
+</form>
+<br>
+<!-- <h3 style="display:inline-block;">Level 1</h3> 
+<input style="display:inline-block;" type="number" name="workout_level" placeholder="Level Number">
+<br>
+<h3 style="display:inline-block;">Level 2</h3>
+<h3>Level 3</h3>
+<h3>Level 4</h3>
+<h3>Level 5</h3>
+ -->

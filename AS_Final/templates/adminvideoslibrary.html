@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      font-size:12px;
+      padding:0px;
+      /*width:200px;*/
+      /*border-collapse: collapse;*/
+  }  
+  th, td {
+    width:250px;
+    padding:5px;
+  }
+  #small {
+    width:100px;
+  }
+  </style>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-workouts">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" style="margin-left:600px; float:right;">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Profile<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+<!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <div class="container">
+      <div class="jumbotron" style="margin-top:0px; margin-bottom:50px; display:inline-block; width:100%; height:1000px;">
+      <h1 style="margin-bottom:10px; margin-top:0px; display:inline-block;"><a href="/admin-videos">Upload</a> | Library</h1> 
+      <br>
+        Search: <input type="text" name="search" placeholder="Enter Keywords" style="width:125px;">
+        Filter by Level:
+        <select style="display:inline-block; margin-bottom:10px; width:50px; height:30px; font-size:15px;" placeholder="Select Level" id='select_level' name="Level">
+          <option>1</option>
+          <option>Online Course</option>
+          <option>Product</option>
+        </select>
+        <input type="submit" name="Filter" class="btn btn-sm btn-primary" style="margin-top:-5px; display:inline-block;" role="button" value="Filter">
+      <br><br>
+      <table style="border: 1px solid black;">
+      <tr>
+        <th id="level" style="text-align:left; width:200px;">Title (Click to View or Edit)</th>
+        <th id="small">Thumbnail</th>
+        <!-- <th id="small" style="width:100px !important;">Tags</th> -->
+        <th>Related Exercises</th>
+        <th id="small">Delete</th>
+      </tr>
+        {% for Video in Videos %}
+        <tr>
+        <td>
+      <form method="POST">{% csrf_token %}
+          <input type="submit" name="{{Video.2}}" value="{{Video.1}}" 
+          style="background:none; border-width:0px; color:blue; text-decoration:underline; 
+          padding:0px; margin:0px; font-size:15px;"/>
+      </form>   
+        </td>
+        <td id="small" style="width:100px !important;">
+        <img src="{{Video.0}}" alt="Thumbnail" height="50" style="display:inline-block;">
+        </td>
+<!--         <td id="small">
+        {{Video.4}}
+        </td>
+ -->        <td>
+          {% for Exercise in Video.5 %}
+          <b>{{Exercise.0}}</b>
+          <br>
+          {{Exercise.1}}
+          <!-- <br> -->
+          {% endfor %}
+        </td>
+        <td id="small">
+          <form method="GET">{% csrf_token %}
+          <input hidden value="{{Video.2}}" name="Delete_PK">
+          <input type="submit" value="Delete Video" name="Delete" style="background-color:red; color:white;">
+          </form>
+        </td>
+        {% endfor %}
+        </tr>
+        <!-- <input type="submit" name="{{Video.2}}" class="btn btn-sm btn-primary" style="float:right;" role="button" value="Edit Information">      -->
+        <!-- <br> -->
+      </table>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

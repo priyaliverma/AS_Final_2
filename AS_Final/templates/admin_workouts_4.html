@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+
+  <style>
+  th, td {
+    border:1px solid black; 
+  }
+  p {
+    font-size:10px;
+  }  
+
+  . {
+    font-size:10px;
+  }
+  input {
+    width:20px;
+  }
+
+  </style>
+
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-videos">Videos</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+        </ul>
+<!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <!-- <div class="container" style="font-size:10px; width:100%;"> -->
+      <div class="jumbotron" style="margin-left:20px; margin-right:150px; margin-top:0px; margin-bottom:50px; display:inline-block; width:98%; height:1600px;">
+<h1>Edit Workouts</h1>
+<h2>Levels: <a href="/admin-workouts">1-5</a> | <a href="/admin-workouts-2">6-10</a> | <a href="/admin-workouts-3">11-15</a> | 16-25</h2>
+<form method="POST" style="margin-left:0px;">{% csrf_token %}
+  Selected Block:
+  <select style="display:inline-block; margin-left:0px; font-size:15px;" onchange="this.form.submit()" placeholder="Select Block" id='select_level' name="Block">
+          {%for Block in Selected_Block %}
+  <option value="{{Block.1}}">{{Block.0}}</option>
+          {% endfor %}
+          {%for Block in Blocks %}
+  <option value="{{Block.1}}">{{Block.0}}</option>
+          {% endfor %}
+  </select>
+<!--   <input type="submit" name="Block_1" value="Block 1 - Volume" class="h2" style="background:none; border-width:0px; color:blue; text-align:left; text-decoration:underline; 
+  padding:0px; margin-left:0px; width:300px;"/> | 
+  <input type="submit" name="Block_2" value="Block 2 - Strength/POWER" class="h2" style="background:none; border-width:0px; color:blue; text-align:left; text-decoration:underline; 
+  padding:0px; margin-left:0px; width:300px;"/>  
+ -->
+ </form>
+
+  <h2>{{Block_Label}}</h2>
+      {% for Week in Workout_Templates %}
+      <h3 style="margin-bottom:2px;">{{Week.0}}</h3>
+      {% for Day in Week.1 %}
+      <div style="display:inline-block; width:23%; font-size:10px;">
+      <form method="GET" style="display:inline-block; margin-right:10px;">
+      <h4 style="margin-bottom:2px; margin-top:2px;">{{Day.0}}
+      {% for Alloy in Day.4 %}
+        <select style="font-size:1vw; background-color:yellow; float:right;" name="Type">
+          <option value="A" style="">Alloy</option>
+          <option value="R">Regular</option>
+        </select>
+      {% endfor %}      
+      {% for Regular in Day.5%}
+        <select style="font-size:1vw; float:right;" name="Type">
+          <option value="R">Regular</option>
+          <option value="A" style="">Alloy</option>
+        </select>
+      {% endfor %}      
+      </h4>
+          <table style="border: 1px solid black;">
+            <tr>
+            <th>Exercise Type</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>RPE</th>
+            <th>Deload</th>
+            {% for Alloy in Day.4 %}
+            <th>Alloy</th>
+            {% endfor %}
+            <!-- <th>Varied Sets</th> -->
+            </tr>
+            {% for Sub in Day.1 %}
+            <tr>
+            <td>          
+              <select name="Type_{{Sub.0}}">
+                <option value="{{Sub.1}}">{{Sub.1}}</option>
+                {% for Type in Exercise_Types %}
+                <option value="{{Type}}">{{Type}}</option>
+                {% endfor %}
+              </select> 
+            </td>
+            <td><input style="width:3vw;" type="text" placeholder="{{Sub.2}}" name="Sets_{{Sub.0}}"></td>
+            <td><input style="width:3vw;" type="text" placeholder="{{Sub.3}}" name="Reps_{{Sub.0}}"></td>
+            <td><input style="margin-left:5px;" type="text" placeholder="{{Sub.4}}" name="RPE_{{Sub.0}}"></td>
+            <td><input style="margin-left:5px;" type="text" placeholder="{{Sub.5}}" name="Deload_{{Sub.0}}"></td>
+            {% for Alloy in Day.4 %}
+            <td><input style="" type="text" placeholder="{{Sub.6}}" name="Alloy_{{Sub.0}}"></td>
+            {% endfor %}
+            <!-- <td><input style="width: 3vw;"  type="text" placeholder="None" name="Money_{{Sub.5}}"></td> -->
+            </tr>
+            {% endfor %}    
+          </table>
+
+          <!-- <div style="margin-right:55px; float:left;">&nbsp </div>  -->
+         <input type="submit" style="width:50px;" name="{{Week.2}}{{Day.2}}_Update_Workout" value="Update">
+      </div>
+        </form>
+         {% endfor %} <!-- Day Loop End  -->
+      {% endfor %}
+
+<!-- </div> -->
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

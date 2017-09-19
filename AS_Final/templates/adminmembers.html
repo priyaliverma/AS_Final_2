@@ -1,0 +1,40 @@
+<h2>Add Member</h2>
+
+<form method="GET">
+  First name: <input type="text" name="fname"><br>
+  Last name: <input type="text" name="lname"><br>
+  Email/Username: <input type="text" name="username"><br>
+  Password: <input type="text" name="password"><br>
+  Level: <input type="number" name="level"><br>
+
+  <input type="submit" name="submitaddmember" value="Add">
+</form>
+{{Member_Added}}
+
+<h2>Add Exercise</h2>
+<form method="GET">
+  Level: <input type="number" name="exercise_level" placeholder="Level Number"><br>
+  Name: <input type="text" name="exercise_name"><br>
+  Type: 
+  <input type="text" name="exercise_type"><br>
+    <select name="exercise_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select> 
+
+  <input type="submit" name="submitaddexercise" value="Add">
+</form>
+{{Exercise_Added}}
+
+<h2>Add Set</h2>
+<form method="GET">
+  Exercise: <input type="text" name="set_exercise" placeholder="Exercise Name"><br>
+  Exercise Type: <input type="text" name="set_type" placeholder="Exercise Type"><br>
+  Level: <input type="number" name="set_level" placeholder="Level Number"><br>
+  Reps: <input type="number" name="set_reps"><br>
+  Rest Time After (Seconds): <input type="number" name="set_rest_time"><br>
+  Order: <input type="text" name="set_order"><br>
+  <input type="submit" name="submitaddset" value="Add">
+</form>
+{{Set_Added}}

@@ -1,0 +1,273 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Include Vue.js Source Code -->
+<script src='https://unpkg.com/vue'></script>
+<!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
+
+<!-- Include HTML Code -->
+<!-- Head --> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
+
+    <title>User Page</title>
+
+</head>
+
+
+<!-- Body --> 
+<body>
+    <h1 style="margin-left:2vw;">Program Scheduling</h1>
+    <hr>
+
+    <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
+
+
+</head>
+<body>
+    <div style="padding-left:30px;">
+    <form method="GET">
+    <h2 style="margin-top:3vw;">Your next set of workouts will take place at Level {{Level}}. Level {{Level}} Workouts have {{Num_Days}} workout days per week.<br><br>Please choose <i>{{Num_Days}} different days</i> of the week that you would prefer to workout on.</h2>
+    <!-- <br> -->
+    <h3>Workout Days</h3>
+    <h4>Note: we advise spacing out your workout days throughout the week so that you get at least 1 day of rest in between your top 3 days (E.G. Monday, Wednesday, Friday, Saturday)</h4>
+    {% for Day in Days_List %}
+    <h3 style="display:inline-block;">{{Day.Name}}</h3>
+        <input type="radio" name="{{Day.Code}}" value=0>Monday
+        <input type="radio" name="{{Day.Code}}" value=1>Tuesday
+        <input type="radio" name="{{Day.Code}}" value=2>Wednesday
+        <input type="radio" name="{{Day.Code}}" value=3>Thursday
+        <input type="radio" name="{{Day.Code}}" value=4>Friday
+        <input type="radio" name="{{Day.Code}}" value=5>Saturday
+        <input type="radio" name="{{Day.Code}}" value=6>Sunday
+    <br>
+    {% endfor %}
+    <input type='submit' value='CREATE PROGRAM' id='blue_btn' name="Create_Program"></input>
+    <div style="text-align:center; padding-top:1vw;">
+    {{Error}}
+    </div>
+    </form>
+    </div>
+
+</body>
+
+</html>
+
+
+<script>
+
+    var vm1 = new Vue({
+        el:'#stats_info',
+        delimiters: ['${', '}'],
+        data: {
+            level:''
+        }
+    });
+
+    var vm2 = new Vue({
+        el: '.table_calendar',
+        delimiters: ['${', '}'],
+        data: {
+            row1: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row2: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row3: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row4: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row5: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            }
+        }
+    });
+
+    function updateRPE() {
+        var current_date = $( "#date_text" ).text(); 
+        var URL = "{% url 'userpageRPEUpdate' %}"; 
+        var data = {'RPE_row1': vm2.row1.rpe,
+                    'RPE_row2': vm2.row2.rpe,
+                    'RPE_row3': vm2.row3.rpe,
+                    'RPE_row4': vm2.row4.rpe,
+                    'RPE_row5': vm2.row5.rpe,
+                    'current_date': current_date};
+
+        $.post(URL, data, function(response){
+            console.log(response); 
+        })
+    };
+
+    function updateTempDate(){
+        var TempDate = $( "#date_text" ).text(); 
+        var data = {'TempDate': TempDate};
+        var URL = "{% url 'userpageUpdate' %}";
+
+        console.log("I'm in updateTempDate"); 
+        $.post(URL, data, function(response){
+     
+            response1 = response[0];
+            vm1.level = response1.level; // all responses have levels, but for now, just display one 
+            vm2.row1.exercise_type = response1.exercise_type;
+            vm2.row1.exercise_name = response1.exercise_name; 
+            vm2.row1.reps = response1.reps;
+            vm2.row1.rpe = response1.rpe;
+
+
+            response2 = response[1];
+            vm2.row2.exercise_type = response2.exercise_type;
+            vm2.row2.exercise_name = response2.exercise_name; 
+            vm2.row2.reps = response2.reps;
+            vm2.row2.rpe = response2.rpe;
+
+
+            response3 = response[2];
+            vm2.row3.exercise_type = response3.exercise_type;
+            vm2.row3.exercise_name = response3.exercise_name; 
+            vm2.row3.reps = response3.reps;
+            vm2.row3.rpe = response3.rpe;
+
+
+            response4 = response[3];
+            vm2.row4.exercise_type = response4.exercise_type;
+            vm2.row4.exercise_name = response4.exercise_name; 
+            vm2.row4.reps = response4.reps;
+            vm2.row4.rpe = response4.rpe;
+
+
+            response5 = response[4];
+            vm2.row5.exercise_type = response5.exercise_type;
+            vm2.row5.exercise_name = response5.exercise_name; 
+            vm2.row5.reps = response5.reps;
+            vm2.row5.rpe = response5.rpe; 
+
+        });
+    }
+
+
+  $(function() {
+        $('#datepicker').datepicker({
+            beforeShowDay: function (date) {
+
+                // Get selected date
+                // Reference: https://stackoverflow.com/questions/26667720/how-to-get-the-selected-date-from-jquery-datepicker
+
+                var currentDate = $( "#datepicker" ).val();
+                $( "#date_text" ).text(currentDate);
+
+                // Reference: https://stackoverflow.com/questions/17863924/jquery-datepicker-add-class-to-first-17-days
+                var final_list = {{ final_list | safe }};
+                var final_list_len = final_list.length; 
+
+                var workout_list = [] 
+
+                for (i = 0; i < final_list_len; i++) {
+                    var workout_date = final_list[i]
+                    var workout_string = workout_date.month + '/' + workout_date.day + '/' + workout_date.year; 
+                    workout_list.push(new Date(workout_string)); 
+                };
+
+                var workout_list_len = workout_list.length; 
+
+                for (i = 0; i < workout_list_len; i++) {
+              
+                    // if workout date and date on the calendar are the same 
+                    if (workout_list[i].getTime() === date.getTime()){
+                        return [true, 'workout']; // set styling to 'workout' (see style tag below)
+                    }
+                };
+
+                return [true, ''];
+            },
+            onSelect: function (date) {
+                //var newDate = $(this).val();
+                $( "#date_text" ).text(date);
+                updateTempDate();
+            }
+         })
+    });
+
+
+    (function ($) {
+        $.extend($.datepicker, {
+
+            // Reference the orignal function so we can override it and call it later
+            _inlineDatepicker2: $.datepicker._inlineDatepicker,
+
+            // Override the _inlineDatepicker method
+            _inlineDatepicker: function (target, inst) {
+
+                // Call the original
+                this._inlineDatepicker2(target, inst);
+
+                var beforeShow = $.datepicker._get(inst, 'beforeShow');
+
+                if (beforeShow) {
+                    beforeShow.apply(target, [target, inst]);
+                }
+            }
+        });
+    }(jQuery));
+
+
+    $(document).ready(function(){
+        $('#update_table').click(function(){
+            updateRPE(); 
+        });
+    });
+
+</script>
+
+
+<style>
+    .workout .ui-state-default {
+        background-color: orange; 
+    }
+
+    .today .ui-state-default {
+        border: 1px solid black;
+    }
+
+</style>
+
+

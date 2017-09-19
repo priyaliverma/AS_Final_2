@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cabin', sans-serif;
+    font-size: 1.5vw;
+}
+
+h2 {
+    font-size: 2.25vw;
+}
+h3 {
+    font-size: 2vw;
+}
+
+
+#tutorial-container {
+    width: 100%;
+    display: flex;
+}
+
+#tutorial-nav {
+    width: 25%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
+}
+
+#tutorial-nav ul {
+    list-style: none;
+}
+
+#tutorial-nav li {
+    padding: 1vw 0;
+}
+
+#tutorial-nav a {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+#tutorial-nav a:hover {
+    border-radius: 0.5vw;
+    background-color: white;
+    padding: 1vw;
+}
+
+#tutorial-content {
+    margin-left: 4%;
+    width: 68%;
+}
+
+#tutorial-content hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}

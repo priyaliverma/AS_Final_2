@@ -1,0 +1,409 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+
+  <style>
+  th, td {
+    border:1px solid black; 
+  }
+  p {
+    font-size:10px;
+  }  
+
+  . {
+    font-size:10px;
+  }
+  input {
+    width:20px;
+  }
+
+  </style>
+
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-videos">Videos</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+        </ul>
+<!--         <ul class="navbar-nav mr-auto" style="margin-left:600px; float:right;">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Profile<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+ --><!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <div class="container" style="font-size:10px;">
+      <div class="jumbotron" style="margin-top:0px; margin-bottom:50px; display:inline-block; width:100%; height:1300px;">
+
+<h1>Edit Workouts</h1>
+<h2>Levels: 1-5 | <a href="/admin-workouts-2">6-10</a> | <a href="/admin-workouts-3">11-15</a> | <a href="/admin-workouts-4">16-25</a></h2>
+
+<p>{{Test}}</p>
+<form method="GET" >
+<!--   <input id="delete_all" name="delete_all" type="submit" value="Delete All"></input>
+  <input id="delete_sets_workouts" name="delete_sets_workouts" type="submit" value="Delete Sets & Workouts"></input>
+  <input id="refresh" name="refresh" type="submit" value="Refresh"></input>
+ --></form>
+
+<!-- <h2>Add Member</h2>
+
+<form method="GET">
+  First name: <input type="text" name="fname"><br>
+  Last name: <input type="text" name="lname"><br>
+  Email/Username: <input type="text" name="username"><br>
+  Password: <input type="text" name="password"><br>
+  Level: <input type="number" name="level"><br>
+
+  <input type="submit" name="submitaddmember" value="Add">
+</form>
+{{Member_Added}} -->
+
+<!-- <h2>Add Exercise</h2>
+<form method="GET">
+  Level: <input type="number" name="exercise_level" placeholder="Level Number"><br>
+  Name: <input type="text" name="exercise_name"><br>
+  Type: 
+  <input type="text" name="exercise_type"><br>
+    <select name="exercise_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select> 
+
+  <input type="submit" name="submitaddexercise" value="Add">
+</form>
+{{Exercise_Added}} -->
+
+<!-- <h2>Add Set</h2>
+<form method="GET">
+  Exercise: <input type="text" name="set_exercise" placeholder="Exercise Name"><br>
+  Exercise Type: <input type="text" name="set_type" placeholder="Exercise Type"><br>
+  Level: <input type="number" name="set_level" placeholder="Level Number"><br>
+  Reps: <input type="number" name="set_reps"><br>
+  Rest Time After (Seconds): <input type="number" name="set_rest_time"><br>
+  Order: <input type="text" name="set_order"><br>
+  <input type="submit" name="submitaddset" value="Add">
+</form>
+{{Set_Added}} -->
+
+<!-- <div style="width:30%; vertical-align:top;"> -->
+      {% for Week in Workout_Templates %}
+      <h3 style="margin-bottom:2px;">{{Week.0}}</h3>
+      {% for Day in Week.1 %}
+      <div style="display:inline-block;">
+      <form method="GET" style="display:inline-block; margin-right:10px;">
+      <h4 style="margin-bottom:2px; margin-top:2px;">{{Day.0}}
+      <!-- Alloy: -->
+      {% for Alloy in Day.3 %}
+        <select style="font-size:1vw; background-color:yellow; float:right;" name="Type">
+          <option value="A" style="">Alloy</option>
+          <option value="R">Regular</option>
+        </select>
+      {% endfor %}      
+      {% for Regular in Day.4%}
+        <select style="font-size:1vw; float:right;" name="Type">
+          <option value="R">Regular</option>
+          <option value="A" style="">Alloy</option>
+        </select>
+      {% endfor %}      
+      </h4>
+      <table style="border: 1px solid black;">
+        <tr>
+        <th>Exercise Type</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>RPE</th>
+        <th>Deload</th>
+        {% for Alloy in Day.3 %}
+        <th>Alloy</th>
+        {% endfor %}
+        <!-- <th>Varied Sets</th> -->
+        </tr>
+        {% for Sub in Day.1 %}
+        <tr>
+        <td>          
+          <select name="Type_{{Sub.5}}">
+            <option value="{{Sub.0}}">{{Sub.0}}</option>
+            {% for Type in Exercise_Types %}
+            <option value="{{Type}}">{{Type}}</option>
+            {% endfor %}
+          </select> 
+        </td>
+        <td><input style="width:3vw;" type="text" placeholder="{{Sub.4}}" name="Sets_{{Sub.5}}"></td>
+        <td><input style="width:3vw;" type="text" placeholder="{{Sub.2}}" name="Reps_{{Sub.5}}"></td>
+        <td><input style="margin-left:5px;" type="text" placeholder="{{Sub.6}}" name="RPE_{{Sub.5}}"></td>
+        <td><input style="margin-left:5px;" type="text" placeholder="{{Sub.7}}" name="Deload_{{Sub.5}}"></td>
+        {% for Alloy in Day.3 %}
+        <td><input style="" type="text" placeholder="{{Sub.8}}" name="Money_{{Sub.5}}"></td>
+        {% endfor %}
+        <!-- <td><input style="width: 3vw;"  type="text" placeholder="None" name="Money_{{Sub.5}}"></td> -->
+        </tr>
+        {% endfor %}    
+      </table>
+         <input type="submit" style="width:50px;" name="{{Week.2}}{{Day.2}}_Update_Workout" value="Update">
+      </div>
+        </form>
+         {% endfor %} <!-- Day Loop End  -->
+      {% endfor %}
+<!-- </div> -->
+
+
+<!-- <div style="display:inline-block;">
+      <h2>Edit Workouts</h2>
+      {% for Week in Weeks %}
+      <h3 style="margin-bottom:2px;">{{Week.0}}</h3>
+      <div style="display:inline-block;" >
+      {% for Row in Days %}
+      <form method="GET" style="display:inline-block;">
+      <h4 style="margin-bottom:2px; margin-top:2px;">{{Row.0}}</h4>
+        <div style="margin-right:55px; float:left;">&nbsp </div> 
+        Exercise Type | Sets x Reps:<br>
+ -->
+<!--         {% for Sets in Sets_Per_Workout %}
+        {{Sets.0}}  
+          <select name="Type_{{Sets.1}}">
+ -->
+          <!-- <option value="Test">Test</option> -->
+
+         <!--  {% for Type in Exercise_Types %}
+          <option value="{{Type}}">{{Type}}</option>
+          {% endfor %}
+          </select> 
+          <input style="width:40px;" type="text" placeholder="" name="Sets_{{Sets.1}}">
+          x
+          <input style="width:40px;" type="text" name="Reps_{{Sets.1}}">
+          <br>
+        {% endfor %}    
+         <input type="submit" name="{{Week.1}}{{Row.1}}_Update_Workout" value="Update">
+         </form>
+         {% endfor %} 
+          --><!-- Day Loop End  -->
+<!--       </div>
+      {% endfor %}
+</div>
+ -->
+<!-- 
+
+<div style="display:inline-block; vertical-align:top;">
+      <h2>Current Workouts</h2>
+      {% for Week in Workout_Templates %}
+      <h3 style="margin-bottom:2px;">{{Week.0}}</h3>
+      {% for Day in Week.1 %}
+      <div style="display:inline-block; vertical-align:top;" >
+      <h4 style="margin-bottom:2px; margin-top:2px; width:120px; margin-left:0px; margin-right:-5px;">{{Day.0}}</h4>
+      {% for Sub in Day.1 %}
+      {{Sub.3}} {{Sub.0}} {{Sub.1}} {{Sub.2}}<br>
+      {% endfor %}      
+      </div>
+      {% endfor %}
+      {% endfor %}
+</div>
+
+{{Workout_Added}}
+
+ -->
+
+
+
+<!-- <h2>Add Workout Tester</h2>
+<form method="GET">
+  Level: <input type="number" name="workout_level" placeholder="Level Number"><br>
+  Week: <input type="number" name="workout_week" placeholder="Exercise Name"><br>
+  Day: &nbsp  <input type="number" name="workout_day" placeholder="Exercise Type"><br>
+  Manual Date: <input type="text" name="workout_date" placeholder="MM/DD/YYYY"><br>
+  Exercise Type | Sets x Reps:<br>
+  Set 1:  
+    <select name="workout_set_1_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select> 
+    <input style="width:40px;" type="text" name="workout_set_1_num">
+    x
+    <input style="width:40px;" type="text" name="workout_set_1_reps">
+    <br>
+  Set 2: 
+    <select name="workout_set_2_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select>  
+    <input style="width:40px;" type="text" name="workout_set_2_num">
+    x
+    <input style="width:40px;" type="text" name="workout_set_2_reps">
+    <br>
+  Set 3: 
+    <select name="workout_set_3_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select> 
+    <input style="width:40px;" type="text" name="workout_set_3_num">
+    x
+    <input style="width:40px;" type="text" name="workout_set_3_reps">
+    <br>
+  Set 4: 
+    <select name="workout_set_4_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select>     
+    <input style="width:40px;" type="text" name="workout_set_4_num">
+    x
+    <input style="width:40px;" type="text" name="workout_set_4_reps">
+    <br>
+  Set 5: 
+    <select name="workout_set_5_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select>   
+    <input style="width:40px;" type="text" name="workout_set_5_num">
+    x
+    <input style="width:40px;" type="text" name="workout_set_5_reps">
+    <br>
+  Set 6: 
+    <select name="workout_set_6_type">
+    {% for Type in Exercise_Types %}
+    <option value="{{Type}}">{{Type}}</option>
+    {% endfor %}
+    </select>   
+    <input style="width:40px;" type="text" name="workout_set_6_num">
+    x
+    <input style="width:40px;" type="text" name="workout_set_6_reps">
+    <br>
+  <input type="submit" name="submitaddworkout" value="Add">
+</form>
+{{Workout_Added}}
+
+ -->
+ <!-- <h2>Users List</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Level</th>
+      </tr>
+    </thead>
+    <tbody>
+ -->
+<!--     <tr> <td>Test</td> <td>Test</td> <td>Test</td> <td>Test</td> <td>Test</td> <td>
+ -->
+<!--     {% for row in Users %}
+    <form method = "POST" action = "">{% csrf_token %} 
+    <tr> <td>{{row.0}}</td> <td>{{row.1}} </td> <td>{{row.2}} </td> <td>{{row.3}}</td> <td>{{row.4}}</td> <td>
+ -->    <!-- <input type="submit" class="btn" value="Accept" name={{row.4}} id="A">   -->
+    <!-- <input type="submit" class="btn" value="Deny" name={{row.5}} id="D"> </td> </tr> -->
+    <!-- </form>     -->
+<!--     {% endfor %}
+  </tbody>
+</table>
+ -->
+<!-- <h2>Exercise List</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Name</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in Exercises %}
+    <tr> <td>{{row.0}}</td> <td>{{row.1}} </td> <td>{{row.2}} </td> 
+    {% endfor %}
+  </tbody>
+</table>
+ -->
+<!-- <h2>Set List</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Exercise</th>
+        <th>Reps</th>
+        <th>Code</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in Sets %}
+    <tr> <td>{{row.0}}</td> <td>{{row.1}} </td> <td>{{row.2}}</td> <td>{{row.3}}</td> 
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Workout List</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Week</th>
+        <th>Day</th>
+        <th>Sets</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in Workouts %}
+    <tr> <td>{{row.0}}</td> <td>{{row.1}} </td> <td>{{row.2}}</td> <td>{{row.3}}</td> 
+    {% endfor %}
+  </tbody>
+</table>
+
+      </div>
+    </div>
+
+
+ -->    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+{% load static %}
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+        <link href="{% static 'tutorial/tutorial.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="tutorial-container">
+            <div id="tutorial-nav">
+                <ul>
+                    <li style="text-decoration: underline;"><a href="/userpage"><i>Back to Site</i></a></li>
+                    <li style="text-decoration: underline;"><a href="/exercise-descriptions">Exercise Descriptions</a></li>
+                    <li>Contents<hr style='width: 85%; margin-right: 15%; border: none; border-top: 1px solid rgba(0, 0, 0, 0.2);'</li>
+                    <li><a href="#item1">Alloy Strength</a></li>
+                    <li><a href="#item2">Autoregulatory Training</a></li>
+                    <li><a href="#item3">Levels Progression</a></li>
+                    <li><a href="#item4">RPE</a></li>
+                    <li><a href="#RPE_Table">RPE Table</a></li>
+                    <li><a href="#item5">Strength Card</a></li>
+                    <li><a href="#item6">Warm Up Sets</a></li>
+                    <li><a href="#item7">Rest Between Sets</a></li>
+                    <li><a href="#item8">Alloy Set</a></li>
+                    <li><a href="#item9">Video Library</a></li>
+                    <li><b>Exercise Descriptions</b></li>
+                </ul>
+            </div>
+
+            <div id="tutorial-content">
+                <h2>Definitions</h2>
+                <hr>
+                <a name="item1">
+                    <h3>WHO IS ALLOY STRENGTH?</h3>
+                    <hr>
+                    <p>
+                    Al·loy (/ˈaˌloi/), noun - a metal made by combining two or more metallic elements, especially to give
+                    greater strength or resistance to corrosion.
+                    <br>
+                    <br>
+                    Alloy Strength is a virtual training platform that provides cutting-edge individualized online workout
+                    programs to athletes of any sport, at any skill or experience level, worldwide. Our coaches come from
+                    some of the best academic programs in the world, with experience working with elite athletes in
+                    multiple sports across the country, and are NSCA Certified Strength and Conditioning Specialists (CSCS).
+                    All of our members get coaching access and progressive, goal-driven programming in a supportive and
+                    focused training community.
+                    <br>
+                    <br>
+                    At Alloy Strength, no two programs are the same. We specify our programming to every individual,
+                    helping you move better, perform better, and become an alloy; strong and resilient.
+                </p>
+                </a>
+                <hr>
+                <a name="item2">
+                    <h3>WHAT IS AUTOREGULATORY TRAINING?</h3>
+                    <hr>
+                    <p>
+                    Autoregulatory training is a system based on an individual athlete’s physiological and mental state,
+                    automatically configuring programming variables to the athlete’s specific needs at the time. This method
+                    attempts to adjust for athlete's adaptations, allowing for increases in load and strength at an individual
+                    pace by catering training stress to daily performance measures. This allows for complete personalization
+                    even within a structured program.
+                </p>
+                </a>
+                <hr>
+                <a name="item3">
+                    <h3>WHAT IS THE LEVELS PROGRESSION?</h3>
+                    <hr>
+                    <p>
+                    The levels progression is the exercise progression used in Alloy Strength’s training system. Rather than having a “back and biceps” or “legs” or “arms and abs” training day, we are concerned with training the
+                    global movement patterns our body can perform. For each compound pattern and associated
+                    global movement patterns our body can perform. For each compound pattern and associated
+                    accessories, there are 25 increasingly-challenging levels. Each microcycle, or 1-month block of training,
+                    presents a chance to “level up” and move on to the next level.
+                </p>
+                </a>
+                <hr>
+                <a name="item4">
+                    <h3>WHAT IS RPE AND HOW DO I USE IT?</h3>
+                    <hr>
+                    <p>A Rating of Perceived Exertion (RPE) scale is a method used in autoregulatory training to determine
+                    exercise set intensity, or how hard something feels to you at the time. The scale used in our Levels
+                    Progression is 1-10, with a 1 signifying “little to no effort” and a 10 signifying “maximum effort”. The
+                    scale also refers to the number of repetitions short of failure for each set, or Repetitions in Reserve
+                    (RIR). A 9 RPE would mean 1 repetition short of failure (1 RIR), and a 7.5 meaning 2-3 RIR.
+                    <br>
+                    <br>
+                    RPE scales can often be more appropriate than percentage based programming (selecting weights as a
+                    percentage of your 1 repetition max). There are many things that can throw off your percentages, such
+                    as strength adaptations in a training block, training history, physical illness, sleep quality, diet, mental
+                    stress, and a myriad of other factors. Life happens, and you can’t always be at your best; RPE can
+                    account for these variables, allowing you to regulate training based on how hard a weight or exercise
+                    feels that day.
+                    <br>
+                    <br>
+                    Each exercise set has a desired RPE, listed underneath the exercise on your Strength Card. For each set,
+                    you will select a weight or number of repetitions to perform to attempt to coincide with the desired
+                    RPE. Ultimately, it is up to you to listen to your body and honestly determine RPE values for that
+                    particular training session, regardless of past performance. Being honest with yourself is the most
+                    important part of using the RPE scale, and will allow for far more effective training results.
+                    <br>
+                    <br>
+                    As you level up, there will be further uses for RPE as well.
+                    </p>
+                </a>
+                <hr>
+                <a name="RPE_Table">
+                    <h3>RPE TABLE</h3>
+                    <hr>
+                    <img src="{% static 'tutorial/RPE_Table.png' %}" style="width:40vw;">
+                </a>                
+                <hr>
+                <a name="item5">
+                    <h3>WHAT IS A STRENGTH CARD?</h3>
+                    <hr>
+                    <p>
+                    A strength card is the template for a daily training session. On a strength card, you will see:
+                    <ul>
+                        <li>Movement patterns to be performed during the training session</li>
+                        <li>Level for each pattern and subsequent exercise</li>
+                        <li>Number of working sets and/or repetitions to be performed</li>
+                        <li>Desired RPE for each set</li>
+                        <li>Suggested weight or number of repetitions for each working set</li>
+                        <li>Suggested rest times in between sets if applicable</li>
+                        <li>Exercise tempo if applicable</li>
+                    </ul>
+                  
+                    </p>
+                </a>
+                <hr>
+                <a name="item6">
+                    <h3>WHAT ABOUT WARM UP SETS?</h3>
+                    <hr>
+                    <p>
+                    Often times you will need to “warm up” with lighter weights prior to your working sets. These sets are
+                    not listed in your strength card, and it is up to you to determine how to best prepare yourself to train.
+                    1-3 warm up sets with higher repetitions than your working sets is a good rule of thumb. 
+                    </p>
+                </a>
+                <hr>
+                <a name="item7">
+                    <h3>HOW LONG SHOULD I REST IN BETWEEN SETS?</h3>
+                    <hr>
+                    <p>
+                    This depends on a number of factors, including training experience and workout intensity. In general,
+                    the heavier the weight we are using, the longer we need to rest. A good rule of thumb is to rest 2-4
+                    minutes in between sets for the main 2 exercises in a training session, and less than 2 minutes for
+                    following exercises. It is important to autoregulate rest, and take the rest periods you need to recover
+                    and perform well, as long as you aren’t spending all day in the gym. These training sessions should
+                    typically take 60-90 minutes to complete
+                    </p>
+                </a>
+                <hr>
+                <a name="item8">
+                    <h3>WHAT IS AN ALLOY SET?</h3>
+                    <hr>
+                    <p>
+                    An Alloy Set is a set where you will perform a predetermined weight for as many repetitions as possible
+                    (AMRAP) with good technique. Alloy sets don’t show up often, but they are an important chance to
+                    challenge yourself!
+                    </p>
+                </a>
+                <hr>
+                <a name="item9">
+                    <h3>WHAT IS THE VIDEO LIBRARY?</h3>
+                    <hr>
+                    <p>
+                    The video library contains detailed videos and write-ups breaking down proper technique and providing
+                    important cues for each exercise in our levels progression. You can always refer back to these videos to
+                    make sure that you are performing the exercises correctly. New videos will unlock as you level up.
+                    </p>
+                </a>
+            </div>
+
+        </div>
+
+    </body>
+
+</html>

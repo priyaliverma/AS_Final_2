@@ -1,0 +1,561 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Include Vue.js Source Code -->
+<script src='https://unpkg.com/vue'></script>
+
+
+<!-- Include HTML Code -->
+<head>
+<meta charset="UTF-8">
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" />
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'homepage/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/navigation.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/homepage_2.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'homepage/homepage.css' %}"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600" rel="stylesheet">
+
+
+    <title>Alloy Strength | Homepage</title>
+</head>
+
+<body>
+
+        <!-- <img src="{% static "my_app/example.jpg" %}" alt="My image"/> -->
+        <img id='banner' src="{% static 'homepage/new_homepage_3.jpg' %}"/></img>
+
+        <!-- PLACE MENU HERE -->
+        <ul id='nav_bar' style="margin-top:1vw;">
+            <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> ABOUT</a></li>
+            <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> PROGRAMS</a></li>
+            <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> BLOG</a></li>
+            <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> TESTIMONIALS</a></li>
+            <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> STORE</a></li>
+        </ul> 
+
+    <div class='mdl-layout__content' id="desc-container" style='width:100%; height:100%;'>
+        <div id="left_desc" style="overflow:hidden;">
+            WHO IS ALLOY STRENGTH?
+            <hr>
+
+            <span>Al·loy (/ˈaˌloi/), noun</span> - a metal made by combining two or more metallic elements, especially to give greater strength or resistance to corrosion. 
+            Alloy Strength is a virtual training platform that provides cutting-edge individualized online workout programs to athletes of any sport, at any skill or experience level, worldwide. 
+
+            <br>
+            <br>
+            Our coaches  come from some of the best academic programs in the world, with experience working with elite athletes in multiple sports across the country, and are NSCA Certified Strength and Conditioning Specialists (CSCS). All of our members get coaching access and progressive, goal-driven programming in a supportive and focused training community.
+
+            <br>
+            <br>
+            At Alloy Strength, no two programs are the same. We specify our programming to every individual, helping you move better, perform better, and become an alloy; strong and resilient.
+
+        </div>
+
+
+        <div id="desc" style="overflow:hidden; height:8vw;">
+            <!-- MODALS -->
+            <!-- TO DO: pattern matching -->
+            <br>
+                <h3 style="padding-top:0px;"> ALLOY STRENGTH </h3>
+                <h6> ONLINE STRENGTH TRAINING SYSTEMS </h6>             
+            <div class='mdl-grid' style="height:20vw;">
+                <div class='mdl-cell mdl-cell--12-col' id='modal_button_container' 
+                style="height:10vw; padding-top:3vw;">
+                    <!-- SIGN-UP MODAL -->
+                        <div id='sign-up' class='modal_button' >
+                        <!-- Accent-colored raised button with ripple -->
+                        <button id='show-modal' @click='showModal = true;'
+                         class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' style="margin-top:-4vw;">SIGN UP</button>
+                        {{Signup_Error}}
+
+                    <form method="GET">{% csrf_token %}
+                        <modal v-if='showModal' @close='showModal=false' style="text-align:left;">
+                            <h3 slot='header' style='text-align:left'>USER INFORMATION 
+                            <button style="float:right;" type="button" @click='showModal = false;' class="close" >&times;</button></h3>
+                            
+
+                            <div slot="body" class="mdl-textfield mdl-js-textfield">
+                            Name<br>
+                            <input class="mdl-textfield__input" type="text" placeholder="First" id="_F_Name" style="width:10vw; display:inline-block;">
+                            <input class="mdl-textfield__input" type="text" placeholder="Last" id="_L_Name" style="width:10vw; display:inline-block;">
+                            <br>
+                            <br>
+                            <input class="mdl-textfield__input" type="text" placeholder='Email/Username' id="_Email">
+                            <br>
+                            <input class="mdl-textfield__input" type="password" placeholder='Password' id="_P_Word_1">
+                            <br>
+                            <input class="mdl-textfield__input" type="password" placeholder='Confirm Password' id="_P_Word_2">
+                            <br>
+                            Date of Birth:
+                            <input class="mdl-textfield__input" type="date" placeholder="Date of Birth" id="_DOB">
+                            <br>
+                            <div>
+                            <button style="vertical-align:bottom; margin-top:30vw;" 
+                            id='show-modal' name="Form_1" type="button" @click='showModal_Two = true; showModal = false;' 
+                                class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick="Get_Names_1()">Next</button>
+                            </div>
+                            </div> 
+                            <div slot='footer'>
+                            Test
+                            <br>
+                            <button id='show-modal' name="Form_1" type="button" @click='showModal_Two = true; showModal = false;' 
+                                class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' onclick="Get_Names_1()">Next</button>
+                            </div>
+                        </modal>
+                      </form>
+
+                    <form method="GET">
+                        <modal v-if='showModal_Two' @close='showModal_Two=false' style="text-align: left;">
+                            <h3 slot='header' style='text-align:left'>PHYSICAL STATS 
+                            <button style="float:right;" type="button" @click="showModal = true; showModal_Two = false; showModal = false;" class="close" >&times;</button>
+                            </h3>
+                            <div slot="body" class="mdl-textfield mdl-js-textfield" style="width:500px;">
+                                <!-- <div class="mdl-textfield mdl-js-textfield" style="text-align:left;"> -->
+                                    <b>HEIGHT (Required):</b><br>
+                                    <br>
+                                    <input class="mdl-textfield__input" id="_H_Feet" type="number" placeholder="--" style="text-align:center; display:inline-block; width:3vw; ">
+                                    Feet
+                                    <input class="mdl-textfield__input" id="_H_Inches" type="number" placeholder="--" style="text-align:center; display:inline-block; width:3vw;">          
+                                    Inches
+                                    <b>&nbsp or &nbsp </b>                         
+                                    <input class="mdl-textfield__input"  id="_H_M" type="number" placeholder="--" style="text-align:center; display:inline-block; width:3vw; ">
+                                    Meters
+                                    <input class="mdl-textfield__input"  id="_H_cm" type="number" placeholder="--" style="text-align:center; display:inline-block; width:3vw;">          
+                                    Centimeters
+                                <!-- </div> -->
+
+                                <div class="mdl-textfield mdl-js-textfield" style="text-align:left;">
+                                    <b>WEIGHT (Required):</b><br>
+                                    <input class="mdl-textfield__input" id="W_lbs" type="number" placeholder="--" style="text-align:center; display:inline-block; width:3vw; ">
+                                    lbs
+                                    <b>&nbsp or &nbsp </b>                         
+                                    <input class="mdl-textfield__input" id="W_KG" type="number" placeholder="--" style="text-align:center; display:inline-block; width:3vw; ">
+                                    KG
+                                </div>
+                                <!-- <div class="mdl-textfield mdl-js-textfield" style="width:500px;"> -->
+                                <br>
+                                    <b>Known Max Lifts (Leave Blank if Unknown):</b><br>
+                                    Squat
+                                    <input class="mdl-textfield__input" type="text" id = "Squat_lbs" placeholder="lbs" style="width:3vw; margin-left:1vw; display:inline-block;">
+                                    /
+                                    <input class="mdl-textfield__input" type="text" id = "Squat_KG" placeholder="KG" style="width:3vw; display:inline-block;">
+                                    <br>
+                                    Bench
+                                    <input class="mdl-textfield__input" type="text" id = "Bench_lbs" placeholder="lbs" style="width:3vw; margin-left:1vw; display:inline-block;">
+                                    /
+                                    <input class="mdl-textfield__input" type="text" id = "Bench_KG" placeholder="KG" style="width:3vw; display:inline-block;">
+                                    <br>
+                                    Deadlift
+                                    <input class="mdl-textfield__input" type="text" id = "DL_lbs" placeholder="lbs" style="width:3vw; margin-left:1vw; display:inline-block;">
+                                    /
+                                    <input class="mdl-textfield__input" type="text" id = "DL_KG" placeholder="KG" style="width:3vw; display:inline-block;">
+                                    <br>
+                                    Overhead Press
+                                    <input class="mdl-textfield__input" type="text" id = "OP_lbs" placeholder="lbs" style="width:3vw; margin-left:1vw; display:inline-block;">
+                                    /
+                                    <input class="mdl-textfield__input" type="text" id = "OP_KG" placeholder="KG" style="width:3vw; display:inline-block;">
+                                    <br>
+                                    Power Clean
+                                    <input class="mdl-textfield__input" type="text" id = "PC_lbs" placeholder="lbs" style="width:3vw; margin-left:1vw; display:inline-block;">
+                                    /
+                                    <input class="mdl-textfield__input" type="text" id = "PC_KG" placeholder="KG" style="width:3vw; display:inline-block;">
+                                    <br>
+                                    Clean and Jerk
+                                    <input class="mdl-textfield__input" type="text" id = "CJ_lbs" placeholder="lbs" style="width:3vw; margin-left:1vw; display:inline-block;">
+                                    /
+                                    <input class="mdl-textfield__input" type="text" id = "CJ_KG" placeholder="KG" style="width:3vw; display:inline-block;">
+                                    <br><br>
+                                    Other:
+                                    <br>
+                                    <textarea rows="4" cols="50" id="Other" placeholder="Write Lift Name(s) and Max(s) Here" style="border-style:solid; border-width:1px; border-color:black;"></textarea>
+                                <!-- </div> -->
+                                <button id='show-modal' type="button" onclick="Get_Names_2()" 
+                                style="margin-top:39vw; margin-left:-29vw;"
+                                class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' >Next</button>
+                                <button
+                                @click="showModal = true; showModal_Three = true; showModal_Two = false; showModal = false;" class="hidden" type="button" id="Go_To_Form_3">
+                                </button>
+                            </div>
+                            <div slot='footer'>
+                            <br>
+                                <button id='show-modal' type="button" onclick="Get_Names_2()" 
+                                class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' >Next</button>
+                                <button
+                                @click="showModal = true; showModal_Three = true; showModal_Two = false; showModal = false;" class="hidden" type="button" id="Go_To_Form_3">
+                                </button>
+                            </div>
+                        </modal>                        
+                        </form>
+
+                        <script>
+                        // FORM 1
+                        var _F_Name = "";
+                        var _L_Name = "";
+                        var _Email = "";
+                        var _P_Word_1 = "";
+                        var _P_Word_2 = "";
+                        var _DOB = "";
+                        // FORM 2
+                        var Height = ["", "", ""];
+
+                        var Weight = ["", ""];
+
+                        var Squat = ["", ""];
+                        var Bench = ["", ""];
+                        var D_Lift = ["", ""];
+                        var OP = ["", ""];
+                        var PC = ["", ""];
+                        var CJ = ["", ""];
+
+                        // var Height_Feet = "";
+                        // var Height_Inches = "";
+
+                        // var Height_M = "";
+                        // var Height_cm = "";
+                        
+                        // var Weight_KG = "";
+                        // var Weight_lbs = "";
+
+                        // var Height_M = "";
+                        // var Height_cm = "";
+
+                        // var Squat_KG = "";
+                        // var Squat_lbs = "";
+
+                        // var Bench_KG = "";
+                        // var Bench_lbs = "";
+
+                        // var Deadlift_KG = "";
+                        // var Deadlift_lbs = "";
+
+                        // var Overhead_Press_KG = "";
+                        // var Overhead_Press_lbs = "";
+
+                        // var P_Clean_KG = "";
+                        // var P_Clean_lbs = "";
+
+                        var C_J_KG = "";
+                        var C_J_lbs = "";
+
+                        var Other = "";
+
+                        function Get_Names_1() {
+                            _F_Name = document.getElementById("_F_Name").value;
+                            _L_Name = document.getElementById("_L_Name").value;
+                            _Email = document.getElementById("_Email").value;
+                            _P_Word_1 = document.getElementById("_P_Word_1").value;
+                            _P_Word_2 = document.getElementById("_P_Word_2").value;
+                            _DOB = document.getElementById("_DOB").value;
+                        }
+
+                        function Get_Names_2() {
+                            if ((document.getElementById("_H_Feet").value != "" || document.getElementById("_H_Inches").value != "")
+                                && (document.getElementById("_H_M").value != "" || document.getElementById("_H_cm").value != "")) {
+                                alert("Please only enter height in feet/inches OR meters/centimeters");
+                                return;
+                            }
+                            else if (document.getElementById("_H_Feet").value != "" || document.getElementById("_H_Inches").value != "") {
+                                Height = [document.getElementById("_H_Feet").value, document.getElementById("_H_Inches").value, "Imperial"];
+                            } 
+                            else if (document.getElementById("_H_M").value != "" || document.getElementById("_H_cm").value != "") {
+                                Height = [document.getElementById("_H_M").value, document.getElementById("_H_cm").value, "Metric"];
+                            }
+
+                            if (document.getElementById("W_lbs").value != "") {
+                                Weight = [document.getElementById("W_lbs").value, "Imperial"];
+                                if (document.getElementById("W_KG").value != "") {
+                                    alert("Please only enter weights in pounds OR kilograms");
+                                    return;
+                                }
+                            }
+                            else if (document.getElementById("W_KG").value != "") {
+                                Weight = [document.getElementById("W_KG").value, "Metric"];                                
+                            }
+
+                            if (document.getElementById("Squat_lbs").value != "") {
+                                if (document.getElementById("Squat_KG").value != "") {
+                                    alert("Please only enter weights in pounds OR kilograms");
+                                    return;
+                                }
+                                Squat = [document.getElementById("Squat_lbs").value, "Imperial"];
+                            }
+                            else if (document.getElementById("Squat_KG").value != "") {
+                                Squat = [document.getElementById("Squat_KG").value, "Metric"];                                
+                            }
+
+                            if (document.getElementById("Bench_lbs").value != "") {
+                                Bench = [document.getElementById("Bench_lbs").value, "Imperial"];
+                                if (document.getElementById("Bench_KG").value != "") {
+                                    alert("Please only enter weights in pounds OR kilograms");
+                                    return;
+                                }
+                            }
+                            else if (document.getElementById("Bench_KG").value != "") {
+                                Bench = [document.getElementById("Bench_KG").value, "Metric"];                                
+                            }
+
+                            if (document.getElementById("DL_lbs").value != "") {
+                                if (document.getElementById("DL_KG").value != "") {
+                                    alert("Please only enter weights in pounds OR kilograms");
+                                    return;
+                                }
+                                D_Lift = [document.getElementById("DL_lbs").value, "Imperial"];
+                            }
+                            else if (document.getElementById("DL_KG").value != "") {
+                                D_Lift = [document.getElementById("DL_KG").value, "Metric"];                                
+                            }
+
+                            if (document.getElementById("OP_lbs").value != "") {
+                                OP = [document.getElementById("OP_lbs").value, "Imperial"];
+                                if (document.getElementById("OP_KG").value != "") {
+                                    alert("Please only enter weights in pounds OR kilograms");
+                                    return;
+                                }
+                            }
+                            else if (document.getElementById("OP_KG").value != "") {
+                                OP = [document.getElementById("OP_KG").value, "Metric"];                                
+                            }
+
+                            if (document.getElementById("PC_lbs").value != "") {
+                                PC = [document.getElementById("PC_lbs").value, "Imperial"];
+                                if (document.getElementById("PC_KG").value != "") {
+                                    alert("Please only enter weights in pounds OR kilograms");
+                                    return;
+                                }
+                            }
+                            else if (document.getElementById("PC_KG").value != "") {
+                                PC = [document.getElementById("PC_KG").value, "Metric"];                                
+                            }
+
+                            if (document.getElementById("CJ_lbs").value != "") {
+                                CJ = [document.getElementById("CJ_lbs").value, "Imperial"];
+                                if (document.getElementById("CJ_KG").value != "") {
+                                    alert("Please only enter weights in pounds OR kilograms");
+                                    return;
+                                }
+                            }
+                            else if (document.getElementById("CJ_KG").value != "") {
+                                CJ = [document.getElementById("CJ_KG").value, "Metric"];                                
+                            }
+                            document.getElementById("Go_To_Form_3").click();
+
+                        }
+
+                        function Set_Names() {
+                            document.getElementById("F_Name").value = _F_Name;
+                            document.getElementById("L_Name").value = _L_Name;
+
+                            document.getElementById("Email").value = _Email;
+
+                            document.getElementById("PWord_1").value = _P_Word_1;
+                            document.getElementById("PWord_2").value = _P_Word_2;
+
+                            document.getElementById("DOB").value = _DOB;
+
+                            document.getElementById("Height").value = Height;
+                            document.getElementById("Weight").value = Weight;
+
+                            document.getElementById("Squat").value = Squat;
+                            document.getElementById("Bench").value = Bench;
+                            document.getElementById("Deadlift").value = D_Lift;
+                            document.getElementById("Overhead_Press").value = OP;
+                            document.getElementById("Power_Clean").value = PC;
+                            document.getElementById("C_Jerk").value = CJ;
+
+                            document.getElementById("Other").value = Other;
+
+                        }
+                        </script>
+
+                        <form method="GET" onsubmit="Set_Names()">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="F_Name" name="F_Name" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="L_Name" name="L_Name" value="">
+
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Email" name="Email" value="">
+
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="PWord_1" name="PWord_1" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="PWord_2" name="PWord_2" value="">
+
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="DOB" name="DOB" value="">
+                        
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Height" name="Height" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Weight" name="Weight" value="">
+
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Squat" name="Squat" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Bench" name="Bench" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Deadlift" name="Deadlift" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Overhead_Press" name="Overhead_Press" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Power_Clean" name="Power_Clean" value="">
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="C_Jerk" name="C_Jerk" value="">
+
+                        <input class="mdl-textfield__input" type="hidden" placeholder="Name" id="Other" name="Other" value="">
+
+
+
+                        <modal v-if='showModal_Three' @close='showModal_Three=false' style="text-align:left; height: 300px !important;">
+                            <h3 slot='header' style='text-align:left'>Experience 
+                            <button style="float:right;" type="button" 
+                            @click="showModal = true; showModal_Two = false; showModal_Three = false; showModal = false;" 
+                            class="close" >&times;</button></h3>
+                            <div slot="body" class="mdl-textfield mdl-js-textfield" style="width:500px;">
+                                <div class="mdl-textfield mdl-js-textfield" style="text-align:left; width:500px;">
+                                    Training Experience (Required):
+                                    <input class="mdl-textfield__input" type="number" placeholder="" style="text-align:center; display:inline-block; width:3vw; margin-left:1vw;">
+                                    Years
+                                    <input class="mdl-textfield__input" type="number" placeholder="" style="text-align:center; display:inline-block; width:3vw;" name="TrainingMonths">                  
+                                    Months                  
+                                    <br><br>
+                                    Primary Sports (Leave Blank If None):
+                                    <br><br>
+                                    <input class="mdl-textfield__input" type="text" placeholder="Primary Sport 1" style="width:10vw; "><br>
+                                    <input class="mdl-textfield__input" type="text" placeholder="Primary Sport 2" style="width:10vw;"><br>                                    
+                                    <input class="mdl-textfield__input" type="text" placeholder="Primary Sport 3" style="width:10vw;"><br><br>
+                                Do You Have Prior RPE Experience?
+                              <select name="RPE_Exp" style="font-size:17px;">
+                                  <option value="Y">Yes</option>
+                                  <option value="N">No</option>
+                              </select>
+                                </div>
+                                    <input type="submit"  value="SIGN UP FOR ALLOYSTRENGTH" @click='showModal_Two = true; showModal = false;' 
+                                    class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' name="Sign_Up"
+                                    style="margin-top:30vw; margin-left:0vw;">
+                            </div>
+                            <br>
+                            <div slot='footer'>
+                                    <input type="submit"  value="SIGN UP FOR ALLOYSTRENGTH" @click='showModal_Two = true; showModal = false;' 
+                                    class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' name="Sign_Up">
+                            </div>
+                        </modal>
+                        </form>
+                    </div>
+
+                    <!-- LOG-IN MODAL -->
+                    <div id='log-in' class='modal_button'>
+                        <!-- Accent-colored raised button with ripple -->
+                        <button id='show-modal' @click='showModal = true' style="margin-top:-4vw;"
+                                class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>LOG IN</button>
+
+                       <form method="POST">{% csrf_token %}
+                        <modal v-if='showModal' @close='showModal=false'>
+                            <h3 slot='header' style='text-align:left'>LOG IN</h3>
+
+                            <div slot="body" class="mdl-textfield mdl-js-textfield" style="width:300px;">
+                                    <input style="margin-top:5vw;" name="Username" class="mdl-textfield__input" type="text" placeholder="Email/Username">
+                                    <br>
+                                    <input style="margin-top:1vw; margin-bottom:1vw;" name="Password" placeholder="Password" 
+                                    class="mdl-textfield__input" type="password" value="Password">
+                                    <br>
+                                    <input type="submit" name="Log_In" style="width:7vw; height:3vw;"  value="Login" id="blue_btn">
+                            </div>
+                            <div slot='footer'>
+                            </div>
+                            <!-- Simple Textfield -->
+<!--                             <form slot='body' action="#" >
+                                <div class="mdl-textfield mdl-js-textfield">
+                                    <input class="mdl-textfield__input" type="text" v-bind:value='email'>
+                                </div>
+                            </form>
+ -->
+                            <!-- Simple Textfield 2-->
+<!--                             <form slot='body' action="#">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                    <input class="mdl-textfield__input" type="text" v-bind:value='password'>
+                                </div>
+                            </form>
+ -->
+                            <!--<button slot='footer' class='mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;accent'-->
+                                    <!--@click='./exercise5.html'>-->
+                                <!--SUBMIT-->
+                            <!--</button>-->
+
+                        </modal>
+                        </form>
+                    </div>
+                    <div>
+                        <!-- <h4 style="text-align:left;">Login Failed</h4> -->
+                    </div>
+                </div>
+            </div>
+            <h6 style="margin-top:-5vw;">{{Signup_Error}}</h6>
+            <h6 style="margin-top:-5vw;">{{Login_Failed}}</h6>
+        </div>    
+         <div id="right_desc" style="overflow:hidden;">
+            WHAT IS AUTOREGULATORY TRAINING?
+            <hr>
+
+            Autoregulatory training is a system based on an individual athlete’s physiological and mental state, automatically configuring programming variables to the athlete’s specific needs at the time. 
+
+            <br>
+            <br>
+
+            This method attempts to adjust for athlete's adaptations, allowing for increases in load and strength at an individual pace by catering training stress to daily performance measures. This allows for complete personalization even within a structured program.
+        
+        </div>    
+
+
+    </div>
+</body>
+
+
+
+<!-- Include Template for modal component -->
+<!-- Reference: https://vuejs.org/v2/examples/modal.html -->
+<script type='text/x-template' id='modal-template'>
+
+    <transition name='modal'>
+        <div class='modal-mask'>
+            <div class='modal-wrapper'>
+                <div class='modal-container' style="width:500px; height:600px;" >
+
+                    <div class='modal-header'>
+                        <slot name='header'>
+                            default header
+                        </slot>
+                    </div>
+
+                    <div class='modal-body' style="height:500px !important; width:500px;">
+                        <slot name='body'>
+                            default body
+                        </slot>
+                    </div>
+
+                    <div class='modal-footer' >
+                        <slot name='footer'>
+                            <button class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'
+                                    @click='$emit("close")'>
+                                SUBMIT
+                            </button>
+<!--                                 <button id='show-modal' @click='showModal = true; showModal_Two = true;  $emit("close");' 
+                                class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>Next</button>
+ -->                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</script>
+
+
+<!-- Include Vue.js Instance Code -->
+<script src="{% static 'homepage/homepage.js' %}"></script>
+<!-- <script src="{% static 'homepage/homepage_2.js' %}"></script> -->
+
+
+
+<!-- Styling -->
+<style>
+    .graybox {
+        background-color:#ddd;
+    }
+</style>
+
+
+</html>

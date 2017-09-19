@@ -1,0 +1,183 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Include Vue.js Source Code -->
+<script src='https://unpkg.com/vue'></script>
+<!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+    var stripe = Stripe('pk_test_XXOQiKnnXqjJlJG5euwKirzj');
+    var elements = stripe.elements();
+</script>
+
+<!-- Include HTML Code -->
+<!-- Head --> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
+
+    <title>User Page</title>
+
+</head>
+
+
+<!-- Body --> 
+<body>
+    <h1 style="margin-left:4vw;">Payment & Confirmation</h1>
+    <hr>
+
+    <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
+
+
+</head>
+<body>
+
+    <div id="left_container">
+        <h2 style="margin-left:4vw;">Available Packages</h2>
+        <div id="summary">
+        <h3 style="margin-top:0px;">Gold</h3>
+        12 months: $300.00 ($25/Month)
+<!--         <input type='button' value='SELECTED' id='update_table' style="background-color:red; float:right; display:inline-block; vertical-align:top; margin-bottom:0vw; margin-top:-1vw;"></input>
+ -->        </div>
+        <div id="summary">
+        <h3 style="margin-top:0px;">Silver</h3>
+        6 months: $180.00 ($30/Month)
+        <!-- <input type='button' value='SELECT' style="float:right; margin-left:3vw; vertical-align:top; margin-bottom:0vw; margin-top:-1vw;"></input> -->
+        </div>
+        <div id="summary">
+        <h3 style="margin-top:0px;">Bronze</h3>
+        1 month: $40.00 ($40/Month)
+        <!-- <input type='button' value='SELECT' id='update_table' style="float:right; display:inline-block; vertical-align:top; margin-bottom:10vw; margin-top:-1vw;"></input> -->
+        </div>
+    </div>
+
+    <div id='right_container'>
+    <!-- <form method="GET"> -->
+        <h2 style="margin-left:7vw;">Confirm Your Subscription to AlloyStrength</h2>
+
+        <div id="summary">
+        <form method="GET">
+        <b>Select Package</b><br><br>
+        Package: 
+        <select name="Package" onchange="this.form.submit()" style="margin-left:1vw;">
+        {% for Package in Packages %}
+            <option value="{{Package.1}}">{{Package.0}}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <br>
+        <b style="">Total: &nbsp ${{Total}}</b> 
+        <!-- (+ ${{Processing_Fee}} Processing Fee) -->
+        </form>
+        <br>
+        <b>Enter Payment Information</b><br><br>
+        <form method="POST" id="payment-form">{% csrf_token %}
+          <div class="form-row">
+            <label for="card-element">
+              Credit or Debit card
+            </label><br><br>
+            <div id="card-element" style="padding-left:1vw; border-style:solid;">
+              <!-- a Stripe Element will be inserted here. -->
+            </div>
+
+            <!-- Used to display Element errors -->
+            <div id="card-errors" role="alert"></div>
+          </div>
+          <br><br>
+        <br><br>
+        <input id = "blue_btn" style="display:inline-block; vertical-align:top; margin-bottom:0vw; margin-top:0vw;" name="Payment_Btn" value="CONFIRM & PAY" type="submit">
+        <br>
+        {{Payment_Status}}
+        <br><br>
+        </form>
+
+</div>
+<script>
+    var style = {
+      base: {
+        // Add your base input styles here. For example:
+        fontSize: '16px',
+        lineHeight: '24px'
+      }
+    };
+
+    // Create an instance of the card Element
+    var card = elements.create('card', {style: style});
+
+    // Add an instance of the card Element into the `card-element` <div>
+    card.mount('#card-element');
+
+    card.addEventListener('change', function(event) {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      stripe.createToken(card).then(function(result) {
+        if (result.error) {
+          // Inform the user if there was an error
+          var errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+        } else {
+          // Send the token to your server
+          stripeTokenHandler(result.token);
+        }
+      });
+    });
+
+    function stripeTokenHandler(token) {
+      // Insert the token ID into the form so it gets submitted to the server
+      var form = document.getElementById('payment-form');
+      var hiddenInput = document.createElement('input');
+      hiddenInput.setAttribute('type', 'hidden');
+      hiddenInput.setAttribute('name', 'stripeToken');
+      hiddenInput.setAttribute('value', token.id);
+      form.appendChild(hiddenInput);
+
+      // Submit the form
+      form.submit();
+    }
+</script>
+
+    <!-- </form>  -->
+
+</body>
+
+</html>
+
+
+
+<style>
+    .workout .ui-state-default {
+        background-color: orange; 
+    }
+
+    .today .ui-state-default {
+        border: 1px solid black;
+    }
+
+</style>
+
+

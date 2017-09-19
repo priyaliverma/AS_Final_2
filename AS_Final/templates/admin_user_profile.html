@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Levels</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" style="margin-left:600px; float:right;">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Profile<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+<!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <div class="container">
+      <div class="jumbotron" style="margin-top:0px; margin-bottom:50px; display:inline-block; width:100%; height:1000px;">
+<form method="GET">
+<div style="width:50%; display:inline-block;">
+  <img src='{% static "adminuserprofilepage/Profile_Placeholder.png" %}'>
+  <h2>Profile Information</h2>
+  Email: <b>{{User_Info.0}}</b>
+  <br>
+  First Name: <b>{{User_Info.1}}</b>
+  <br>
+  Last Name: <b>{{User_Info.2}}</b>
+  <br>
+  Level: <b>{{User_Info.3}}</b>
+  <br>
+  <h2>Exercise Stats</h2>
+  Squat:
+  <br>
+  Hinge:
+  <br>
+  UB Hor Press:
+</div>
+<div style="float:right; width:40%; display:inline-block;">
+  <div name="Next_Workout" style="height:200px;">
+    <h2>Next Workout</h2>
+    <!-- Date:  -->
+    {{Next_Workout.1}}{{Next_Workout.0}}
+    {%for set in Next_Workout.2 %}
+    <br>
+    <b>{{set}}</b>
+    {% endfor %}
+  </div>
+  <div name="Last_Workout" style="height:200px;">
+    <h2>Last Workout</h2>
+    <!-- Date:  -->
+    {{Last_Workout.1}}{{Last_Workout.0}}
+    {%for set in Last_Workout.2 %}
+    <br>
+    <b>{{set}}</b>
+    {% endfor %}
+  </div>
+</div>
+<br>
+</form>
+<br>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

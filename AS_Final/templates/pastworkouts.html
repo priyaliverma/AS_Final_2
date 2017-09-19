@@ -1,0 +1,373 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Include Vue.js Source Code -->
+<script src='https://unpkg.com/vue'></script>
+<!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
+
+<!-- Include HTML Code -->
+<!-- Head --> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
+
+    <title>User Page</title>
+
+</head>
+
+
+<!-- Body --> 
+<body>
+    <div id='header-left'>
+        <h1>Past Workouts</h1>
+    </div>
+
+     <div id='header-right'>
+        <ul id='nav-bar'>
+            <li><a href="{%url 'userpage' %}">Home</a></li>
+            <li><a href="{%url 'videos' %}">Videos</a></li>
+            <li><a href="{%url 'pastworkouts' %}" class='page-active'>Past Workouts</a></li>
+            <li><a href="{%url 'userprofile' %}">Profile</a></li>
+            <li><a href="{%url 'contact' %}">Contact & Support</a></li>
+            <li><a href="{%url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
+
+</head>
+<body>
+
+    <div id="left_container">
+        <h3>Past Workouts List</h3>
+        <form method="POST">{% csrf_token %}
+        <table style="margin-top:2vw; border:1px solid black; font-size:12px; border-collapse: collapse;">
+          <tr style="text-align:center;">
+            <th style="padding-left:5px; width:300px !important; text-align:center;">Date <br>(Click for Details)</th>
+            <th style="padding-left:5px; font-size:12px; border:1px solid black; width:100px !important;">Level</th>
+            <th style="padding-left:5px; font-size:12px; border:1px solid black; width:100px !important;">Week</th>
+            <th style="padding-left:5px; font-size:12px; border:1px solid black; width:50px !important;">Day</th>
+            <th style="padding-left:5px; font-size:12px; border:1px solid black; width:50px !important;">Type</th>
+            <th style="padding-left:5px; font-size:12px; border:1px solid black; width:50px !important;">Notes/Comments</th>
+          </tr>
+          {% for row in Workout_Info %}
+          <tr>
+            <td>
+            <input type="submit" name="Submitted_Date" value="{{row.0}}" style="background:none; border-width:0px; color:blue; text-decoration:underline; padding:0px; margin:0px; font-size:12px;"/>
+            </td>
+<!-- <a href="/profile">{{row.0}}</a></td> -->
+            <td>{{row.1}}</td>
+            <td><a>{{row.2}}</a></td>
+            <td><a>{{row.3}}</a></td>
+            <td><a>{{row.4}}</a></td>
+            <td><a>Comments from <br>coach</a></td>
+          </tr>            
+          {% endfor %}
+        </table>
+        </form>
+    </div>
+
+    <div id='right_container'>
+        <div id='stats_info'>
+
+            <h3>Workout Stats For: {{Workout_Date.0}}
+            <br>Level 1, Week 4, Day 2</h3>
+            <hr>
+        </div>
+
+        <table class='table_calendar'>
+            <tr>
+                <th class='table_header'>Pattern</th>
+                <th class='table_header'>Exercise</th>
+                <th class='table_header'>Reps</th>
+                <th class='table_header'>Weight</th>
+                <th class='table_header'>RPE</th>
+                <th class='table_header'>Tempo</th>
+            </tr>
+            {% for Sub in Selected_Workout %}
+            <tr class='table_content'>
+                <th>{{Sub.0}}</th>
+                <td><div>{{Sub.1}}
+                <br>({{Sub.2}} Sets)
+                <br>
+                {{Sub.4}}
+                </div></td>
+                <td>
+                {% for Set in Sub.3.0 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.1}}
+                    </div>
+                {% endfor %}
+                {% for Set in Sub.3.1 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.1}}
+                    </div>
+                {% endfor %}
+                <td>                
+                {% for Set in Sub.3.0 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.0}}
+                    </div>
+                {% endfor %}
+                {% for Set in Sub.3.1 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.1}}
+                    </div>
+                {% endfor %}
+                </td>
+                <td>
+                {% for Set in Sub.3.0 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.0}}
+                    </div>
+                {% endfor %}                    
+                {% for Set in Sub.3.1 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.1}}
+                    </div>
+                {% endfor %}
+                </td>
+                <td>
+                {% for Set in Sub.3.0 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.0}}
+                    </div>
+                {% endfor %}
+                {% for Set in Sub.3.1 %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        {{Set.1}}
+                    </div>
+                {% endfor %}
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+
+    </div>
+
+</body>
+
+</html>
+
+
+<script>
+
+    var vm1 = new Vue({
+        el:'#stats_info',
+        delimiters: ['${', '}'],
+        data: {
+            level:''
+        }
+    });
+
+    var vm2 = new Vue({
+        el: '.table_calendar',
+        delimiters: ['${', '}'],
+        data: {
+            row1: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row2: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row3: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row4: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            },
+            row5: {
+                'exercise_type': '',
+                'exercise_name': '',
+                'sets': '',
+                'reps': '',
+                'rpe': ''
+            }
+        }
+    });
+
+    function updateRPE() {
+        var current_date = $( "#date_text" ).text(); 
+        var URL = "{% url 'userpageRPEUpdate' %}"; 
+        var data = {'RPE_row1': vm2.row1.rpe,
+                    'RPE_row2': vm2.row2.rpe,
+                    'RPE_row3': vm2.row3.rpe,
+                    'RPE_row4': vm2.row4.rpe,
+                    'RPE_row5': vm2.row5.rpe,
+                    'current_date': current_date};
+
+        $.post(URL, data, function(response){
+            console.log(response); 
+        })
+    };
+
+    function updateTempDate(){
+        var TempDate = $( "#date_text" ).text(); 
+        var data = {'TempDate': TempDate};
+        var URL = "{% url 'userpageUpdate' %}";
+
+        console.log("I'm in updateTempDate"); 
+        $.post(URL, data, function(response){
+     
+            response1 = response[0];
+            vm1.level = response1.level; // all responses have levels, but for now, just display one 
+            vm2.row1.exercise_type = response1.exercise_type;
+            vm2.row1.exercise_name = response1.exercise_name; 
+            vm2.row1.reps = response1.reps;
+            vm2.row1.rpe = response1.rpe;
+
+
+            response2 = response[1];
+            vm2.row2.exercise_type = response2.exercise_type;
+            vm2.row2.exercise_name = response2.exercise_name; 
+            vm2.row2.reps = response2.reps;
+            vm2.row2.rpe = response2.rpe;
+
+
+            response3 = response[2];
+            vm2.row3.exercise_type = response3.exercise_type;
+            vm2.row3.exercise_name = response3.exercise_name; 
+            vm2.row3.reps = response3.reps;
+            vm2.row3.rpe = response3.rpe;
+
+
+            response4 = response[3];
+            vm2.row4.exercise_type = response4.exercise_type;
+            vm2.row4.exercise_name = response4.exercise_name; 
+            vm2.row4.reps = response4.reps;
+            vm2.row4.rpe = response4.rpe;
+
+
+            response5 = response[4];
+            vm2.row5.exercise_type = response5.exercise_type;
+            vm2.row5.exercise_name = response5.exercise_name; 
+            vm2.row5.reps = response5.reps;
+            vm2.row5.rpe = response5.rpe; 
+
+        });
+    }
+
+
+  $(function() {
+        $('#datepicker').datepicker({
+            beforeShowDay: function (date) {
+
+                // Get selected date
+                // Reference: https://stackoverflow.com/questions/26667720/how-to-get-the-selected-date-from-jquery-datepicker
+
+                var currentDate = $( "#datepicker" ).val();
+                $( "#date_text" ).text(currentDate);
+
+                // Reference: https://stackoverflow.com/questions/17863924/jquery-datepicker-add-class-to-first-17-days
+                var final_list = {{ final_list | safe }};
+                var final_list_len = final_list.length; 
+
+                var workout_list = [] 
+
+                for (i = 0; i < final_list_len; i++) {
+                    var workout_date = final_list[i]
+                    var workout_string = workout_date.month + '/' + workout_date.day + '/' + workout_date.year; 
+                    workout_list.push(new Date(workout_string)); 
+                };
+
+                var workout_list_len = workout_list.length; 
+
+                for (i = 0; i < workout_list_len; i++) {
+              
+                    // if workout date and date on the calendar are the same 
+                    if (workout_list[i].getTime() === date.getTime()){
+                        return [true, 'workout']; // set styling to 'workout' (see style tag below)
+                    }
+                };
+
+                return [true, ''];
+            },
+            onSelect: function (date) {
+                //var newDate = $(this).val();
+                $( "#date_text" ).text(date);
+                updateTempDate();
+            }
+         })
+    });
+
+
+    (function ($) {
+        $.extend($.datepicker, {
+
+            // Reference the orignal function so we can override it and call it later
+            _inlineDatepicker2: $.datepicker._inlineDatepicker,
+
+            // Override the _inlineDatepicker method
+            _inlineDatepicker: function (target, inst) {
+
+                // Call the original
+                this._inlineDatepicker2(target, inst);
+
+                var beforeShow = $.datepicker._get(inst, 'beforeShow');
+
+                if (beforeShow) {
+                    beforeShow.apply(target, [target, inst]);
+                }
+            }
+        });
+    }(jQuery));
+
+
+    $(document).ready(function(){
+        $('#update_table').click(function(){
+            updateRPE(); 
+        });
+    });
+
+</script>
+
+
+<style>
+    .workout .ui-state-default {
+        background-color: orange; 
+    }
+
+    .today .ui-state-default {
+        border: 1px solid black;
+    }
+
+</style>
+
+
