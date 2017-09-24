@@ -10,8 +10,9 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
 import json
 import stripe
-from Shared_Functions import User_Check, Member_Exists
-from RPE_Dict import RPE_Dict
+from checks import *
+from RPE_Dict import *
+import re
 
 Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -171,7 +172,7 @@ def Home(request):
 		print(DOB)
 		print(Training_Months)
 
-	return render(request, "homepage.html", context)
+	return render(request, "homepage_2.html", context)
 
 @user_passes_test(Member_Exists, login_url="/")
 def SignUp_Confirmation(request):
@@ -260,22 +261,6 @@ def SignUp_Confirmation(request):
 		print("Payment Button Pressed")
 		return HttpResponseRedirect("/Welcome")
 	return render(request, "signup_confirmation.html", context)
-
-
-def Get_Weight(Max, Reps, RPE):
-	Weight = 0
-	Percentage = RPE_Dict[RPE][Reps - 1]
-	Weight = Percentage*Max/100
-	Rounded_Weight = Weight - (Weight % 5)
-	# return RPE_Dict[RPE][Reps - 1]
-	return Rounded_Weight
-
-def Get_Max(Weight, Reps, RPE):
-	Percentage = RPE_Dict[RPE][Reps - 1]
-	print("Percentage: " + str(Percentage))
-	# print("")
-	Max = (Weight*100)/Percentage
-	return Max
 
 def Generate_Workouts(Start_Date, Level, Days_List, Member):
 	Week_Days = enumerate(Days_Of_Week)

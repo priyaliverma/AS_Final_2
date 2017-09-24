@@ -7,6 +7,8 @@ from Users.admin_views import *
 from Users.admin_video_views import *
 from Users.test_views import *
 from Users.sign_up_views import *
+from Users.video_views import *
+from Users.generate_workout_views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -18,9 +20,6 @@ urlpatterns = [
     url(r'^admin-users-view-profile/', Admin_User_Profile, name='AdminUser_Profile'),
 
     url(r'^admin-workouts/', Admin_Workouts, name='Home'),
-    url(r'^admin-workouts-2/', Admin_Workouts_2, name='Home'),
-    url(r'^admin-workouts-3/', Admin_Workouts_3, name='Home'),
-    url(r'^admin-workouts-4/', Admin_Workouts_4, name='Home'),
 
     url(r'^admin-exercises/', AdminExercises, name='Home'),
 
@@ -35,13 +34,13 @@ urlpatterns = [
     url(r'^welcome/', Welcome, name='Welcome'),
 
     url(r'^welcome/', SignUp_Confirmation, name='SignUpConfirmation'),
-    url(r'^member-home/', Member_Home, name='Home'),
     url(r'^test/', Test, name='Test'),
 
     url(r'^tutorial/', Tutorial, name="tutorial"),
     url(r'^exercise-descriptions/', Exercise_Descriptions, name="exercise_descriptions"),
 
     url(r'^userpage/', User_Page, name="userpage"),
+    # url(r'^userpage/', User_Page_Test, name="userpage"),
 
     url(r'^userpage-alloy/', User_Page_Alloy, name="userpage_alloy"),
 

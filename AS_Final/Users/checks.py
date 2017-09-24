@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from .models import *
 from django.shortcuts import render
@@ -7,21 +6,12 @@ from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, time, timedelta
-from django.utils import timezone
 from django.contrib.auth import logout, login, authenticate
 from django.core.files import File
+from django.utils import timezone
 import json
 import stripe     
-
-def User_Ref_Dict(user):
-	Dict = {}
-	_Member = Member.objects.get(User = user)
-	_Level = _Member.Level
-	_Workouts = _Member.workouts.all()
-	Dict["Member"] = _Member
-	Dict["Level"] = _Level
-	Dict["Workouts"] = _Workouts
-	return Dict
+import re
 
 def User_Check(user):
 	if user.is_anonymous():

@@ -72,41 +72,48 @@ class Set(models.Model):
 	Order = models.IntegerField(default=0)
 
 # Row in each table in 'Program'
-class SubWorkout(models.Model):
-	# Workout = models.OneToOneField(Workout, default="")
-	# Exercise = models.OneToOneField(Exercise, default="", null=True, blank=True)
-	Exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, blank=True, null=True)
+class SubWorkout_Template(models.Model):
 	Exercise_Type = models.CharField(default="", max_length=200, null=True, blank=True)
 	Sets = models.IntegerField(default=0)
-	Filled_Sets = models.IntegerField(default=0)
-	Reps = models.IntegerField(default=0)
+	Reps = models.CharField(default="", max_length=4)
+	Stop_Set = models.BooleanField(default=False) 
+	Drop_Set = models.BooleanField(default=False) 
+	Strength_Stop = models.IntegerField(default=0)
+	Strength_Drop = models.IntegerField(default=0)
 	Special_Reps = models.CharField(default="", max_length=10)	
 	Order = models.IntegerField(default=0)
 	RPE = models.CharField(default="", max_length=3)
 	Deload = models.IntegerField(default=0)
-	Money = models.IntegerField(default=0, null=True)
 	Alloy = models.BooleanField(default=False)
-	Show_Alloy = models.BooleanField(default=False)
 	Alloy_Reps = models.IntegerField(default=0)
-	Alloy_Weight = models.IntegerField(default=0)
-	Alloy_Passed = models.BooleanField(default=False)
-	Submitted = models.BooleanField(default=False)
-	Set_Stats = models.CharField(default="", max_length=300)
-	Set_1 = models.CharField(default="", max_length=20)
-	Set_2 = models.CharField(default="", max_length=20)
-	Set_3 = models.CharField(default="", max_length=20)
-	Set_4 = models.CharField(default="", max_length=20)
+	# Workout = models.OneToOneField(Workout, default="")  
+	# Exercise = models.OneToOneField(Exercise, default="", null=True, blank=True)
 	# Alloy = models.BooleanField(default=False)
 	# Alloy_Reps = models.IntegerField(default=0)
-class SubWorkout_Template(models.Model):
+class SubWorkout(models.Model):	
 	Exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, blank=True, null=True)
-	Exercise_Type = models.CharField(default="", max_length=200)
-	Sets = models.IntegerField(default=0)
-	Reps = models.IntegerField(default=0)
-	Order = models.IntegerField(default=0)
-	RPE = models.CharField(default="", max_length=3)
-	Deload = models.IntegerField(default=0)
-	Money = models.IntegerField(default=0)
+	Template = models.ForeignKey(SubWorkout_Template, on_delete=models.CASCADE, blank=True, null=True)
+	Suggested_Weight = models.IntegerField(default=0)
+	Filled_Sets = models.IntegerField(default=0)
+
+	Special_Sets = models.BooleanField(default=False)
+
+	Show_Alloy = models.BooleanField(default=False)
+	Alloy_Weight = models.IntegerField(default=0)
+	Alloy_Passed = models.BooleanField(default=False)
+
+	Maxed_Sets = models.BooleanField(default=False) 
+	
+	Stopped = models.BooleanField(default=False)
+	Dropped = models.BooleanField(default=False)
+
+	Stop_Sets = models.IntegerField(default=0)
+	Drop_Sets = models.IntegerField(default=0)
+
+
+	Set_Stats = models.CharField(default="", max_length=300)
+	Suggested_Weight = models.IntegerField(default=0)
+	Submitted = models.BooleanField(default=False)
 
 class Workout_Template(models.Model):
 	Level_Group = models.IntegerField(default=0)
@@ -114,7 +121,7 @@ class Workout_Template(models.Model):
 	Ordered_ID = models.IntegerField(default=0)
 	Week = models.IntegerField(default=0)
 	Day = models.IntegerField(default=0)
-	SubWorkouts = models.ManyToManyField(SubWorkout, default="")
+	SubWorkouts = models.ManyToManyField(SubWorkout_Template, default="")
 	_Date = models.CharField(default="", max_length=10)
 	Block_Num = models.IntegerField(default=0)
 	Block = models.CharField(default="", max_length=200)

@@ -44,12 +44,16 @@
 <body>
     <div style="padding-left:30px;">
     <form method="GET">
-    <h2 style="margin-top:3vw;">Your next set of workouts will take place at Level {{Level}}. Level {{Level}} Workouts have {{Num_Days}} workout days per week.<br><br>Please choose <i>{{Num_Days}} different days</i> of the week that you would prefer to workout on.</h2>
+    <h2 style="margin-top:3vw;">Your next set of workouts will take place at Level {{Level}}. <br><br>Level {{Level}} Workouts have {{Num_Days}} workout days per week. <br><span style="font-weight:normal;">Please choose </span>
+    <i>{{Num_Days}} different days</i> 
+    <span style="font-weight:normal;">
+    of the week that you would prefer to workout on.</span>
+    </h2>
     <!-- <br> -->
     <h3>Workout Days</h3>
     <h4>Note: we advise spacing out your workout days throughout the week so that you get at least 1 day of rest in between your top 3 days (E.G. Monday, Wednesday, Friday, Saturday)</h4>
     {% for Day in Days_List %}
-    <h3 style="display:inline-block;">{{Day.Name}}</h3>
+    <h3 style="margin-top:0; display:inline-block;">{{Day.Name}}</h3>
         <input type="radio" name="{{Day.Code}}" value=0>Monday
         <input type="radio" name="{{Day.Code}}" value=1>Tuesday
         <input type="radio" name="{{Day.Code}}" value=2>Wednesday

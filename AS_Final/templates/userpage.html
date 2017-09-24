@@ -73,6 +73,7 @@
     <div id="left_container">
         <div id="date_text_container">
             <p> Here's your workout for </p>
+            {{Safe_Test | safe}}
             <p id="date_text" value={{Date}}>{{Date}}<p>
         </div>
 
@@ -116,9 +117,10 @@
                 <td style="font-size:0.8vw;">
                 <b style="font-size:1vw;">{{Pattern.Exercise_Type}}</b>
                 <br>
-                {{Pattern.Sets}} x {{Pattern.Reps}} @ {{Pattern.RPE}} RPE
+                {{Pattern.Sets_Reps}}
+                <!-- {{Pattern.Sets}} x {{Pattern.Reps}} @ {{Pattern.RPE}} RPE -->
                 <br>
-                Weight: {{Pattern.Suggested_Weight}}
+                {{Pattern.Suggested_Weight}}
                 <br>
                 Deload: {{Pattern.Deload}}
                 </td>
@@ -133,7 +135,7 @@
                 </td>
 
                 <!-- REPS -->
-                <td>
+                <td style="padding:0px;">
                 {% for Set in Pattern.Filled_Sets %}
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
                     {{Set.Reps}} 
@@ -148,13 +150,37 @@
                     </div>
                 {% endfor %}
 
+                {% for Set in Pattern.Strength_Sets.Input %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    {{Set.Reps}}
+                    (Strength Stop {{Set.Stop}})
+                    </div>
+                {% endfor %}
+
                 {% for Set in Pattern.Regular_Sets.Input %}
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
                     <!-- {{Pattern.Reps}} -->
-                    {{Set.3}}
-                    (Set {{Set.2}})
+                    {{Set.Reps}}
+                    (Set {{Set.Number}})
                     </div>
                 {% endfor %}
+                {% for Button in Pattern.Strength_Stop %}
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
+                    padding-left:0px !important;">
+                    <input type="submit" style="height:100%; width:100%; font-size:0.75vw;" 
+                    onclick=""
+                    class="{{Pattern.Input_ID}}" name="{{Pattern.Exercise_Type}}_Get_Set" value="Get Next Set"
+                    id="Get_Alloy_Button">
+                        <!-- {{Pattern.Reps}}+ -->
+                    </div>
+                {% endfor %}
+                {% for Button in Pattern.Strength_Drop %}
+                    <input type="submit" style="height:100%; width:100%; font-size:0.75vw;" 
+                    onclick=""
+                    class="{{Pattern.Input_ID}}" name="{{Pattern.Exercise_Type}}_Get_Drop" value="Get Drop Sets"
+                    id="Get_Alloy_Button">
+                {% endfor %}
+
                 {% for Set in Pattern.Alloy_Sets.Fixed %}
                     <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
                     padding-left:0px !important;">
@@ -194,10 +220,23 @@
                     </div>
                 {% endfor %}
 
+                {% for Set in Pattern.Strength_Sets.Input %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    <input type="text" placeholder="Enter Weight" class="{{Pattern.Input_ID}}"
+                    name = "{{Set.Code}}_Weight" style="width:95%; height:17px; border-style:none;">
+                    </div>
+                {% endfor %}
+
+
                 {% for Set in Pattern.Regular_Sets.Input %}
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
                     <input type="text" placeholder="Enter Weight" class="{{Pattern.Input_ID}}"
-                    name = "{{Set.0}}_Weight" style="width:95%; height:17px; border-style:none;">
+                    name = "{{Set.Code}}_Weight" style="width:95%; height:17px; border-style:none;">
+                    </div>
+                {% endfor %}
+                {% for Button in Pattern.Strength_Stop %}
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
+                    padding-left:0px !important;">
                     </div>
                 {% endfor %}
                 {% for Set in Pattern.Alloy_Sets.Fixed %}
@@ -231,16 +270,31 @@
                     10 (Alloy)
                     </div>
                 {% endfor %}
-
-                {% for Set in Pattern.Regular_Sets.Input %}
+                {% for Set in Pattern.Strength_Sets.Input %}
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        <select class="{{Pattern.Input_ID}}" style="text-align:center; width:100%;" name="{{Set.0}}_RPE">
+                        <select class="{{Pattern.Input_ID}}" style="text-align:center; width:100%;" name="{{Set.Code}}_RPE">
                             <option value="" style="text-align:center; margin-left:3vw;">Select RPE</option>
                         {% for RPE in RPE_List %}
                             <option value={{RPE.1}} style="text-align:center; margin-left:3vw;">{{RPE.0}}</option>
                         {% endfor %}
                             <option value="X" style="text-align:center; margin-left:3vw;">X (Failure)</option>
                         </select>
+                    </div>
+                {% endfor %}
+                {% for Set in Pattern.Regular_Sets.Input %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <select class="{{Pattern.Input_ID}}" style="text-align:center; width:100%;" name="{{Set.Code}}_RPE">
+                            <option value="" style="text-align:center; margin-left:3vw;">Select RPE</option>
+                        {% for RPE in RPE_List %}
+                            <option value={{RPE.1}} style="text-align:center; margin-left:3vw;">{{RPE.0}}</option>
+                        {% endfor %}
+                            <option value="X" style="text-align:center; margin-left:3vw;">X (Failure)</option>
+                        </select>
+                    </div>
+                {% endfor %}
+                {% for Button in Pattern.Strength_Stop %}
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
+                    padding-left:0px !important;">
                     </div>
                 {% endfor %}
                 {% for Set in Pattern.Alloy_Sets.Fixed %}
@@ -275,15 +329,35 @@
                 {% endfor %}
                     {% for n in Pattern.Regular_Sets.Input %}
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                    <input type="text" placeholder="0" name = "{{n.0}}_Tempo_1" class="{{Pattern.Input_ID}}"
+                    <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_1" class="{{Pattern.Input_ID}}"
                     style="width:25%; height:17px; border-style:none; 
                     text-align:center;">
                     |
-                    <input type="text" placeholder="0" name = "{{n.0}}_Tempo_2" class="{{Pattern.Input_ID}}"
+                    <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_2" class="{{Pattern.Input_ID}}"
                     style="width:25%; height:17px; border-style:none;
                     text-align:center;">
                     |
-                    <input type="text" placeholder="0" name = "{{n.0}}_Tempo_3" class="{{Pattern.Input_ID}}"
+                    <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_3" class="{{Pattern.Input_ID}}"
+                    style="width:25%; height:17px; border-style:none;
+                    text-align:center;">
+                    </div>                
+                    {% endfor %}
+                    {% for Button in Pattern.Strength_Stop %}
+                        <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
+                        padding-left:0px !important;">
+                        </div>
+                    {% endfor %}
+                    {% for Set in Pattern.Strength_Sets.Input %}
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_1" class="{{Pattern.Input_ID}}"
+                    style="width:25%; height:17px; border-style:none; 
+                    text-align:center;">
+                    |
+                    <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_2" class="{{Pattern.Input_ID}}"
+                    style="width:25%; height:17px; border-style:none;
+                    text-align:center;">
+                    |
+                    <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_3" class="{{Pattern.Input_ID}}"
                     style="width:25%; height:17px; border-style:none;
                     text-align:center;">
                     </div>                
@@ -295,13 +369,13 @@
                     {% endfor %}
                     {% for n in Pattern.Alloy_Sets.Input %}
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        <input type="text" placeholder="0" name = "{{n.0}}_Tempo_1" class="{{Pattern.Input_ID}}"
+                        <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_1" class="{{Pattern.Input_ID}}"
                         style="width:25%; height:17px; border-style:none; text-align:center;">
                         |
-                        <input type="text" placeholder="0" name = "{{n.0}}_Tempo_2" class="{{Pattern.Input_ID}}"
+                        <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_2" class="{{Pattern.Input_ID}}"
                         style="width:25%; height:17px; border-style:none; text-align:center;">
                         |
-                        <input type="text" placeholder="0" name = "{{n.0}}_Tempo_3" class="{{Pattern.Input_ID}}"
+                        <input type="text" placeholder="0" name = "{{Set.Code}}_Tempo_3" class="{{Pattern.Input_ID}}"
                         style="width:25%; height:17px; border-style:none; text-align:center;">
                     </div>                
                     {% endfor %}
@@ -323,7 +397,9 @@
                         name="Get_Alloy" style="background-color:red;" id='blue_btn'></input>
  -->                    {% endfor %}
                     {% for Bool in Show_Submit %}
-                        <input type='submit' onclick="check_null()" value='SUBMIT WORKOUT' name="Submit_Workout" id='blue_btn'></input>
+                        <input type='submit' 
+                        onclick="" 
+                        value='SUBMIT WORKOUT' name="Submit_Workout" id='blue_btn'></input>
                     {% endfor %}
 <!--                 <input type='submit' value='GET ALLOY WEIGHTS' name="Get_Alloy" style="background-color:red;" id='blue_btn'></input>
                 <input type='submit' value='SUBMIT WORKOUT' name="Submit_Workout" id='blue_btn'></input>
