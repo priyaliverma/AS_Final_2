@@ -162,10 +162,10 @@
                 {% for Set in Pattern.All_Filled_Sets %}
                     {% if Set.Type == "Bodyweight" %}
                         <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        {{Set.Reps}} (Bodyweight)
+                        {{Set.Reps}} 
                     {% elif Set.Type == "Dropped" %}
                         <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        {{Set.Reps}} (Dropped)
+                        {{Set.Reps}} 
                     {% elif Set.Type == "Alloy" %}
                         <div style="background-color:yellow; 
                         height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
@@ -185,18 +185,16 @@
                 {% for Set in Pattern.All_Unfilled %}
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
                     {% if Pattern.Set_Type == 'Strength_Input' %}
-                            {{Set.Reps}} Stop
-                            (Strength Stop {{Set.Stop}})
+                            {{Set.Reps}} 
                     {% elif Pattern.Set_Type == 'Dropped_Set' %}
-                            {{Set.Reps}} Dropped
+                            {{Set.Reps}} 
                             (Dropped Set {{Set.Drop}})
                     {% elif Pattern.Set_Type == 'Regular_Set' %}
                             {% if Pattern.BodyWeight %}
                                 <input type="number" placeholder="Enter Reps" class="{{Pattern.Input_ID}}"
                                 name = "{{Set.Code}}_Reps" style="width:95%; height:17px; border-style:none;">
                             {% else %}
-                                {{Set.Reps}} Regular
-                                (Set {{Set.Number}})
+                                {{Set.Reps}}
                             {% endif %}
                     {% endif %}
                     </div>
