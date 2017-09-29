@@ -81,43 +81,31 @@
           <input type="text" name="Title" placeholder="Title" style="width:370px;" id="Title">
           <!-- <input type="text" name="search" placeholder="Title"> -->
           <br>
-<!--           General Description<br>
-          <textarea rows="4" cols="50" name="Description" placeholder="Description"></textarea> 
-          <br>
- --><!--           Tags:
-          <br>
-          <input type="text" name="Tag" placeholder="Enter New Tag" style="margin-top:10px; width:200px; display:inline-block;">
-          <input type="submit" class="btn btn-sm btn-primary" style="margin-bottom:5px; display:inline-block; margin-left:5px;" role="button" value="Add Tag">
-          <br>
- -->          
-          <!-- <p style="font-size:20px; display:inline-block;">Exercise Type:</p> -->
-          <!-- <p style="font-size:15px; margin-left:0px; display:inline-block;">Type:</p> -->
-<!--           <select style="display:inline-block; margin-left:0px; font-size:15px;" onchange="this.form.submit()" placeholder="Select Level" id='select_level' name="Exercise">
-          {%for Exercise in Exercise_Types %}
-            <option>{{Exercise}}</option>
-          {% endfor %}
-          </select>
- -->          
-<!--           Tags (Separate by comma)<br>
-          <input type="text" name="Tags" placeholder="Tag 1, Tag 2, etc." style="margin-top:5px; width:370px;">
- -->          <!-- <br> -->
-          <!-- <p style="font-size:15px; display:inline-block;">Level:</p> -->
-<!--           <select style="display:inline-block; margin-left:0px; font-size:12px;" onchange="this.form.submit()" placeholder="Select Level" id='select_level' name="Level">
-          {%for Display in Level_Display %}
-            <option>{{Display}}</option>
-          {% endfor %}
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
- -->          <!-- <br> -->
-<!--           <input type="submit" class="btn btn-sm btn-primary" style="display:inline-block; margin-top:10px; margin-left:0px; padding:3px; margin-right:0px; display:inline-block;" role="button" name="AddVideo" value="Add Exercise">
- -->          <br><br>
+      <br><br>
           <input type="submit" onclick="check_null()"
           class="btn btn-md btn-primary" style="margin-right:50px; display:inline-block;" role="button" name="AddVideo" value="Add Video">
         </div>
 
-        <div style="display:inline-block; vertical-align:top; margin-left:10px; margin-right:0px;">
+        <div style="display:inline-block; vertical-align:top; margin-top:-2vw; margin-left:10px; margin-right:0px;">
+        <h4>Select Access Level:</h4>
+        Minimum member level required to view video 
+        <br>
+        <select name="Level_Access">
+          <option value="0">None</option>
+          {%for Level in Levels %}
+            <option value="{{Level}}">{{Level}}</option>
+          {% endfor %}
+        </select>
         <h4>Select Exercise Type:</h4>
+<select style="display:inline-block; margin-left:0px; font-size:15px;" onchange="this.form.submit()" placeholder="Select Level" id='select_level' name="Exercise">
+          {%for Exercise in Selected_Exercise %}
+            <option>{{Exercise}}</option>
+          {% endfor %}
+          {%for Exercise in Exercise_Types %}
+            <option>{{Exercise}}</option>
+          {% endfor %}
+          </select>
+
           <!-- <form method="POST">{% csrf_token %} -->
 <!--           <p style="margin:0px; width:300px; font-size:12px;">
           Changing this will refresh the page 

@@ -10,131 +10,10 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
 import json
 import stripe
-from Shared_Functions import User_Check, Member_Exists
+from checks import User_Check, Member_Exists
 from RPE_Dict import RPE_Dict
 import re
-from Shared_Functions import User_Ref_Dict
-
-Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-def Generate_Workouts(Start_Date, Level, Days_List, Member):
-	Week_Days = enumerate(Days_Of_Week)
-	# Days = Days_List[]
-	# Workouts = Workout_Template.objects.get(Level=Level)
-	Max_Days = 28
-	Output = []
-	count = 0
-	Days = Days_List
-	if Level <= 5:
-		if len(Days_List) == 4:
-			Days = Days_List[:-1]
-		else:
-			Days = Days_List
-		print("Program Start Date: " + Start_Date.strftime('%m/%d/%Y'))		
-		print("Selected Workout Days: ")		
-		_Days = []
-		for x in Days:
-			_Days.append(Days_Of_Week[x])
-		print(_Days)
-
-		for i in range(0, 28): #i will be from 1 to 28
-			if (Start_Date + timedelta(days=i)).weekday() in Days:
-				Workout_Date = Start_Date + timedelta(days=i)
-				count += 1				
-				string_date = Workout_Date.strftime('%m/%d/%Y')
-				_Workout_Template = Workout_Template.objects.get(Level_Group=1, Ordered_ID=count)
-				# print("Workout Template: " + "Week " + str(_Workout_Template.Week) + " Day " 
-				# + str(_Workout_Template.Day) + " Ordered ID: " + str(_Workout_Template.Ordered_ID) + " Level Group: " + str(_Workout_Template.Level_Group))				
-				_Workout = Workout(Template=_Workout_Template, _Date=string_date, Level = Level, Member=Member)
-				_Workout.save()
-				for x in _Workout.Template.SubWorkouts.all():
-					x.Exercise, Created = Exercise.objects.get_or_create(Type = _Type, Level = Level)
-					x.save()
-					_SubWorkout = SubWorkout(Template = x)
-					_SubWorkout.save()
-					_Workout.SubWorkouts.add(_SubWorkout)
-					_Workout.save()
-				print("Level " + str(_Workout.Level) + " Workout Created For: " + _Workout._Date + " (Week " + str(_Workout.Template.Week) + " Day " + str(_Workout.Template.Day) + ")")
-				# print(string_date)
-				Output.append(string_date)
-				# Member.workouts.add(_Workout)
-				# Member.save()
-		return(Output)
-	elif Level <= 10:
-		if len(Days_List) == 4:
-			Days = Days_List[:-1]
-		else:
-			Days = Days_List
-		Max_Days = 28
-		for i in range(0, Max_Days): #i will be from 1 to 28
-			if (Start_Date + timedelta(days=i)).weekday() in Days:
-				Workout_Date = Start_Date + timedelta(days=i)
-				count += 1				
-				string_date = Workout_Date.strftime('%m/%d/%Y')
-				_Workout_Template = Workout_Template.objects.get(Level_Group=2, Ordered_ID=count)
-				_Workout = Workout(Template=_Workout_Template, _Date=string_date, Level = Level, Member=Member)
-				_Workout.save()
-				for x in _Workout.Template.SubWorkouts.all():
-					_SubWorkout = SubWorkout(Template = x)
-					_SubWorkout.save()
-					_Workout.SubWorkouts.add(_SubWorkout)
-					_Workout.save()
-				Output.append(string_date)
-		return(Output)
-	elif Level <= 15: #9 Weeks
-		Max_Days = 63
-		for i in range(0, Max_Days): #i will be from 1 to 28
-			if (Start_Date + timedelta(days=i)).weekday() in Days:
-				Workout_Date = Start_Date + timedelta(days=i)
-				count += 1				
-				string_date = Workout_Date.strftime('%m/%d/%Y')
-				if count <= 16:
-					_Workout_Template = Workout_Template.objects.get(Level_Group=3, Ordered_ID=count, Block_Num=1)
-					_Workout = Workout(Template=_Workout_Template, _Date=string_date, Level = Level, Member=Member)
-					for x in _Workout.Template.SubWorkouts.all():
-						_SubWorkout = SubWorkout(Template = x)
-						_SubWorkout.save()
-						_Workout.SubWorkouts.add(_SubWorkout)
-					_Workout.save()
-				elif count > 16 and count < 36:
-					adjusted_count = count - 16
-					_Workout_Template = Workout_Template.objects.get(Level_Group=3, Ordered_ID=adjusted_count, Block_Num=2)
-					_Workout = Workout(Template=_Workout_Template, _Date=string_date, Level = Level, Member=Member)
-					for x in _Workout.Template.SubWorkouts.all():
-						_SubWorkout = SubWorkout(Template = x)
-						_SubWorkout.save()
-						_Workout.SubWorkouts.add(_SubWorkout)
-					_Workout.save()
-				Output.append(string_date)
-		return(Output)
-	elif Level <= 25: #9 Weeks
-		Max_Days = 63
-		for i in range(0, Max_Days): #i will be from 1 to 28
-			if (Start_Date + timedelta(days=i)).weekday() in Days:
-				Workout_Date = Start_Date + timedelta(days=i)
-				count += 1				
-				string_date = Workout_Date.strftime('%m/%d/%Y')
-				if count <= 16:
-					_Workout_Template = Workout_Template.objects.get(Level_Group=4, Ordered_ID=count, Block_Num=1)
-					_Workout = Workout(Template=_Workout_Template, _Date=string_date, Level = Level, Member=Member)
-					_Workout.save()
-					for x in _Workout.Template.SubWorkouts.all():
-						_SubWorkout = SubWorkout(Template = x)
-						_SubWorkout.save()
-						_Workout.SubWorkouts.add(_SubWorkout)
-						_Workout.save()
-				elif count > 16:
-					adjusted_count = count - 16
-					_Workout_Template = Workout_Template.objects.get(Level_Group=4, Ordered_ID=adjusted_count, Block_Num=2)
-					_Workout = Workout(Template=_Workout_Template, _Date=string_date, Level = Level, Member=Member)
-					_Workout.save()
-					for x in _Workout.Template.SubWorkouts.all():
-						_SubWorkout = SubWorkout(Template = x)
-						_SubWorkout.save()
-						_Workout.SubWorkouts.add(_SubWorkout)
-						_Workout.save()
-				Output.append(string_date)
-		return(Output)
+from Shared_Functions import *
 
 
 @user_passes_test(User_Check, login_url="/")
@@ -146,7 +25,8 @@ def Get_Workout_Block(request):
 	context["Num_Days"] = 3
 
 	_Member = Ref_Dict["Member"]
-	_Member.Level = 13
+	_Member.Level = 16
+	# _Member.Level = 1
 	_Member.save()
 
 	N_Days = 3
@@ -203,3 +83,54 @@ def Get_Workout_Block(request):
 			Generate_Workouts(Start_Date, _Level, Days_List, _Member)
 			return HttpResponseRedirect("/userpage")
 	return render(request, "next_workout_block.html", context)
+
+@user_passes_test(User_Check, login_url="/")
+def Level_Up(request):
+	User = request.user
+	_Member = Member.objects.get(User=User)
+	request.session["Level_Up"] = Check_Level_Up(_Member)
+	context = {}
+	
+	context["Core_Stats"] = []
+	context["Stats"] = []
+	context["Title"] = "Level Up"
+	context["Main_Message"] = "Congratulations, you have levelled up!"
+	context["Second_Message"] = "You are now at level: " + str(_Member.Level + 1)
+	context["Level"] = _Member.Level 
+	context["Level_Up"] = ["True"]
+	if "Level_Up" not in request.session.keys():
+		request.session["Level_Up"] = True
+
+	if not request.session["Level_Up"]:
+		context["Main_Message"] = "You need more time!"
+		context["Second_Message"] = "You results show that you need to spend more time at your current exercise level. " 						
+		context["Level_Up"] = []
+	else:
+		context["Level"] += 1
+	
+	Stat_List = _Member.Stats.all()
+	for i in Stat_List:
+		Stat_Dict = {}
+		Stat_Dict["Type"] = i.Type
+		if i.Failed:
+			Stat_Dict["Alloy_Outcome"] = "Failed"
+			Stat_Dict["PASSED"] = []
+			Stat_Dict["FAILED"] = ["FAILED"]
+		else:
+			Stat_Dict["Alloy_Outcome"] = "Passed"
+			Stat_Dict["PASSED"] = ["PASSED"]
+			Stat_Dict["FAILED"] = []
+		# Stat_Dict["Alloy_Reps"] = i.Alloy_Reps
+		# Stat_Dict["Alloy_Performance_Reps"] = i.Alloy_Performance_Reps
+		Stat_Dict["Exercise_Name"] = i.Exercise_Name
+		# Stat_Dict["Exercise_Name"] = i.Exercise_Name
+		# Stat_Dict["Alloy_Performance_Reps"] = i.Alloy_Performance_Reps
+		if i.Type == "Squat" or i.Type == "Hinge" or i.Type == "UB Hor Press":
+			context["Core_Stats"].append(Stat_Dict)
+		else:
+			context["Stats"].append(Stat_Dict)
+	if request.GET.get("Next_Workouts"):
+		return HttpResponseRedirect("/get-workouts")
+	# New_Level = str(request.session["New_Level"])
+	# context["Level_Up_Message"] = "Congratulations, you've reached Level " + New_Level + " !! You can access the new Level ___ videos"
+	return render(request, "levelup.html", context)

@@ -100,6 +100,18 @@
       <div style="width:40%; display:inline-block; vertical-align:top;">
       <form method="GET">
         <h2>Related Exercises</h2>
+        <h4>Current Access Level: {{Level_Access}}</h4>
+          Change Access Level:
+          <select name="Level_Access">
+            <option value="0">None</option>
+            {%for Level in Levels %}
+              <option value="{{Level}}">{{Level}}</option>
+            {% endfor %}
+          </select>
+        <input type="submit" class="btn btn-primary btn-sm" value="Change" name="Change_Level_Access" style="margin-left:5px;">
+
+        <h4>Exercise Type</h4>
+        <br>
           Current Exercise Type: <b>{{Display.1}}</b>
           <br>
           Change Type:

@@ -11,19 +11,28 @@ class Video(models.Model):
 	Thumbnail = models.FileField(upload_to='static/videos/Thumbnails', max_length=100)
 	Exercise_Type = models.CharField(default="", max_length=200)
 	Description = models.CharField(default="", max_length=1000)
-	# Image = models.ImageField(upload_to='static/videos/Thumbnails', max_length=100)
+	Level_Access = models.IntegerField(default=0)
+	def Give_Access(Level_Num):
+		if self.Level_Access <= Level_Num:
+			return True
+		else:
+			return False
 
 class Member(models.Model):
 	User = models.OneToOneField(User)
+	Picture = models.FileField(upload_to='static/user_profile_pictures', max_length=100, default="")
 	Level = models.IntegerField(default=1)
 	Squat = models.IntegerField(default=0)
-	Has_Workout = models.BooleanField(default=False)
+	Has_Workouts = models.BooleanField(default=False)
+	Finished_Workouts = models.BooleanField(default=False)
 	New = models.BooleanField(default=True)
 	Admin = models.BooleanField(default=False)
 	Signup_Date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
 	Paid = models.BooleanField(default=False)
 	Expiry_Date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
-	
+	Agreed = models.BooleanField(default=False)
+	Read = models.BooleanField(default=False)
+
 class Stat(models.Model):
 	Type = models.CharField(default="", max_length=200)
 	Member = models.ForeignKey(Member, related_name="Stats")
@@ -75,7 +84,7 @@ class Set(models.Model):
 class SubWorkout_Template(models.Model):
 	Exercise_Type = models.CharField(default="", max_length=200, null=True, blank=True)
 	Sets = models.IntegerField(default=0)
-	Reps = models.CharField(default="", max_length=4)
+	Reps = models.CharField(default="", max_length=10)
 	Stop_Set = models.BooleanField(default=False) 
 	Drop_Set = models.BooleanField(default=False) 
 	Strength_Stop = models.IntegerField(default=0)
@@ -110,9 +119,11 @@ class SubWorkout(models.Model):
 	Stop_Sets = models.IntegerField(default=0)
 	Drop_Sets = models.IntegerField(default=0)
 
-
 	Set_Stats = models.CharField(default="", max_length=300)
+	
 	Suggested_Weight = models.IntegerField(default=0)
+	Drop_Weight = models.IntegerField(default=0)
+	
 	Submitted = models.BooleanField(default=False)
 
 class Workout_Template(models.Model):
@@ -127,7 +138,9 @@ class Workout_Template(models.Model):
 	Block = models.CharField(default="", max_length=200)
 	Alloy = models.BooleanField(default=False)
 	First = models.BooleanField(default=False)
+	Block_End = models.BooleanField(default=False)
 	Last = models.BooleanField(default=False)
+	Has_Tempo = models.BooleanField(default=False)
 
 class Workout(models.Model):
 	Current_Block = models.BooleanField(default=True)

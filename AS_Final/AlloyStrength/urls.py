@@ -3,12 +3,15 @@ from django.contrib import admin
 # from Users.views import Home, Member_Home, Admin, Test, User_Page, Workout_Update, Videos, AdminExercises, RPE_Update, SignUp_Confirmation, Welcome, Past_Workouts, User_Profile, Level_Up
 
 from Users.views import *
+
 from Users.admin_views import *
 from Users.admin_video_views import *
-from Users.test_views import *
+
+
 from Users.sign_up_views import *
 from Users.video_views import *
 from Users.generate_workout_views import *
+from Users.user_stat_views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,11 +33,15 @@ urlpatterns = [
 
 
     url(r'^$', Home, name='Home'),
+    url(r'^waiver/', Waiver, name='SignUpConfirmation'),
+    url(r'^terms-conditions/', Terms_Conditions, name='SignUpConfirmation'),
+
     url(r'^sign-up-confirmation/', SignUp_Confirmation, name='SignUpConfirmation'),
+    url(r'^renew-membership/', Membership_Expired, name='MembershipExpired'),
+
     url(r'^welcome/', Welcome, name='Welcome'),
 
     url(r'^welcome/', SignUp_Confirmation, name='SignUpConfirmation'),
-    url(r'^test/', Test, name='Test'),
 
     url(r'^tutorial/', Tutorial, name="tutorial"),
     url(r'^exercise-descriptions/', Exercise_Descriptions, name="exercise_descriptions"),
@@ -45,8 +52,8 @@ urlpatterns = [
     url(r'^userpage-alloy/', User_Page_Alloy, name="userpage_alloy"),
 
     url(r'^contact/', Contact_And_Support, name="contact"),
-    url(r'^level-up/', Level_Up, name="levelup"),
-    url(r'^get-workout-block/', Get_Workout_Block, name='get_workout_block'),
+    url(r'^progress-report/', Level_Up, name="levelup"),
+    url(r'^get-workouts/', Get_Workout_Block, name='get_workout_block'),
 
 
     url(r'^userpageUpdate/', Workout_Update, name="userpageUpdate"),
@@ -57,11 +64,9 @@ urlpatterns = [
 
     url(r'^profile-view-workout/', User_Profile_View_Workout, name="profile_view_workout"),
 
-    url(r'^past-workouts/', Past_Workouts, name="pastworkouts"),
-
     url(r'^videos/', Videos, name="videos"),
-    url(r'^videos-2/', Videos_2, name="videos_2"),
 
     url(r'^logout/', Logout, name='logout'),
 
+    # url(r'^past-workouts/', Past_Workouts, name="pastworkouts"),
 ]

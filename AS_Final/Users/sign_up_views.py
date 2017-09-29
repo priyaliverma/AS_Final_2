@@ -13,6 +13,7 @@ import stripe
 from checks import *
 from RPE_Dict import *
 import re
+from Shared_Functions import *
 
 Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -139,7 +140,7 @@ def Home(request):
 			if User.objects.filter(username = Email).exists():
 				context["Signup_Error"] = "An account with that email has already been created!"
 				print("Sign-up Error")
-				return render(request, "homepage.html", context)
+				return render(request, "homepage_3.html", context)
 			else:
 				print("Signing Up...")
 				New_User = User.objects.create_user(Email, password=P_Word_1)
@@ -155,7 +156,9 @@ def Home(request):
 				user = authenticate(username=Email, password=P_Word_1)
 				if user is not None:
 				    	login(request, user)
-				return HttpResponseRedirect("/sign-up-confirmation")
+				# return HttpResponseRedirect("/terms-conditions")
+				return HttpResponseRedirect("/waiver")
+				# return HttpResponseRedirect("/sign-up-confirmation")
 
 	if request.POST.get("Sign_Up"):
 		print("Sign Up Button Pressed")
@@ -172,9 +175,41 @@ def Home(request):
 		print(DOB)
 		print(Training_Months)
 
-	return render(request, "homepage_2.html", context)
+	return render(request, "homepage_3.html", context)
 
-@user_passes_test(Member_Exists, login_url="/")
+@user_passes_test(Tier_1, login_url="/")
+@user_passes_test(Not_Agreed, login_url="/")
+def Waiver(request):
+	context = {}
+	User = request.user
+	_Member = Member.objects.get(User=User)
+	if "Empty_Input" in request.session.keys():
+		context["Empty"] = "Please enter today's date, name and indicate agreement before continuing!"
+	if request.POST.get("Agree"):
+		print(request.POST.keys())
+		if request.POST["full_name"] != "" and request.POST["date"] != "" and "agree_check" in request.POST.keys():
+			_Member.Agreed = True
+			_Member.save()
+			return HttpResponseRedirect("/terms-conditions")
+		else:
+			request.session["Empty_Input"] = True
+		# print(request.POST["agree_check"])
+	return render(request, "waiver.html", context)
+
+@user_passes_test(Tier_1, login_url="/")
+@user_passes_test(Not_Read, login_url="/")
+def Terms_Conditions(request):
+	context = {}
+	User = request.user
+	_Member = Member.objects.get(User=User)
+	if request.POST.get("Continue"):
+		_Member.Read = True
+		_Member.save()
+		return HttpResponseRedirect("/sign-up-confirmation")
+	return render(request, "terms_conditions.html", context)
+
+@user_passes_test(Tier_1, login_url="/")
+@user_passes_test(New_Check, login_url="/")
 def SignUp_Confirmation(request):
 	context = {}
 	User = request.user
@@ -210,7 +245,151 @@ def SignUp_Confirmation(request):
 		if i[1] == request.session["Package"]:
 			context["Packages"].append(i)
 			Total = i[2] + Processing_Fee
-			context["Total"] = i[2] + Processing_Fee
+			context["Total"] = '{:.2f}'.format((i[2] + Processing_Fee))
+			context["End_Date"] = (datetime.now() + i[3]).date()
+			Subscription_Time = i[3]
+			print(datetime.now())
+			print(datetime.now() + i[3])
+	for i in Packages:
+		if i[1] != request.session["Package"]:
+			context["Packages"].append(i)
+
+	Charge_Amount = int(Total*100)
+
+	if request.method == "POST":
+		print("Payment POST received")
+		Number = request.POST.get("cardnumber")
+		print(Number)
+		token = request.POST.get('stripeToken') # Using Flask
+		print(token)
+		try:
+			customer = stripe.Customer.create(
+				# email=_Username,
+				source=token,
+			)
+			_ID = customer.id
+			charge = stripe.Charge.create(
+				amount=Charge_Amount, # new_order.total * 100
+			    currency="usd",
+			    customer=_ID,
+			          # source=token,
+			    description="Gold",
+			    )
+			print("New Customer ID: " + str(_ID))
+			print("New Customer Charged: " + str(charge.amount))
+			_Member.Paid = True
+			_Member.New = False
+			_Member.Signup_Date = datetime.now()
+			_Member.Expiry_Date = datetime.now() + Subscription_Time
+			_Member.save()
+			print(_Member.Signup_Date)
+			print(_Member.Expiry_Date)
+			# print("New Customer Charged! " + str(_ID) + " Amount: " + str(charge.amount))
+			return HttpResponseRedirect("/welcome")
+
+		except stripe.error.CardError:
+			print("Card Error - PAYMENT DECLINED")
+			context["Payment_Status"] = "Payment Failed!"
+			return render(request, "signup_confirmation.html", context)
+
+	if request.GET.get("Payment_btn"):
+		print("Payment Button Pressed")
+		return HttpResponseRedirect("/Welcome")
+	return render(request, "signup_confirmation.html", context)
+
+@user_passes_test(Tier_2, login_url="/")
+@user_passes_test(No_Workouts, login_url="/")
+def Welcome(request):
+	print("Username: " + request.user.username)
+	_User = request.user
+	_Member = Member.objects.get(User=_User)
+	_Level = _Member.Level
+	print("Level: " + str(_Member.Level))
+	print("Squat: " + str(_Member.Squat))
+	context = {}
+
+	if request.GET.get("Create_Program"):
+		print("Creating Program")
+		print("Start Date: " + str(request.GET.get("Start_Date")))
+		Start_Date_String = request.GET.get("Start_Date")
+		Day_1_String = request.GET.get("Day_1")
+		Day_2_String = request.GET.get("Day_2")
+		Day_3_String = request.GET.get("Day_3")
+		Day_4_String = request.GET.get("Day_4")
+
+		if Day_1_String == "" or Day_1_String == None or Day_2_String == "" or Day_2_String == None or Day_3_String == "" or Day_3_String == None or Day_4_String == "" or Day_4_String == None: 
+			context["Error"] = "Please choose 4 different workout days!"
+			return render(request, "welcome.html", context)
+
+		Start_Date_List = Start_Date_String.split("-")
+		Start_Year = int(Start_Date_List[0])
+		Start_Month = int(Start_Date_List[1])
+		Start_Date = int(Start_Date_List[2])
+		Start_Datetime = datetime.strptime(Start_Date_String, "%Y-%m-%d")
+		if Start_Datetime.date() < datetime.now().date():
+			context["Error"] = "Invalid start date. Please choose a start date that is not in the past"
+			return render(request, "welcome.html", context)
+		Days_List = [int(Day_1_String), int(Day_2_String), int(Day_3_String), int(Day_4_String)]
+
+		Generate_Workouts(Start_Datetime, _Level, Days_List, _Member)
+		# return HttpResponseRedirect("/welcome")
+		_Member.New = False
+		_Member.Has_Workouts = True
+		_Member.save()
+		return HttpResponseRedirect("/userpage")
+		# Generate_Workouts(datetime(Year, Month, Day), _Level, [Day_1, Day_2, Day_3])
+	return render(request, "welcome.html", context)
+
+
+@user_passes_test(Tier_3, login_url="/")
+def Membership_Expired(request):
+	context = {}
+	User = request.user
+	_Member = Member.objects.get(User=User)
+	stripe.api_key = "sk_test_LKsnEFYm74fwmLbyfR3qKWgb"
+	Package_Description = "Gold"
+	print("RPE Test: " + str(Get_Weight(200, 8, 8)))
+
+	Packages = [["Gold ($300.00)", "G", 300.00, timedelta(days=365)], ["Silver ($180.00)", "S", 180.00, timedelta(days=180)], 
+	["Bronze ($40.00)", "B", 40.00, timedelta(days=30)]]
+	request.session["Package"] = "G"
+	context["Packages"] = [] 
+
+	Processing_Fee = 0
+	context["Processing_Fee"] = Processing_Fee 
+
+	Extension_Start = datetime.now()
+
+	if _Member.Expiry_Date != None and _Member.Expiry_Date.date() >= datetime.now().date():
+		Extension_Start = _Member.Expiry_Date
+		context["Message"] = "Your current membership lasts until: "
+		context["Expiry_Date"] = _Member.Expiry_Date.date()
+		context["Message_2"] = " Choose one of the packages below to extend your membership"
+	else:
+		context["Message"] = "Your membership has expired!"
+		context["Message_2"] = "Choose one of the packages below to renew your membership"
+	Total = 0
+	Subscription_Time = timedelta(days=30)
+
+	for i in stripe.Customer.all():
+		print("Stripe Customer: " + str(i.id))
+
+	# if request.POST.get("Payment_Btn"):
+	if request.GET.get("Package"):
+		Package = request.GET.get("Package")
+		print("Package: " + str(Package))
+		request.session["Package"] = Package
+
+	# if "Package" not in request.session.keys():
+	# 	request.session["Package"] = "G"
+
+	for i in Packages:
+		if i[1] == request.session["Package"]:
+			context["Packages"].append(i)
+			Total = round(i[2] + Processing_Fee, 2)*100
+			# Total = "{0:.2f}".format(i[2] + Processing_Fee)
+			context["Total"] = '{:.2f}'.format((i[2] + Processing_Fee))
+			context["End_Date"] = (Extension_Start + i[3]).date()
 			Subscription_Time = i[3]
 			print(datetime.now())
 			print(datetime.now() + i[3])
@@ -244,126 +423,24 @@ def SignUp_Confirmation(request):
 			print("New Customer Charged: " + str(charge.amount))
 			_Member.Paid = True
 			_Member.Signup_Date = datetime.now()
-			_Member.Expiry_Date = datetime.now() + Subscription_Time
-			_Member.save()
+			if _Member.Expiry_Date != None and _Member.Expiry_Date.date() >= datetime.now().date():
+				_Member.Expiry_Date = _Member.Expiry_Date + Subscription_Time
+				_Member.save()
+			else:
+				_Member.Expiry_Date = datetime.now() + Subscription_Time
+				_Member.save()
 			print(_Member.Signup_Date)
 			print(_Member.Expiry_Date)
 			# print("New Customer Charged! " + str(_ID) + " Amount: " + str(charge.amount))
-			return HttpResponseRedirect("/welcome")
+			return HttpResponseRedirect("/userpage")
 
 		except stripe.error.CardError:
 			print("Card Error - PAYMENT DECLINED")
 			context["Payment_Status"] = "Payment Failed!"
-			return render(request, "signup_confirmation.html", context)
-
+			return render(request, "member_expired.html", context)
 
 	if request.GET.get("Payment_btn"):
 		print("Payment Button Pressed")
 		return HttpResponseRedirect("/Welcome")
-	return render(request, "signup_confirmation.html", context)
+	return render(request, "member_expired.html", context)
 
-def Generate_Workouts(Start_Date, Level, Days_List, Member):
-	Week_Days = enumerate(Days_Of_Week)
-	# Days = Days_List[]
-	# Workouts = Workout_Template.objects.get(Level=Level)
-	Output = []
-	if Level <= 5:
-		if len(Days_List) == 4:
-			Days = Days_List[:-1]
-		else:
-			Days = Days_List
-		# Create workout objects with dates according to the next 4 weeks
-		# 1. Get day of the week of start_date (should be one of Days_List)
-		# 	Give member option to choose one of the 3-4 Days to start on
-		# 2. Get all workout days...
-		# Order the workouts
-		# _Templates = Workout_Template.objects.filter(Level_Group = 1)
-
-		# for i in _Templates:
-		# 	print("Existing Workout Template: " + "Week " + str(i.Week) + " Day " 
-		# 	+ str(i.Day) + " Ordered ID: " + str(i.Ordered_ID) + " Level Group: " + str(i.Level_Group))
-		count = 0
-		print("Program Start Date: " + Start_Date.strftime('%m/%d/%Y'))		
-		print("Selected Workout Days: ")		
-		_Days = []
-		for x in Days:
-			_Days.append(Days_Of_Week[x])
-		print(_Days)
-
-		for i in range(0, 28): #i will be from 1 to 28
-			if (Start_Date + timedelta(days=i)).weekday() in Days:
-				Workout_Date = Start_Date + timedelta(days=i)
-				count += 1				
-				string_date = Workout_Date.strftime('%m/%d/%Y')
-				_Workout_Template = Workout_Template.objects.get(Level_Group=1, Ordered_ID=count)
-				# print("Workout Template: " + "Week " + str(_Workout_Template.Week) + " Day " 
-				# + str(_Workout_Template.Day) + " Ordered ID: " + str(_Workout_Template.Ordered_ID) + " Level Group: " + str(_Workout_Template.Level_Group))				
-				_Workout = Workout(Template=_Workout_Template, _Date=string_date, Level = Level, Member=Member)
-				_Workout.save()
-				for x in _Workout.Template.SubWorkouts.all():
-					_Type = x.Exercise_Type
-					# _Weight = Get_Weight(Max, x.Reps, x.RPE)
-					x.Exercise, Created = Exercise.objects.get_or_create(Type = _Type, Level = Level)
-					x.save()
-					_Workout.SubWorkouts.add(x)
-					_Workout.save()
-				print("Level " + str(_Workout.Level) + " Workout Created For: " + _Workout._Date + " (Week " + str(_Workout.Template.Week) + " Day " + str(_Workout.Template.Day) + ")")
-				# print("Sets and Reps: ")
-				for z in _Workout.SubWorkouts.all():
-					print(z.Exercise.Name + " " + str(z.Sets) + " x " + str(z.Reps))
-				# print(string_date)
-				Output.append(string_date)
-				# Member.workouts.add(_Workout)
-				# Member.save()
-		return(Output)
-	elif Level >= 6 and Level <= 10:
-		return None
-	elif Level >= 11 and Level <= 15:
-		return None
-	elif Level >= 16 and Level <= 25:
-		return None
-			# .weekday(timedelta(days=i+1))
-
-@user_passes_test(User_Check, login_url="/")
-def Welcome(request):
-	print("Username: " + request.user.username)
-	_User = request.user
-	_Member = Member.objects.get(User=_User)
-	_Level = _Member.Level
-	print("Level: " + str(_Member.Level))
-	print("Squat: " + str(_Member.Squat))
-	context = {}
-
-	if request.GET.get("Create_Program"):
-		print("Creating Program")
-		print("Start Date: " + str(request.GET.get("Start_Date")))
-		Start_Date_String = request.GET.get("Start_Date")
-		Day_1_String = request.GET.get("Day_1")
-		Day_2_String = request.GET.get("Day_2")
-		Day_3_String = request.GET.get("Day_3")
-		Day_4_String = request.GET.get("Day_4")
-		# print("Day 1: " + str(request.GET.get("Day_1")))
-		# print("Day 2: " + str(request.GET.get("Day_2")))
-		# print("Day 3: " + str(request.GET.get("Day_3")))
-		# print("Day 4: " + str(request.GET.get("Day_4")))
-		Start_Date_List = Start_Date_String.split("-")
-		Start_Year = int(Start_Date_List[0])
-		Start_Month = int(Start_Date_List[1])
-		Start_Date = int(Start_Date_List[2])
-		Start_Datetime = datetime.strptime(Start_Date_String, "%Y-%m-%d")
-		Days_List = [int(Day_1_String), int(Day_2_String), int(Day_3_String), int(Day_4_String)]
-		# print("Start Year: " + str(Start_Year))
-		# print("Start Month: " + str(Start_Month))
-		# print("Start Date: " + str(Start_Date))
-		# print("Days: " + str(Days_List))
-		print(Days_List)
-		print(Start_Datetime)
-
-		Generate_Workouts(Start_Datetime, _Level, Days_List, _Member)
-		# return HttpResponseRedirect("/welcome")
-		_Member.New = False
-		_Member.Has_Workout = True
-		_Member.save()
-		return HttpResponseRedirect("/userpage")
-		# Generate_Workouts(datetime(Year, Month, Day), _Level, [Day_1, Day_2, Day_3])
-	return render(request, "welcome.html", context)

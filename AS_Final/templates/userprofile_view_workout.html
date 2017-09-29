@@ -36,7 +36,7 @@ td, th {
 }
 
 #small {
-    /*width:5vw;*/
+    /*width:2vw;*/
 }
 
 </style>
@@ -86,14 +86,14 @@ td, th {
         <hr class='userprofile-row-divider'>
 
         <div class='userprofile-row'>
-            <div class='userprofile-col-12' id='' style="padding-left:2vw;">
+            <div class='userprofile-col-12' id='' style="padding-left:2vw; padding-right:2vw;">
                 <h1 style="text-align:left;">Workout Stats</h1>
                 <table style="text-align:left; margin-bottom:2vw;">
                 <tr>
-                    <th id="small">
+                    <th id="small" style="width:2%;">
                     Pattern
                     </th>
-                    <th id="small">
+                    <th id="small" style="width:5%;">
                     Exercise Name
                     </th>
                     <th style="">
@@ -102,9 +102,8 @@ td, th {
                 </tr>
                 {% for Pattern in Patterns %}
                 <tr>
-                <td id="small">{{Pattern.Type}}</td>
-                <td id="small">{{Pattern.Exercise_Name}}</td>
-
+                <td id="small" style="width:2%;">{{Pattern.Type}}</td>
+                <td id="small" style="width:5%;">{{Pattern.Exercise_Name}}</td>
                 <td>
                 {% for Set in Pattern.Sets %}
                 <!-- {{Set.Set_String}} -->
@@ -127,7 +126,7 @@ td, th {
 
         <div class='userprofile-row'>
             <div id='userprofile-stats'>
-                <h1>Stats</h1>
+                <!-- <h1>Stats</h1> -->
             </div>
         </div>
 

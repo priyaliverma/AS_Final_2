@@ -10,10 +10,12 @@ from django.contrib.auth import logout, login, authenticate
 from django.core.files import File
 from .views import Levels, Exercise_Types
 from django.contrib.auth.decorators import user_passes_test
-from Shared_Functions import Admin_Check
 import os
 import json
 import stripe
+from checks import Admin_Check
+
+Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 
 @user_passes_test(Admin_Check, login_url="/admin-login")
 def Admin_Videos(request):
@@ -24,7 +26,7 @@ def Admin_Videos(request):
 	"Ant Chain", "Post Chain",  "Isolation", "Iso 2", "Iso 3", "Iso 4", "RFL Load", "RFD Unload 1", "RFD Unload 2"]
 	context["Levels"] = Levels
 	context["Level_Display"] = []
-	# context[""]
+	# context["Level_Access_Options"] = ["0"]
 	if "Current_Exercises" not in request.session.keys():
 		request.session["Current_Exercises"] = []
 
@@ -82,13 +84,6 @@ def Admin_Videos(request):
 	else:
 		context["Level_Display"] = Levels
 
-	# if request.POST.get("Exercise"):
-	# 	print("EXERCISE SELECTED: " + request.POST['Exercise'])
-	# 	request.session["Exercise"] = request.POST['Exercise']
-	# 	return HttpResponseRedirect("/admin-videos")
-
-	# if request.method == "POST":
-	# 	print(request.POST['Level'])
 
 	if request.POST.get("AddExercises"):
 		print("AddExercises Pressed")
@@ -135,11 +130,12 @@ def Admin_Videos(request):
 		if "Description" in request.POST.keys():
 			_Description = request.POST['Description']
 		print(_Description)
-
+		Level_Access = request.POST["Level_Access"]
 		print(_Title)
 		_Video = Video(Title = _Title, File = _File, Thumbnail = _Thumbnail, Exercise_Type=_Type, Description=_Description, Tags=_Tags)
 		# _Video.Thumbnail.url = "static/videos/Thumbnails/Default_Thumbnail.png"
 		Add_Exercises = request.POST.getlist("Exercise_List")
+		_Video.Level_Access = Level_Access
 		_Video.save()
 		for i in Add_Exercises:
 			_Exercise = Exercise.objects.get(Name = i)
@@ -271,6 +267,9 @@ def Admin_Videos_Edit(request):
 	context["Tags"] = _Video.Tags.split(",")
 	context["Video_Title"] = _Video.Title
 
+	context["Levels"] = Levels
+	context["Level_Access"] = _Video.Level_Access
+
 	context["Exercise_Description_Types"] = [["None", ""],
 	["Romanian Deadlift", "#RDL"],
 	["Barbell Deadlift", "#BBDL"],
@@ -304,6 +303,12 @@ def Admin_Videos_Edit(request):
 		else:
 			row.append(Describer_Labels_Dict[i.Description_Code])
 		context["Assigned_Exercises"].append(row)
+
+	if request.GET.get("Change_Level_Access"):
+		_Access = request.GET["Level_Access"]
+		_Video.Level_Access = _Access
+		_Video.save()
+		return HttpResponseRedirect("/admin-videos-library-edit")
 
 	if request.POST.get("Change_Title"):
 		New_Title = request.POST["New_Title"]

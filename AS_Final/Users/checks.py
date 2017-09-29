@@ -13,6 +13,73 @@ import json
 import stripe     
 import re
 
+def Tier_1(user):
+	if user.is_anonymous():
+		return False
+	elif Member.objects.filter(User=user).exists():
+		return True
+	return False
+
+def Tier_2(user):
+	if user.is_anonymous():
+		return False
+	elif Member.objects.filter(User=user).exists():
+		_Member = Member.objects.get(User=user)
+		if _Member.Admin:
+			return True		
+		elif _Member.Paid:
+			return True
+	return False
+
+def Tier_3(user):
+	if user.is_anonymous():
+		return False
+	elif Member.objects.filter(User=user).exists():
+		_Member = Member.objects.get(User=user)
+		if _Member.Admin:
+			return True
+		elif _Member.Paid and _Member.Read and _Member.Agreed:
+			return True
+	return False
+
+def Expired_Check(user):
+	_Member = Member.objects.get(User=user)
+	if _Member.Admin:
+		return True
+	if _Member.Expiry_Date < datetime.now(timezone.utc):
+		request.session["Expired"] = ["True"]
+		return False
+	return True
+	
+# Liability Waiver
+def Not_Agreed(user):
+	_Member = Member.objects.get(User=user)
+	return not _Member.Agreed
+# Terms & Conditions
+def Not_Read(user):
+	_Member = Member.objects.get(User=user)
+	return not _Member.Read
+# Sign-Up Confirmation
+def New_Check(user):
+	_Member = Member.objects.get(User=user)
+	return _Member.New
+# Welcome
+def No_Workouts(user):
+	_Member = Member.objects.get(User=user)
+	return not _Member.Has_Workout
+
+
+
+def New_Check_Inverse(user):
+	_Member = Member.objects.get(User=user)
+	return not _Member.New
+
+
+def Agreed(user):
+	_Member = Member.objects.get(User=user)
+	return _Member.Agreed
+
+
 def User_Check(user):
 	if user.is_anonymous():
 		return False
@@ -26,6 +93,10 @@ def User_Check(user):
 			return False
 	else:
 		return False
+
+def Agreed_And_Read(user):
+	_Member = Member.objects.get(User=user)
+	return _Member.Read and _Member.Agreed	
 
 def Admin_Check(user):
 	if user.is_anonymous():

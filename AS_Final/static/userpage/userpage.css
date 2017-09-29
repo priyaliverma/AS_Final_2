@@ -227,11 +227,11 @@ table.ui-datepicker-calendar th {
 }
 
 #date_text_container {
-	text-align: center;
+	/*text-align: center;*/
 }
 
 #date_text_container p {
-	font-size: 1.15vw;
+	/*font-size: 1.15vw;*/
 }
 
 #date_text {

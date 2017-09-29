@@ -13,131 +13,7 @@ import json
 import re
 import stripe
 from .views import Levels, Exercise_Types
-from Shared_Functions import Admin_Check
-
-def Admin_Logout(request):
-	logout(request)
-	return HttpResponseRedirect("/admin-login")
-
-def Admin_Login(request):
-	context = {}
-	context["Login_Failed"] = ""
-	Logged_In = False
-	if request.POST.get("Login"):
-		_Username = request.POST["Username"]
-		_Password = request.POST["Password"]
-		user = authenticate(username=_Username, password=_Password)
-		if user is not None:
-			if Member.objects.filter(User=user).exists():
-				_Member = Member.objects.get(User=user)
-				if _Member.Admin:
-					print("User authenticated")
-			    	login(request, user)
-			    	Logged_In = True
-				# else:
-				# 	context["Login_Failed"] = "Login Failed!"
-		if Logged_In:
-			return HttpResponseRedirect('/admin-users')
-		else:
-			context["Login_Failed"] = "Login Failed!"
-			return render(request, "admin_login.html", context)
-	return render(request, "admin_login.html", context)
-
-@user_passes_test(Admin_Check, login_url="/admin-login")
-def Admin_Users(request): 
-	context = {}
-	context["Users"] = []
-	for _User in User.objects.all():
-		if Member.objects.filter(User=_User).exists():
-			_Member = Member.objects.get(User=_User)
-			row = []
-			row.append(_User.username)
-			row.append(_User.pk)
-			row.append(_User.first_name)
-			row.append(_User.last_name)
-			context["Users"].append(row)
-	if request.method == 'GET':
-		print("GET REQUEST RECEIVED")
-	if request.method == 'POST':
-		print("POST REQUEST RECEIVED")
-		keys = []
-		for i in request.POST.keys():
-			keys.append(i)
-			print(i)
-			print(type(i))
-			print(len(i))
-			if len(i) < 4:
-				request.session["User_PK"] = str(i)
-		print("POST REQUEST RECEIVED")
-		return HttpResponseRedirect("/admin-users-view-profile/")
-	return render(request, "admin_users.html", context)
-
-@user_passes_test(Admin_Check, login_url="/admin-login")
-def Admin_User_Profile (request):
-	User_PK = int(request.session["User_PK"])
-	_User = User.objects.get(pk=User_PK)
-	_Member = Member.objects.get(User=_User)
-	_Workouts = _Member.workouts.all()
-	_Now = datetime.now()
-	_Past_Times = []
-	_Future_Times = []
-	print("From Admin User Profile: " + str(User_PK))
-	print("Current Time: " + str(datetime.now()))
-	context = {}
-	context["User_Info"] = []
-	context["User_Info"].append(_User.username)
-	context["User_Info"].append(_User.first_name)
-	context["User_Info"].append(_User.last_name)
-	context["User_Info"].append(_Member.Level)
-	for i in _Workouts:
-		_Datetime = datetime.strptime(i._Date, '%m/%d/%Y')
-		i.Date = _Datetime.date()
-		i.save()
-		# print(str(i) + " " + i._Date + " " + str(datetime.strptime(i._Date, '%m/%d/%Y')))
-		print(str(i) + " " + i._Date + " " + str(i.Date))
-		if _Datetime >_Now:
-			_Distance = _Datetime - datetime.now()
-			_Future_Times.append(_Distance)
-			if _Distance <= min(_Future_Times):
-				Next_Workout = i
-		elif _Datetime < _Now:
-			_Distance = datetime.now() - _Datetime
-			_Past_Times.append(_Distance)
-			if _Distance <= min(_Past_Times):
-				Last_Workout = i
-	print(_Future_Times)
-	print(_Past_Times)
-	context["Next_Workout"] = []
-	context["Last_Workout"] = []
-	if _Future_Times:
-		print("Future Min Time: " + str(min(_Future_Times)))
-		print("Next Workout: " + str(Next_Workout) + " " + Next_Workout._Date)
-		_Summary = ", Level " + str(Next_Workout.Level) + " Week " + str(Next_Workout.Week) + " Day " + str(Next_Workout.Day)
-		context["Next_Workout"].append(_Summary)
-		context["Next_Workout"].append(Next_Workout._Date)
-		_Subs = []
-		for _sub in Next_Workout.SubWorkouts.all():
-			_Description = str(_sub.Sets) + " x " + str(_sub.Reps) + " " + _sub.Exercise.Name
-			_Subs.append(_Description)
-		context["Next_Workout"].append(_Subs)
-	else:
-		context["Next_Workout"].append("None")		
-	if _Past_Times:
-		print("Past Min Time: " + str(min(_Past_Times)))
-		print("Last Workout: " + str(Last_Workout) + " " + Last_Workout._Date)	
-		_Summary = ", Level " + str(Last_Workout.Level) + " Week " + str(Last_Workout.Template.Week) + " Day " + str(Last_Workout.Template.Day)
-		context["Last_Workout"].append(_Summary)
-		context["Last_Workout"].append(Last_Workout._Date)
-		_Subs = []
-		for _sub in Last_Workout.SubWorkouts.all():
-			_Description = str(_sub.Sets) + " x " + str(_sub.Reps) + " " + _sub.Exercise.Name
-			_Subs.append(_Description)
-		context["Last_Workout"].append(_Subs)
-	else:
-		context["Last_Workout"].append("None")
-
-	return render(request, "admin_user_profile.html", context)
-
+from checks import Admin_Check
 
 Level_Group_1_Exercises = [["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",  "Hinge", "Squat"], 
 ["LB Uni Push", "Ant Chain", "Post Chain",  "Isolation", "Iso 2", "Iso 3", "Iso 4"]]
@@ -256,14 +132,14 @@ def AdminExercises(request):
 					if request.GET.get(Input_Code) != "" and request.GET.get(Input_Code) != None:
 						_Name = request.GET.get(Input_Code)
 						# print(Input_Code + " " + _Name)
-						print(Input_Code + " : " + _Name)
+						# print(Input_Code + " : " + _Name)
 						if Exercise.objects.filter(Type = x[0], Level = Level_Num).exists():
 							print("Changing Exercise: " + _Name)
 							_Exercise = Exercise.objects.get(Type = _Type, Level = Level_Num)
 							_Exercise.Name = _Name
 							_Exercise.Code = Input_Code
 							_Exercise.save()
-							print("New Name: " + _Exercise.Name)
+							# print("New Name: " + _Exercise.Name)
 						else:
 							_Exercise = Exercise(Type = x[0], Level = Level_Num, Name = _Name, Code = Input_Code)
 							_Exercise.save()
@@ -338,20 +214,20 @@ def Admin_Workouts(request):
 			context["Select_Right_Groups"].append(Group)
 
 	if request.GET.get("Select_Level_Group"):
-		print("Test")
-		print("Selected Level Group: " + request.GET["Select_Level_Group"])
+		# print("Test")
+		# print("Selected Level Group: " + request.GET["Select_Level_Group"])
 		Key = str(request.GET["Select_Level_Group"])
-		print("Selected Group: " + request.GET["Select_Level_Group"])
-		print(Level_Group_Dict.keys())
+		# print("Selected Group: " + request.GET["Select_Level_Group"])
+		# print(Level_Group_Dict.keys())
 
-		print(Level_Group_Dict[Key])
+		# print(Level_Group_Dict[Key])
 
 		Selected_Group = request.GET["Select_Level_Group"]
 
 		request.session["Level_Group_Workout"] = Level_Group_Dict[Key]
-		print("Selected Group: " + str(request.session["Level_Group_Workout"]))
+		# print("Selected Group: " + str(request.session["Level_Group_Workout"]))
 		return HttpResponseRedirect("/admin-workouts")
-	print("New Selected Group: " + str(request.session["Level_Group_Workout"]))
+	# print("New Selected Group: " + str(request.session["Level_Group_Workout"]))
 
 	if request.GET.get("Block"):
 		if request.GET['Block'] == "Block_1":
@@ -401,23 +277,18 @@ def Admin_Workouts(request):
 		Selected_Block_Num = Selected_Block[2]
 		if Selected_Group == 4:
 			context["Show_Strength_Drop"].append("True")
+			New_Template, Created = Workout_Template.objects.get_or_create(Level_Group = Selected_Group, Block_Num = 1, Week = 4, Ordered_ID=16, Day = 4)
+			New_Template.save()
 			New_Template, Created = Workout_Template.objects.get_or_create(Level_Group = Selected_Group, Block_Num = 2, Week = 4, Ordered_ID=16, Day = 4)
 			New_Template.save()
 		if Selected_Block_Num == 2:
 			context["Workout_Templates"].append(["Week 5", []])
-			for _Template in Workout_Template.objects.filter(Level_Group=Selected_Group, Block_Num=2, Week=5).all():
-				_Template.delete()
-			for n in range(3):
-				print("N: " + str(n))
-				Day = n + 1
-				New_Template, Created = Workout_Template.objects.get_or_create(Level_Group = Selected_Group, Block_Num = 2, Week = 5, Ordered_ID=16 + Day, Day = Day)
-				New_Template.save()
-				# print(New_Template.)
 
 	for i in Templates:
-		print(i.Ordered_ID)
+		# print(i.Ordered_ID)
 		Template_Dict = {}
 		Button_Code = "W" + str(i.Week) + "D" + str(i.Day) + "_Update_Workout"
+		print(Button_Code + str(i.Ordered_ID))
 		Template_Dict["Day_Name"] = "Day " + str(i.Day)
 		Template_Dict["Button_Code"] = Button_Code
 		Template_Dict["Subs"] = []
@@ -460,20 +331,34 @@ def Admin_Workouts(request):
 		for E in range(Empty_Sets):
 			Empty_Dict = {}
 			Empty_Dict["Order"] = Num_Sets + E + 1
-			Template_Dict["Subs"].append(Empty_Dict)		
+			Template_Dict["Subs"].append(Empty_Dict)
+
 		if i.Ordered_ID == 1:
 			i.First = True
 			Template_Dict["Day_Name"] += " (First)"
-			i.save()
-		elif i.Ordered_ID == Workout_Template.objects.filter(Level_Group=Selected_Group).count():
-			i.Last = True
-			Template_Dict["Day_Name"] += " (Last)"
-			i.save()
-		if _week_index <= 4:			
-			context["Workout_Templates"][_week_index][1].append(Template_Dict)
+		else:
+			i.First = False
+		if i.Ordered_ID == Templates.count():
+			if i.Block_Num == 1:
+				i.Block_End = True
+				i.Last = False
+				Template_Dict["Day_Name"] += " (Block End)"
+			else:
+				i.Last = True
+				i.Block_End = False
+				Template_Dict["Day_Name"] += " (Last)"
+		else:
+			i.Last = False
+			i.Block_End = False
+		i.save()
+		# Template_Dict["Day_Name"] += " " + str(i.Ordered_ID)
+		# if _week_index <= 4:			
+		# 	context["Workout_Templates"][_week_index][1].append(Template_Dict)
+		context["Workout_Templates"][_week_index][1].append(Template_Dict)
+
 		# print(Button_Code)
 		if request.GET.get(Button_Code):
-			print("Line 455 Executing")
+			print(Button_Code + " Pressed")
 			if request.GET["Type"] == "A":
 				i.Alloy = True
 			elif request.GET["Type"] == "R":
@@ -489,6 +374,7 @@ def Admin_Workouts(request):
 				Deload_Code = "Deload_" + str(Order)
 				Alloy_Reps_Code = "Money_" + str(Order)				
 				SS_Code = "SS_" + str(Order)
+				SD_Code = "SD_" + str(Order)
 				if request.GET[Type_Code] != "":
 					_Type = request.GET[Type_Code]
 					_Sets = request.GET[Set_Code]
@@ -497,11 +383,14 @@ def Admin_Workouts(request):
 					_Deload = request.GET[Deload_Code]
 					_Alloy_Reps = ""
 					_SS = ""
+					_SD = ""
 					if Alloy_Reps_Code in request.GET.keys():
 						_Alloy_Reps = request.GET[Alloy_Reps_Code]
 					if SS_Code in request.GET.keys():
 						_SS = request.GET[SS_Code]
-						
+					if SD_Code in request.GET.keys():
+						_SD = request.GET[SD_Code]
+
 					if (i.SubWorkouts.all().filter(Order = Order).exists()):
 						_Edit_Sub = i.SubWorkouts.all().get(Order = Order)
 						_Edit_Sub.Exercise_Type = _Type
@@ -513,12 +402,24 @@ def Admin_Workouts(request):
 							_Edit_Sub.RPE = _RPE
 						if _Deload != "":
 							_Edit_Sub.Deload = _Deload
+						# ALLOY
 						if _Alloy_Reps != "":
 							_Edit_Sub.Alloy_Reps = _Alloy_Reps
 							_Edit_Sub.Alloy = True
+						if _Alloy_Reps == "0" or _Alloy_Reps == 0:
+							_Edit_Sub.Alloy = False
+						# STRENGTH STOP
 						if _SS != "":
 							_Edit_Sub.Strength_Stop = _SS
-							_Edit_Sub.Stop_Set = True							
+							_Edit_Sub.Stop_Set = True				
+						if _SS == "0" or _SS == 0:			
+							_Edit_Sub.Stop_Set = False				
+						# STRENGTH DROP
+						if _SD != "":
+							_Edit_Sub.Strength_Drop = _SD
+							_Edit_Sub.Drop_Set = True				
+						if _SD == "0" or _SD == 0:			
+							_Edit_Sub.Drop_Set = False				
 						_Edit_Sub.save()
 						i.save()
 					else:
@@ -544,3 +445,30 @@ def Admin_Workouts(request):
 	return render(request, "admin_workouts.html", context)
 
 
+def Admin_Logout(request):
+	logout(request)
+	return HttpResponseRedirect("/admin-login")
+
+def Admin_Login(request):
+	context = {}
+	context["Login_Failed"] = ""
+	Logged_In = False
+	if request.POST.get("Login"):
+		_Username = request.POST["Username"]
+		_Password = request.POST["Password"]
+		user = authenticate(username=_Username, password=_Password)
+		if user is not None:
+			if Member.objects.filter(User=user).exists():
+				_Member = Member.objects.get(User=user)
+				if _Member.Admin:
+					print("User authenticated")
+			    	login(request, user)
+			    	Logged_In = True
+				# else:
+				# 	context["Login_Failed"] = "Login Failed!"
+		if Logged_In:
+			return HttpResponseRedirect('/admin-users')
+		else:
+			context["Login_Failed"] = "Login Failed!"
+			return render(request, "admin_login.html", context)
+	return render(request, "admin_login.html", context)
