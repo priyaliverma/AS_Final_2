@@ -9,7 +9,7 @@
 
 
 <!-- Include HTML Code -->
-<!-- Head --> 
+<!-- Head -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,14 +24,14 @@
             // Remove navigation prompt
             window.onbeforeunload = null;
     </script>
- -->     <!-- Font Awesome --> 
+ -->     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Material Design code -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
    <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  
+
     <!-- Style Sheets -->
     <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
@@ -76,7 +76,7 @@
         <!-- <br> -->
         <!-- Selected Date: -->
         <h3 style="margin-left:4vw; text-align:left; display:inline-block;">Selected Date: </h3>
-        <p style="font-weight:bold; font-size:1.17em; text-align:left; 
+        <p style="font-weight:bold; font-size:1.17em; text-align:left;
         display:inline-block; margin-left:1vw; display:inline-block;" class="h3" id="date_text" value={{Date}}><b>{{Date}}</b><p>
         <!-- </div> -->
 
@@ -116,7 +116,7 @@
         {% if Workout_Day %}
         <form method="GET">
         <table class='table_calendar' style="margin-top:-1vw;">
-            <tr>    
+            <tr>
                 <th class='table_header'>Pattern</th>
                 <th class='table_header'>Exercise</th>
                 <th class='table_header'>Reps / Time (s)</th>
@@ -148,46 +148,52 @@
                 <!-- EXERCISE NAMES -->
                 <td style="width:0.5vw !important;">
                 <!-- Exercise_Name -->
-                 {{Pattern.Exercise_Name}}      
+                 {{Pattern.Exercise_Name}}
                  <!-- {{Pattern.Set_Stats}}           -->
-                 {% if Pattern.Has_Video %} 
+                 {% if Pattern.Has_Video %}
                     <button type="submit" id="blue_btn" name="Video" value="{{Pattern.Video_PK}}">Watch Video</button>
-                 {% endif %} 
+                 {% endif %}
                  <!-- <input type="submit" id="blue_btn" name="Video" value="Video" style="margin-top:0.5vw;"> -->
                 </td>
 
 <!-- REPS -->
-                <td style="padding:0px;">
+                <td style="padding:0px !important; padding-top:0px !important; padding-bottom:0px !important;">
                 <!-- FILLED SETS -->
                 {% for Set in Pattern.All_Filled_Sets %}
                     {% if Set.Type == "Bodyweight" %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        {{Set.Reps}} 
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
+                        {{Set.Reps}}
                     {% elif Set.Type == "Dropped" %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        {{Set.Reps}} 
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
+                        {{Set.Reps}}
                     {% elif Set.Type == "Alloy" %}
-                        <div style="background-color:yellow; 
-                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        {{Set.Reps}} 
+                        <div style="background-color:yellow;
+                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
+                        {{Set.Reps}}
                         {% if Set.Alloy_Passed_Bool %}
                             (Passed)
                         {% else %}
                             <span style="color:red;">(Failed)</span>
                         {% endif %}
                     {% else %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                        {{Set.Reps}} 
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
+                        {{Set.Reps}}
                     {% endif %}
                         </div>
                 {% endfor %}
                 <!-- UNFILLED SETS -->
                 {% for Set in Pattern.All_Unfilled %}
-                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    <div style="height:20px; border-top:solid;
+                    border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                    padding-top:1px; padding-bottom:2px;">
                     {% if Pattern.Set_Type == 'Strength_Input' %}
-                            {{Set.Reps}} 
+                            {{Set.Reps}}
                     {% elif Pattern.Set_Type == 'Dropped_Set' %}
-                            {{Set.Reps}} 
+                            {{Set.Reps}}
                             (Dropped Set {{Set.Drop}})
                     {% elif Pattern.Set_Type == 'Regular_Set' %}
                             {% if Pattern.BodyWeight %}
@@ -201,35 +207,38 @@
                 {% endfor %}
                 <!-- SS BUTTON -->
                 {% if Pattern.SS_Btn %}
-                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                    padding-left:0px !important;">
-                    <input type="submit" style="height:100%; width:100%; font-size:0.75vw;" 
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-left:0px !important; padding-top:0px; padding-bottom:1px;">
+                    <input type="submit" style="height:100%; width:100%; font-size:0.75vw;"
                     onclick=""
                     class="{{Pattern.Input_ID}}" name="{{Pattern.Exercise_Type}}_Get_Set" value="Submit Stop Set"
                     id="Get_Alloy_Button">
                         <!-- {{Pattern.Reps}}+ -->
-                    </div>                
+                    </div>
                 {% endif %}
                 <!-- SD BUTTON -->
                 {% if Pattern.SD_Btn %}
-                    <input type="submit" style="height:100%; width:100%; font-size:0.75vw;" 
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-left:0px !important; padding-top:0px; padding-bottom:1px;">
+                    <input type="submit" style="height:100%; width:100%; font-size:0.75vw; padding-top:1px; padding-bottom:2px;"
                     onclick=""
                     class="{{Pattern.Input_ID}}" name="{{Pattern.Exercise_Type}}_Get_Drop" value="Submit Drop Set"
                     id="Get_Alloy_Button">
+                    </div>
                 {% endif %}
                 <!-- LAST ALLOY INPUT -->
                 {% if Pattern.Alloy_Sub %}
                     {% if Pattern.Alloy_Set_Type == 'Input' %}
-                        <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                        padding-left:0px !important;">
+                        <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                        padding-left:0px !important; padding-top:1px; padding-bottom:2px;">
                         <!-- Test -->
-                            <input type="number" placeholder="{{Pattern.Money}}+" name = "{{Pattern.Alloy_Code}}_Reps" 
-                            style="width:95%; height:17px; border-style:none; text-align:center;">                        
+                            <input type="number" placeholder="{{Pattern.Money}}+" name = "{{Pattern.Alloy_Code}}_Reps"
+                            style="width:95%; height:17px; border-style:none; text-align:center;">
                         </div>
                     {% elif Pattern.Alloy_Set_Type == 'Button' %}
-                        <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                        padding-left:0px !important;">
-                        <input type="submit" style="height:100%; width:100%; font-size:0.75vw;" 
+                        <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                        padding-left:0px !important; padding-top:0px; padding-bottom:1px;">
+                        <input type="submit" style="height:100%; width:100%; font-size:0.75vw;"
                         onclick="check_null_specific('{{Pattern.Input_ID}}')"
                         class="{{Pattern.Input_ID}}" name="{{Pattern.Exercise_Type}}_Get_Alloy" value="Get Alloy Set"
                         id="Get_Alloy_Button">
@@ -238,42 +247,47 @@
                 {% endif %}
                 <!-- EMPTY SETS -->
                 {% for Set in Pattern.Empty_Sets %}
-                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                    padding-left:0px !important;">
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-left:0px !important; padding-top:1px; padding-bottom:2px;">
                     </div>
                 {% endfor %}
                 </td>
 
 <!-- WEIGHT -->
-                <td style="border-style:solid !important; border-left:solid black; padding:0px !important; padding-top:0px !important; margin-top: 0px !important;">
+                <td style="border-style:solid !important; border-left:solid black; padding:0px !important;
+                padding-top:0px !important; margin-top: 0px !important;">
                 <!-- FILLED SETS -->
                 {% for Set in Pattern.All_Filled_Sets %}
                     {% if Set.Type == "Bodyweight" %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                         {{Set.Weight}}
                     {% elif Set.Type == "Alloy" %}
-                        <div style="background-color:yellow; 
-                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <div style="background-color:yellow;
+                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                         {{Set.Weight}}
-                    {% else %}                    
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    {% else %}
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                         {{Set.Weight}}
                     {% endif %}
                         </div>
                 {% endfor %}
                 <!-- UNFILLED SETS -->
                 {% for Set in Pattern.All_Unfilled %}
-                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                    padding-top:1px; padding-bottom:2px;">
                     {% if Pattern.Set_Type == 'Strength_Input' %}
                         {% if Set.Has_Weight %}
                             {{Set.Weight}}
                         {% else %}
                             <input type="number" placeholder="Enter Weight" class="{{Pattern.Input_ID}}"
                             name = "{{Set.Code}}_Weight" style="width:95%; height:17px; border-style:none;">
-                        {% endif %} 
+                        {% endif %}
                     {% elif Pattern.Set_Type == 'Dropped_Set' %}
                         {% if Set.Has_Weight %}
-                            {{Set.Drop_Weight}} (From {{Set.Weight}})                        
+                            {{Set.Drop_Weight}} (From {{Set.Weight}})
                         {% else %}
                             <input type="number" placeholder="Enter Weight" class="{{Pattern.Input_ID}}"
                             name = "{{Set.Code}}_Weight" style="width:95%; height:17px; border-style:none;">
@@ -283,31 +297,34 @@
                                 Bodyweight
                             {% else %}
                                 <input type="number" placeholder="Enter Weight" class="{{Pattern.Input_ID}}"
-                                name = "{{Set.Code}}_Weight" style="width:95%; height:17px; border-style:none;">
+                                name = "{{Set.Code}}_Weight" style="width:95%; height:100%; border-style:none;">
                             {% endif %}
                     {% endif %}
                     </div>
                 {% endfor %}
                 <!-- SS and SD BUTTON -->
                 {% if Pattern.SS_Btn or Pattern.SD_Btn %}
-                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                    padding-left:0px !important;">
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-left:0px !important; padding-top:0px; padding-bottom:1px;">
                     </div>
                 {% endif %}
                 <!-- LAST ALLOY INPUT -->
                 {% if Pattern.Alloy_Sub %}
-                    <div style="background-color:yellow; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);">
                     {% if Pattern.Alloy_Set_Type == 'Input' %}
+                    <div style="background-color:yellow; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-top:1px; padding-bottom:2px;">
                         {{Pattern.Alloy_Weight}} lbs
                     {% elif Pattern.Alloy_Set_Type == 'Button' %}
+                    <div style="background-color:yellow; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-top:0px; padding-bottom:1px;">
                         X
                     {% endif %}
                     </div>
                 {% endif %}
                 <!-- EMPTY SETS -->
                 {% for Set in Pattern.Empty_Sets %}
-                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                    padding-left:0px !important;">
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-left:0px !important; padding-top:1px; padding-bottom:2px;">
                     </div>
                 {% endfor %}
                 </td>
@@ -316,18 +333,21 @@
                 <!-- FILLED SETS -->
                 {% for Set in Pattern.All_Filled_Sets %}
                     {% if Set.Type == "Alloy" %}
-                        <div style="background-color:yellow; 
-                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <div style="background-color:yellow;
+                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                         10 (Alloy)
                     {% else %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                         {{Set.RPE}}
                         {% endif %}
                     </div>
                 {% endfor %}
                 <!-- UNFILLED SETS -->
                 {% for Set in Pattern.All_Unfilled %}
-                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                    padding-top:1px; padding-bottom:2px;">
                         <select class="{{Pattern.Input_ID}}" style="text-align:center; width:100%;" name="{{Set.Code}}_RPE">
                             <option value="" style="text-align:center; margin-left:3vw;">Select RPE</option>
                         {% for RPE in RPE_List %}
@@ -339,19 +359,21 @@
                 {% endfor %}
                 <!-- SS BUTTON -->
                 {% if Pattern.SS_Btn or Pattern.SD_Btn %}
-                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                    padding-left:0px !important;">
+                    <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-left:0px !important; padding-top:0px; padding-bottom:1px;">
                     </div>
                 {% endif %}
                 <!-- LAST ALLOY INPUT -->
                 {% if Pattern.Alloy_Sub %}
-                    <div style="background-color:yellow; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);">           
+                    <div style="background-color:yellow; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    padding-top:0px; padding-bottom:1px;">
                     10 (Alloy Set)
                     </div>
                 {% endif %}
                 <!-- EMPTY SETS -->
                 {% for Set in Pattern.Empty_Sets %}
-                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                    padding-top:1px; padding-bottom:2px;">
                     </div>
                 {% endfor %}
                 </td>
@@ -361,18 +383,21 @@
                 <!-- FILLED SETS -->
                 {% for Set in Pattern.All_Filled_Sets %}
                     {% if Set.Type == "Alloy" %}
-                        <div style="background-color:yellow; 
-                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <div style="background-color:yellow;
+                        height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                         {{Set.Tempo}}
                     {% else %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                         {{Set.Tempo}}
                     {% endif %}
                     </div>
                 {% endfor %}
                 <!-- UNFILLED SETS -->
                 {% for Set in Pattern.All_Unfilled %}
-                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                    padding-top:1px; padding-bottom:2px;">
                     {% if Pattern.Tempo_Required %}
                         <input type="number" placeholder="0" name = "{{Set.Code}}_Tempo_1" class="{{Pattern.Input_ID}}"
                         style="width:25%; height:17px; border-style:none; text-align:center;">
@@ -383,7 +408,7 @@
                         <input type="number" placeholder="0" name = "{{Set.Code}}_Tempo_3" class="{{Pattern.Input_ID}}"
                         style="width:25%; height:17px; border-style:none; text-align:center;">
                     {% endif %}
-                    </div>                
+                    </div>
                     {% if Pattern.Set_Type == 'Strength_Input' %}
                     {% elif Pattern.Set_Type == 'Dropped_Set' %}
                     {% elif Pattern.Set_Type == 'Regular_Set' %}
@@ -391,15 +416,17 @@
                 {% endfor %}
                 <!-- SS BUTTON -->
                 {% if Pattern.SS_Btn or Pattern.SD_Btn %}
-                        <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                        padding-left:0px !important;">
+                        <div style="text-align:center; height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                        padding-left:0px !important;
+                        padding-top:0px; padding-bottom:1px;">
                         </div>
                 {% endif %}
                 <!-- LAST ALLOY INPUT -->
                 {% if Pattern.Alloy_Sub %}
                     {% if Pattern.Alloy_Set_Type == 'Input'%}
                         {% if Pattern.Tempo_Required %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                        padding-top:1px; padding-bottom:2px;">
                             <input type="number" placeholder="0" name = "{{Set.Code}}_Tempo_1" class="{{Pattern.Input_ID}}"
                             style="width:25%; height:17px; border-style:none; text-align:center;">
                             |
@@ -409,19 +436,20 @@
                             <input type="number" placeholder="0" name = "{{Set.Code}}_Tempo_3" class="{{Pattern.Input_ID}}"
                             style="width:25%; height:17px; border-style:none; text-align:center;">
                         {% else %}
-                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                        background-color:yellow; padding-left:0px !important;">
+                        <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                        background-color:yellow; padding-left:0px !important; padding-top:1px; padding-bottom:2px;">
                         {% endif %}
                     {% elif Pattern.Alloy_Set_Type == 'Button' %}
-                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); 
-                    background-color:yellow; padding-left:0px !important;">
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75);
+                    background-color:yellow; padding-left:0px !important; padding-top:0px; padding-bottom:1px;">
                     {% endif %}
-                    </div>                
+                    </div>
                 {% endif %}
                 <!-- EMPTY SETS -->
                 {% for Set in Pattern.Empty_Sets %}
-                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;">
-                    </div>                
+                    <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
+                    padding-top:1px; padding-bottom:2px;">
+                    </div>
                 {% endfor %}
                 </td>
             {% endif %}
@@ -434,17 +462,17 @@
                 <!-- <input type='submit' value='TESTER' name="Tester" id='blue_btn'></input> -->
                 {% for Bool in Workout_Day_Time.1 %}
                     {% for Bool in Show_Get_Alloy %}
-<!--                         <input type='button' value='GET ALLOY WEIGHTS' 
+<!--                         <input type='button' value='GET ALLOY WEIGHTS'
                         name="Get_Alloy" style="background-color:red;" id='blue_btn'></input>
  -->                    {% endfor %}
                     {% for Bool in Show_Submit %}
-                        <input type='submit' 
-                        onclick="" 
+                        <input type='submit'
+                        onclick=""
                         value='SUBMIT WORKOUT' name="Submit_Workout" id='blue_btn'></input>
                     {% endfor %}
 <!--                 <input type='submit' value='GET ALLOY WEIGHTS' name="Get_Alloy" style="background-color:red;" id='blue_btn'></input>
                 <input type='submit' value='SUBMIT WORKOUT' name="Submit_Workout" id='blue_btn'></input>
- -->                
+ -->
                 {% endfor %}
          {% endif %}
                 <!-- <input type='submit' value='CHECK LEVEL-UP' name="Level_Up_Check" id='blue_btn'></input> -->
@@ -477,7 +505,7 @@
             return;
         }
         else {
-            event.preventDefault(); 
+            event.preventDefault();
         }
     }
 
@@ -488,22 +516,22 @@
         for (index = 0; index < Inputs.length; index ++) {
 
             // if (typeof Inputs[index].value == 'number' && Inputs[index].value < 0) {
-            //     event.preventDefault(); 
+            //     event.preventDefault();
             //     alert("Please fill in fields with numerical values above 0!");
-            //     return;                
+            //     return;
             // }
 
             if (Inputs[index].value == "") {
                 Alert = true;
             }
             // else if (Inputs[index].tagName =="input" && typeof Inputs[index].value != 'number') {
-            //     event.preventDefault(); 
+            //     event.preventDefault();
             //     alert("Please fill in fields with numerical values!");
-            //     return;                
+            //     return;
             // }
-        }        
+        }
         if (Alert) {
-            event.preventDefault(); 
+            event.preventDefault();
             alert("Please finish all sets for the exercise first!");
             return;
         }
@@ -512,32 +540,32 @@
     function check_null() {
         var Get_Alloy_Exists = document.getElementById("Get_Alloy_Button");
         if (Get_Alloy_Exists != null) {
-            event.preventDefault(); 
+            event.preventDefault();
             alert("Please finish all sets first!");
             return;
         }
         var Inputs = document.getElementsByTagName("input");
         for (index = 0; index < Inputs.length; index ++) {
             // if (Inputs[index].value == "") {
-            //     event.preventDefault(); 
+            //     event.preventDefault();
             //     alert("Please fill in all required fields!");
             //     return;
             // }
             if (typeof Inputs[index].value != 'number') {
-                event.preventDefault(); 
+                event.preventDefault();
                 alert("Please fill in fields with numerical values!");
-                return;                
+                return;
             }
         }
         var Selects = document.getElementsByTagName("select");
         for (index = 0; index < Selects.length; index ++) {
             if (Selects[index].value == "") {
-                event.preventDefault(); 
+                event.preventDefault();
                 alert("Please fill in all required fields!");
                 return;
             }
         }
-    }    
+    }
 </script>
 
 <script>
@@ -594,8 +622,8 @@
     });
 
     function updateRPE() {
-        var current_date = $( "#date_text" ).text(); 
-        var URL = "{% url 'userpageRPEUpdate' %}"; 
+        var current_date = $( "#date_text" ).text();
+        var URL = "{% url 'userpageRPEUpdate' %}";
         var data = {'RPE_row1': vm2.row1.rpe,
                     'RPE_row2': vm2.row2.rpe,
                     'RPE_row3': vm2.row3.rpe,
@@ -604,52 +632,52 @@
                     'current_date': current_date};
 
         $.post(URL, data, function(response){
-            console.log(response); 
+            console.log(response);
         })
     };
 
     function updateTempDate(){
-        var TempDate = $( "#date_text" ).text(); 
+        var TempDate = $( "#date_text" ).text();
         var data = {'TempDate': TempDate};
         var URL = "{% url 'userpageUpdate' %}";
 
-        console.log("I'm in updateTempDate"); 
+        console.log("I'm in updateTempDate");
         $.post(URL, data, function(response){
-     
+
             response1 = response[0];
-            vm1.level = response1.level; // all responses have levels, but for now, just display one 
+            vm1.level = response1.level; // all responses have levels, but for now, just display one
             vm2.row1.exercise_type = response1.exercise_type;
-            vm2.row1.exercise_name = response1.exercise_name; 
+            vm2.row1.exercise_name = response1.exercise_name;
             vm2.row1.reps = response1.reps;
             vm2.row1.rpe = response1.rpe;
 
 
             response2 = response[1];
             vm2.row2.exercise_type = response2.exercise_type;
-            vm2.row2.exercise_name = response2.exercise_name; 
+            vm2.row2.exercise_name = response2.exercise_name;
             vm2.row2.reps = response2.reps;
             vm2.row2.rpe = response2.rpe;
 
 
             response3 = response[2];
             vm2.row3.exercise_type = response3.exercise_type;
-            vm2.row3.exercise_name = response3.exercise_name; 
+            vm2.row3.exercise_name = response3.exercise_name;
             vm2.row3.reps = response3.reps;
             vm2.row3.rpe = response3.rpe;
 
 
             response4 = response[3];
             vm2.row4.exercise_type = response4.exercise_type;
-            vm2.row4.exercise_name = response4.exercise_name; 
+            vm2.row4.exercise_name = response4.exercise_name;
             vm2.row4.reps = response4.reps;
             vm2.row4.rpe = response4.rpe;
 
 
             response5 = response[4];
             vm2.row5.exercise_type = response5.exercise_type;
-            vm2.row5.exercise_name = response5.exercise_name; 
+            vm2.row5.exercise_name = response5.exercise_name;
             vm2.row5.reps = response5.reps;
-            vm2.row5.rpe = response5.rpe; 
+            vm2.row5.rpe = response5.rpe;
         });
         document.getElementById('Calendar_Form').submit();
 
@@ -668,34 +696,34 @@
 
                 // Reference: https://stackoverflow.com/questions/17863924/jquery-datepicker-add-class-to-first-17-days
                 var final_list = {{ final_list | safe }};
-                var final_list_len = final_list.length; 
+                var final_list_len = final_list.length;
 
 
 
-                var workout_list = [] 
+                var workout_list = []
 
                 for (i = 0; i < final_list_len; i++) {
                     var workout_date = final_list[i]
-                    var workout_string = workout_date.month + '/' + workout_date.day + '/' + workout_date.year; 
+                    var workout_string = workout_date.month + '/' + workout_date.day + '/' + workout_date.year;
 
                     // if today is a workout day
                     if (workout_string === currentDate) {
                         $('#date_text').css('color','orange');
                     }
 
-                    workout_list.push(new Date(workout_string)); 
+                    workout_list.push(new Date(workout_string));
                 };
 
-                var workout_list_len = workout_list.length; 
+                var workout_list_len = workout_list.length;
 
 
-                var isWorkout = false; 
+                var isWorkout = false;
                 for (i = 0; i < workout_list_len; i++) {
-                    // if workout date and date on the calendar are the same 
-                    var workoutDay = (workout_list[i].getTime() === date.getTime()); 
+                    // if workout date and date on the calendar are the same
+                    var workoutDay = (workout_list[i].getTime() === date.getTime());
 
                     if (workoutDay) {
-                        isWorkout = true; 
+                        isWorkout = true;
                     }
                 };
 
@@ -704,20 +732,20 @@
                 if (today) {
 
                     if (isWorkout) {
-                        return [true, 'workoutToday']; 
+                        return [true, 'workoutToday'];
                     } else {
-                        return [true, 'today']; 
+                        return [true, 'today'];
                     }
-                    
+
                 }
                 else {
                     if (isWorkout) {
-                        return [true, 'workout']; 
+                        return [true, 'workout'];
                     } else {
-                        return [true, '']; 
+                        return [true, ''];
                     }
                 }
-                
+
             },
             onSelect: function (date) {
                 //var newDate = $(this).val();
@@ -756,19 +784,19 @@
 
 
     $(document).ready(function(){
-        
+
         // var currMonthString = {{ Curr_Month }}
-        // var currMonth = parseInt(currMonthString, 10)        
+        // var currMonth = parseInt(currMonthString, 10)
 
         // var currYearString = {{ Curr_Year }}
-        // var currYear = parseInt(currYearString, 10)        
+        // var currYear = parseInt(currYearString, 10)
 
         // var currDayString = {{ Curr_Day }}
-        // var currDay = parseInt(currDayString, 10)        
+        // var currDay = parseInt(currDayString, 10)
         $('#datepicker').datepicker('setDate', '{{Date}}');
 
         $('#update_table').click(function(){
-            updateRPE(); 
+            updateRPE();
         });
     });
 
@@ -777,7 +805,7 @@
 
 <style>
     .workout .ui-state-default {
-        background-color: orange; 
+        background-color: orange;
     }
 
     .today .ui-state-default {

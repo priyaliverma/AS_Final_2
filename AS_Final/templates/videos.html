@@ -10,19 +10,19 @@
 
 
 <!-- Include HTML Code -->
-<!-- Head --> 
+<!-- Head -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
+
     <!-- Style Sheets -->
     <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
     <link rel="stylesheet" href="{% static 'videopage/videopage.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
     <link href="https://cdn.plyr.io/2.0.13/plyr.css" rel="stylesheet">
-    
+
     <!-- <link rel="stylesheet" href="path/to/plyr.css"> -->
 
     <title>Training Library</title>
@@ -30,7 +30,7 @@
 </head>
 
 
-<!-- Body --> 
+<!-- Body -->
 <body>
 
     <div id='header-left'>
@@ -43,28 +43,11 @@
             <li><a href="{%url 'videos' %}" class='page-active'>Videos</a></li>
             <li><a href="{%url 'tutorial' %}">Tutorial</a></li>
             <li><a href="/tutorial/#RPE_Table">RPE Table</a></li>
-            <!-- <li><a href="{%url 'pastworkouts' %}">Past Workouts</a></li> -->
-            <!-- <li><a href="{%url 'user_stats' %}">Stats</a></li> -->
             <li><a href="{%url 'userprofile' %}">Profile</a></li>
             <!-- <li><a href="{%url 'contact' %}">Contact & Support</a></li> -->
             <li><a href="{%url 'logout' %}">Logout</a></li>
         </ul>
     </div>
-<!--      <div id='header-left'>
-        <h1>Video Library</h1>
-    </div>
-
-    <div id='header-right'>
-        <ul id='nav-bar'>
-            <li><a href="{%url 'userpage' %}">Home</a></li>
-            <li><a href="{%url 'videos' %}" class='page-active'>Videos</a></li>
-            <li><a href="{%url 'pastworkouts' %}">Past Workouts</a></li>
-            <li><a href="{%url 'userprofile' %}">Profile</a></li>
-            <li><a href="{%url 'contact' %}">Contact & Support</a></li>
-            <li><a href="{%url 'logout' %}">Logout</a></li>
-        </ul>
-    </div>
- -->
     <hr>
 
     <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
@@ -77,8 +60,9 @@
     <div id="left_container" style="">
         <h2 style="text-align:center; margin-right:4vw;">{{Video_Title}}</h2>
         <br>
-        <div class="container" style="width:550px; margin-right:2vw; margin-left:2vw; margin-top:2vw;">
-        <video style="text-align:center; height:350px; margin-top:2vw; margin-bottom:2vw;" height="350" controls controlsList="nodownload">
+        <div class="container" style="width:550px; margin-right:2vw; margin-left:2vw; margin-top:2vw; height:29vw !important;">
+
+        <video style="text-align:center; margin-top:2vw; margin-bottom:2vw; margin:auto; width:100%; max-height:27vw;" controls controlsList="nodownload">
             <source src="{{Video_URL}}" type="video/mp4">
         </video>
         </div>
@@ -98,8 +82,8 @@
             </select>
         </form>
         <!-- <br> -->
-        <div class="mdl-tabs__panel is-active" id="levels_group_1" 
-        style="overflow-y:scroll; height:400px; border:solid; width:85vw; margin-top:0.5vw; 
+        <div class="mdl-tabs__panel is-active" id="levels_group_1"
+        style="overflow-y:scroll; height:400px; border:solid; width:85vw; margin-top:0.5vw;
         margin-left:2vw; margin-right:4vw; padding-left:0.5vw; margin-bottom:3vw;">
         <h3>{{Selected_Exercise_Name.0}}</h3>
         {{Selected_Exercise_Description | safe}}
@@ -109,7 +93,7 @@
             {{Dict.Name}} (<a href="/exercise-descriptions/{{Dict.Description_URL}}" target="_blank">View Description</a>)<br>
         {% endfor %}
  -->        <!-- <img id="main_video" src='{% static "videopage/Vid_Thumbnail.png" %}'> -->
-    </div>                
+    </div>
 
     <div id='right_container' style="margin-top:0px;">
         <div id='video_tabs' class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
@@ -120,14 +104,14 @@
                 <a href="#levels_group_3" class="mdl-tabs__tab" id="tab3">11-15</a>
                 <a href="#levels_group_4" class="mdl-tabs__tab" id="tab4">16-20</a>
                 <a href="#levels_group_5" class="mdl-tabs__tab" id="tab5">21-25</a>
- -->                
+ -->
             </div>
             <!-- <div id="search_container"> -->
             <h5 style="margin-bottom:0vw; margin-top:-2vw;">Videos (Click Image to View)</h5>
             <br>
                 <!-- <p style="font-size: 1vw; display:inline-block; padding:0; margin: 0">Search</p> -->
                 Search
-                <input type="text" style="display:inline-block; margin-left:0.5vw; margin-right:1vw;" 
+                <input type="text" style="display:inline-block; margin-left:0.5vw; margin-right:1vw;"
                 name="search" placeholder="Enter Keywords">
                 Level
                 <select style="margin-left:0.5vw;" placeholder="Select Level" id='select_level' name="Level">
@@ -142,9 +126,9 @@
                     <option value="{{Level}}">{{Level}}+</option>
                     {% endfor %}
                 </select>
-                <input type="submit" 
-                value="Filter Videos" 
-                name="search_submit" 
+                <input type="submit"
+                value="Filter Videos"
+                name="search_submit"
                 style="margin-left:2.5vw; background-color: orange; border-radius: 0.35vw; border: none">
                 <hr style="border-top: 0.02vw solid rgba(0,0,0,0.2); margin-top: 0.75vw; width: 85%">
             <!-- </div> -->
@@ -155,15 +139,15 @@
             <div class="video_row">
                 {%for Row in Videos %}
                 <div class="thumbnail_container" style="height:8vw; font-size:1vw; margin-bottom:0px; margin-left:0.5vw; margin-right:0.5vw;">
-                    <input type="image" name="{{Row.1}}" src="{{Row.2}}" alt="Show Video" value="{{Row.0}}" 
+                    <input type="image" name="{{Row.1}}" src="{{Row.2}}" alt="Show Video" value="{{Row.0}}"
                     style="width:100%; height:6vw; border-style:solid; margin-top:0px;"/>
                     {{Row.0}}
-<!--                     <input type="submit" name="{{Row.1}}" value="{{Row.0}}" 
-                    style="background:none; border-width:0px; color:blue; text-decoration:underline; 
+<!--                     <input type="submit" name="{{Row.1}}" value="{{Row.0}}"
+                    style="background:none; border-width:0px; color:blue; text-decoration:underline;
                     padding:0px; margin:0px; font-size:12px; width:100%;"/>
  -->                    <!-- <a href="" style="margin:0px; padding:0px;" name="{{Row.1}}" onclick="this.form.submit();"><p>{{Row.0}}</p></a> -->
                 </div>
-                {% endfor %}                
+                {% endfor %}
             </div>
         </form>
         </div>
@@ -185,7 +169,7 @@
         data: {
             option1: "",
             option2: "",
-            option3: "", 
+            option3: "",
             option4: "",
             option5: ""
         }
@@ -223,9 +207,9 @@
 
             // vm.option1 = "Level 1";
             // vm.option2 = "Level 2";
-            // vm.option3 = "Level 3"; 
-            // vm.option4 = "Level 4"; 
-            // vm.option5 = "Level 5"; 
+            // vm.option3 = "Level 3";
+            // vm.option4 = "Level 4";
+            // vm.option5 = "Level 5";
         // }
 
         $("#tab1").click(function () {
@@ -237,45 +221,45 @@
 
             // vm.option1 = "Level 1";
             // vm.option2 = "Level 2";
-            // vm.option3 = "Level 3"; 
-            // vm.option4 = "Level 4"; 
-            // vm.option5 = "Level 5"; 
+            // vm.option3 = "Level 3";
+            // vm.option4 = "Level 4";
+            // vm.option5 = "Level 5";
         })
 
         $("#tab2").click(function () {
             vm.option1 = "Level 6";
             vm.option2 = "Level 7";
-            vm.option3 = "Level 8"; 
-            vm.option4 = "Level 9"; 
-            vm.option5 = "Level 10"; 
-          
+            vm.option3 = "Level 8";
+            vm.option4 = "Level 9";
+            vm.option5 = "Level 10";
+
         })
 
         $("#tab3").click(function () {
             vm.option1 = "Level 11";
             vm.option2 = "Level 12";
-            vm.option3 = "Level 13"; 
-            vm.option4 = "Level 14"; 
-            vm.option5 = "Level 15"; 
-          
+            vm.option3 = "Level 13";
+            vm.option4 = "Level 14";
+            vm.option5 = "Level 15";
+
         })
 
         $("#tab4").click(function () {
             vm.option1 = "Level 16";
             vm.option2 = "Level 17";
-            vm.option3 = "Level 18"; 
-            vm.option4 = "Level 19"; 
-            vm.option5 = "Level 20"; 
-          
+            vm.option3 = "Level 18";
+            vm.option4 = "Level 19";
+            vm.option5 = "Level 20";
+
         })
 
         $("#tab5").click(function () {
             vm.option1 = "Level 21";
             vm.option2 = "Level 22";
-            vm.option3 = "Level 23"; 
-            vm.option4 = "Level 24"; 
-            vm.option5 = "Level 25"; 
-          
+            vm.option3 = "Level 23";
+            vm.option4 = "Level 24";
+            vm.option5 = "Level 25";
+
         })
 
     });
