@@ -23,8 +23,8 @@ Level_Names = ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6",
 "Level 16", "Level 17", "Level 18", "Level 19", "Level 20", "Level 21", "Level 22", "Level 23", "Level 24", "Level 25"]
 
 
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def Videos(request): 
 	_User = request.user
 	_Member = Member.objects.get(User = _User)

@@ -212,9 +212,9 @@ def Admin_Videos_Library(request):
 		if os.path.isfile(Delete_Video.File.url):
 			 os.remove(Delete_Video.File.url)
 			 print("Removed Video File")
-		if os.path.isfile(Delete_Video.Thumbnail.url):
-			 os.remove(Delete_Video.Thumbnail.url)
-			 print("Removed Video File")
+		# if os.path.isfile(Delete_Video.Thumbnail.url):
+		# 	 os.remove(Delete_Video.Thumbnail.url)
+		# 	 print("Removed Video File")
 		# if os.path.isfile(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),_Video.file.url)):
 		# 	 os.remove(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),_Video.file.url))
 		# 	 print("Removed Video File")

@@ -24,31 +24,23 @@ def User_Ref_Dict(user):
 	return Dict
 
 def Check_Level_Up(_Member):
-	Level_Up = True
+	Level_Up = False
 	Curr_Level = _Member.Level
 	Stats = _Member.Stats.all()
 	
 	Squat, Created = Stat.objects.get_or_create(Member = _Member, Type="Squat")
-	Bench, Created = Stat.objects.get_or_create(Member = _Member, Type="UB Hor Press")
+	Bench, Created = Stat.objects.get_or_create(Member = _Member, Type="UB Hor Push")
 	Hinge, Created = Stat.objects.get_or_create(Member = _Member, Type="Hinge")
 	print("CHECK LEVEL UP FUNCTION:")
 	print(Curr_Level)
-	# for x in Stats:
-	# 	print("Stat Check: " + x.Type + " Passed: " + str(not x.Failed))
-	# 	print(x.Level)
-	# 	if x.Failed and x.Level <= Curr_Level - 2:
-	# 		Level_Up = False
-	# 	if x.Level < Curr_Level - 2:
-	# 		return False
-	# 	if x.Failed and x.Core: 
-	# 		return False
-	if Squat.Failed or Bench.Failed or Hinge.Failed:
-		Level_Up = False
+	if Squat.Level_Up and Bench.Level_Up and Hinge.Level_Up:
+		Level_Up = True
+	# if Squat.Failed or Bench.Failed or Hinge.Failed:
 
 	if Level_Up:
 		print("Member Levelled Up!")
-	# 	_Member.Level += 1
-	# 	_Member.save()
+		_Member.Level += 1
+		_Member.save()
 		return True
 	else:
 		return False

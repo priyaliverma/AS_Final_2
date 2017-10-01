@@ -28,8 +28,12 @@ Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 RPEs = [["1-2", 1], ["3-4", 3], ["5-6", 5], ["7", 7], ["8", 8], ["8.5", 8.5], ["9", 9], ["9.5", 9.5], ["10", 10]]
 RPEs.reverse()
 
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
+@user_passes_test(Member_Exists, login_url="/")
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
+@user_passes_test(Member_Agreed, login_url="/waiver")
+@user_passes_test(Member_Read, login_url="/terms-conditions")
+@user_passes_test(Member_Has_Workouts, login_url="/welcome")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def User_Page(request): 
 	_User = request.user
 	_Member = Member.objects.get(User = _User)
@@ -50,6 +54,28 @@ def User_Page(request):
 
 	if _Member.Has_Workouts and _Member.Finished_Workouts:
 		context["Finished_Workouts"] = True
+
+	Uncompleted_Workouts = Workouts.filter(Member=_Member, Completed=False)
+	Upcoming_Workouts = []
+	for U in Uncompleted_Workouts:
+		_Date = datetime.strptime(U._Date, "%m/%d/%Y")
+		if _Date.date() >= datetime.now().date():
+			Delta = _Date.date() - datetime.now().date()
+			print("Future Uncompleted Workout Workout " + str(Delta) + " Days ahead")
+			Upcoming_Workouts.append(U)
+		elif _Date.date() < datetime.now().date():
+			print("Past Uncompleted Workout Workout")
+			U.Completed = True
+			U.save()
+	
+	print("Number of remaining workouts: " + str(len(Upcoming_Workouts)))
+
+	if len(Upcoming_Workouts) == 0:
+		_Member.Finished_Workouts = True
+		_Member.save()
+	print("Finished Workouts: " + str(_Member.Finished_Workouts))
+	# _Member.Finished_Workouts = False
+	# _Member.save()
 
 	# Reversed_RPE = reversed(RPEs)
 	# RPEs.reverse()
@@ -74,7 +100,13 @@ def User_Page(request):
 	Requires_Tempo = False
 	Alloys_Complete = True
 
+	if _Date == datetime.now().strftime("%m/%d/%Y") and Workout.objects.filter(_Date=_Date, Member=_Member, Completed=True).exists():
+		context["Workout_Completed_Same_Day"] = True
+
 	if Workout.objects.filter(_Date=_Date, Member=_Member, Completed=False).exists():
+		if Workout.objects.filter(_Date=_Date, Member=_Member, Completed=False).count() > 1:
+			Workout.objects.filter(_Date=_Date, Member=_Member, Completed=False)[0].delete()
+
 		_Workout = Workout.objects.get(_Date=_Date, Member=_Member, Completed=False)
 		Workout_Day = True
 		context["Workout_Info"] = "Level " + str(_Workout.Level) + ", Week " + str(_Workout.Template.Week) + ", Day " + str(_Workout.Template.Day)
@@ -140,11 +172,16 @@ def User_Page(request):
 			context["Future"] = "It is not time to complete this workout yet. Please come back to this date later."
 			context["Workout_Day_Time"] = "Future"
 			Future = True
+		if _Workout.Template.Last:	
+			print("Last workout detected")
 
 # 		FOR TESTING:
-		Same_Day = True
-		Past = False
-		Future = False
+		context["Workout_Day_Time"] = "Same"
+		# _Workout.Completed = False
+		# _Workout.save()
+		# Same_Day = True
+		# Past = False
+		# Future = False
 
 # 		SUB-WORKOUT LOOP # 1
 		for i in _Workout.SubWorkouts.all():
@@ -195,8 +232,10 @@ def User_Page(request):
 
 			if i.Template.Deload != 0 and i.Template.Deload != None:
 				Row["Deload"] = str(i.Template.Deload) + " (Level " + str(_Member.Level + i.Template.Deload) + ")"
+				Row["Level"] = "Level " + str(_Member.Level + i.Template.Deload)
 			else:
 				Row["Deload"] = "None"
+				Row["Level"] = "Level " + str(_Member.Level)
 
 
 			if Template.Reps == "" or Template.Reps == "0" or Template.Reps == "B":
@@ -354,6 +393,10 @@ def User_Page(request):
 			if i.Filled_Sets >= 6:
 				i.Maxed_Sets = True
 				i.save()
+				Row["SS_Btn"] = False
+				Row["SD_Btn"] = False
+
+
 			#ADD FILLED SETS TO SET_STATS			
 			i.Set_Stats = "/".join(Filled_Sets)
 			i.save()
@@ -548,6 +591,7 @@ def User_Page(request):
 # 		FORM SUBMIT-CHECK STARTS HERE
 		Last_Filled_Set = ["", "", "", "", ""]
 		if request.GET.get("Submit_Workout") or Get_Alloy_Pressed or Get_Set_SS or Get_Set_SD:
+			print("578")
 			# print(request.GET.keys())
 # 			LOOPING THROUGH SETS
 			for _Sub in _Workout.SubWorkouts.all():
@@ -798,20 +842,20 @@ def User_Page(request):
 								Stat_List.remove('')
 							_Sub.Set_Stats += "/" + Stat_String
 							_Sub.save()
-#				WORKOUT SUBMITTED 
-				if request.GET.get("Submit_Workout"):
-					_Workout.Submitted = True
+#			WORKOUT SUBMITTED 
+			if request.GET.get("Submit_Workout"):
+				print("Submitted")
+				_Workout.Completed = True
+				_Workout.save()
+#			LAST WORKOUT/LEVEL-UP CHECK 
+				if _Workout.Template.Last:	
+					print("Last Workout Submitted")				
+					request.session["Level_Up"] = Check_Level_Up(_Member)			
+					_Member.Finished_Workouts = True
+					_Member.save()		
+					_Workout.Completed = True
 					_Workout.save()
-					# _Workout.Completed = True
-					# _Workout.save()
-#				LAST WORKOUT/LEVEL-UP CHECK 
-					if _Workout.Template.Last:					
-						request.session["Level_Up"] = Check_Level_Up(_Member)			
-						_Member.Finished_Workouts = True
-						_Member.save()		
-						_Workout.Completed = True
-						_Workout.save()
-						return HttpResponseRedirect("/progress-report")
+					return HttpResponseRedirect("/progress-report")
 					# elif _Workout.Template.Block_End:
 					# 	return HttpResponseRedirect("/next-block")
 
@@ -927,39 +971,32 @@ def RPE_Update(request):
 
 Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def Contact_And_Support(request): 
 	return render(request, "contact.html")
 
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def Logout(request): 
 	logout(request)
 	return HttpResponseRedirect("/")
 
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def Exercise_Descriptions(request):
 	context = {}
 	return render(request, "exercise_descriptions.html", context)
 
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def Tutorial(request):
 	context = {}
 	return render(request, "tutorial.html", context)
 
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
-def User_Page_Alloy(request):
-	context = {}
-	return render(request, "userpage_alloy.html", context)
 
-
-@user_passes_test(Tier_3, login_url="/")
-@user_passes_test(Expired_Check, login_url="/renew-membership")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def Past_Workouts(request):
 	context = {}
 	_User = request.user

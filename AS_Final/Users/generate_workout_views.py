@@ -10,13 +10,16 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.files import File
 import json
 import stripe
-from checks import User_Check, Member_Exists
 from RPE_Dict import RPE_Dict
+from level_up_messages import Messages_Dict
 import re
 from Shared_Functions import *
+from checks import *
 
 
-@user_passes_test(User_Check, login_url="/")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
+@user_passes_test(Member_Finished_Workouts, login_url="/userpage")
 def Get_Workout_Block(request):
 	context = {}
 	Days_List = []
@@ -25,8 +28,8 @@ def Get_Workout_Block(request):
 	context["Num_Days"] = 3
 
 	_Member = Ref_Dict["Member"]
-	_Member.Level = 16
-	# _Member.Level = 1
+	# _Member.Level = 16
+	_Member.Level = 1
 	_Member.save()
 
 	N_Days = 3
@@ -80,39 +83,48 @@ def Get_Workout_Block(request):
 			for W in _Member.workouts.all():
 				W.Current_Block = False
 				W.save()
+			_Member.Finished_Workouts = False
+			_Member.save()
 			Generate_Workouts(Start_Date, _Level, Days_List, _Member)
 			return HttpResponseRedirect("/userpage")
 	return render(request, "next_workout_block.html", context)
 
-@user_passes_test(User_Check, login_url="/")
+@user_passes_test(Inside_Access, login_url="/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
+@user_passes_test(Member_Finished_Workouts, login_url="/userpage")
 def Level_Up(request):
 	User = request.user
 	_Member = Member.objects.get(User=User)
-	request.session["Level_Up"] = Check_Level_Up(_Member)
+	# request.session["Level_Up"] = Check_Level_Up(_Member)
 	context = {}
 	
 	context["Core_Stats"] = []
 	context["Stats"] = []
 	context["Title"] = "Level Up"
 	context["Main_Message"] = "Congratulations, you have levelled up!"
-	context["Second_Message"] = "You are now at level: " + str(_Member.Level + 1)
+	context["Second_Message"] = "You are now at level: " + str(_Member.Level)
 	context["Level"] = _Member.Level 
 	context["Level_Up"] = ["True"]
+
 	if "Level_Up" not in request.session.keys():
-		request.session["Level_Up"] = True
+		context["Passed"] = True
+		request.session["Level_Up"] = False
 
 	if not request.session["Level_Up"]:
+		context["Passed"] = False
 		context["Main_Message"] = "You need more time!"
 		context["Second_Message"] = "You results show that you need to spend more time at your current exercise level. " 						
+
+		context["Level_Up_Message"] = Messages_Dict[16]
+		Static_String = str(16) + "_Static"
+		context["Level_Up_Img_URL"] = Messages_Dict[Static_String]
 		context["Level_Up"] = []
-	else:
-		context["Level"] += 1
 	
 	Stat_List = _Member.Stats.all()
 	for i in Stat_List:
 		Stat_Dict = {}
 		Stat_Dict["Type"] = i.Type
-		if i.Failed:
+		if not i.Level_Up:
 			Stat_Dict["Alloy_Outcome"] = "Failed"
 			Stat_Dict["PASSED"] = []
 			Stat_Dict["FAILED"] = ["FAILED"]
@@ -125,7 +137,7 @@ def Level_Up(request):
 		Stat_Dict["Exercise_Name"] = i.Exercise_Name
 		# Stat_Dict["Exercise_Name"] = i.Exercise_Name
 		# Stat_Dict["Alloy_Performance_Reps"] = i.Alloy_Performance_Reps
-		if i.Type == "Squat" or i.Type == "Hinge" or i.Type == "UB Hor Press":
+		if i.Type == "Squat" or i.Type == "Hinge" or i.Type == "UB Hor Push":
 			context["Core_Stats"].append(Stat_Dict)
 		else:
 			context["Stats"].append(Stat_Dict)

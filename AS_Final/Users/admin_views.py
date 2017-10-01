@@ -100,6 +100,8 @@ def AdminExercises(request):
 				# Input_Code = "L" + str(n) + x[2]
 				# print(Input_Code)
 				if Exercise.objects.filter(Type = _Type, Level = Level_Num).exists():
+					# if Exercise.objects.filter(Type=_Type, Level=Level_Num).count() > 1:
+					# 	Exercise.objects.filter(Type=_Type, Level=Level_Num)[0].delete()
 					_Exercise = Exercise.objects.get(Type = _Type, Level = Level_Num)
 					x[1][n - 1] = _Exercise.Name
 					if Group_Index == 0:

@@ -1,0 +1,33 @@
+#nav_bar {
+    margin-top: 1.4vw;
+    list-style-type: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 0px;
+}
+
+ul {
+    z-index: 9999;
+    line-height: 0px;
+    width: 100%;
+    margin: 0; 
+    padding: 0; 
+}
+
+#nav_bar li {
+    display: inline-block;
+    font-size: 1vw;
+}
+
+#nav_link_1 {
+    margin-left: 32.5%;
+}
+
+#nav_link_2 {
+    margin-left: 28%; 
+}
+
+a {
+    text-decoration: none
+}

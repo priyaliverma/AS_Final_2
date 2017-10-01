@@ -78,6 +78,18 @@
     <th style="font-size:12px; width:150px !important; text-align:left;">Next Workout (Date)</th>
  -->  
  </tr>
+  {% for Member in Members %}  
+  <tr>
+    <td>
+    Member:
+    <input type="submit" name="{{Member.PK}}" value="{{Member.Username}}" style="background:none; border-width:0px; color:blue; 
+    text-decoration:underline; padding:0px; margin:0px; font-size:12px;"/>
+    </td>
+    <td>{{Member.First_Name}}</td>
+    <td>{{Member.Last_Name}}</td>
+ </tr>
+  {% endfor %}
+
   {% for User in Users %}
   <tr>
     <td>

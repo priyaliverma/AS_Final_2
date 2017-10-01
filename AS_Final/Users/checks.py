@@ -19,6 +19,81 @@ def Tier_1(user):
 	elif Member.objects.filter(User=user).exists():
 		return True
 	return False
+# SEQUENCE STARTS HERE
+def Member_Exists(user):
+	if user.is_anonymous():
+		return False
+		print("Member doens't exist!")
+	else:
+		return Member.objects.filter(User=user).exists()
+def Member_Paid(user):
+	_Member = Member.objects.get(User=user)
+	if not _Member.Paid:
+		print("Member hasn't paid!")		
+	return _Member.Paid
+# Liability Waiver
+def Member_Agreed(user):
+	_Member = Member.objects.get(User=user)
+	if not _Member.Agreed:
+		print("Member hasn't agreed!")		
+	return _Member.Agreed
+def Not_Agreed(user):
+	_Member = Member.objects.get(User=user)
+	if _Member.Agreed:
+		print("Member already agreed!")		
+	return not _Member.Agreed
+# Terms & Conditions
+def Not_Read(user):
+	_Member = Member.objects.get(User=user)
+	if _Member.Read:
+		print("Member already read!")		
+	return not _Member.Read
+def Member_Read(user):
+	_Member = Member.objects.get(User=user)
+	if not _Member.Read:
+		print("Member hasn't Read!")		
+	return _Member.Read
+# Welcome
+def Member_Has_Workouts(user):
+	_Member = Member.objects.get(User=user)
+	if not _Member.Has_Workouts:
+		print("Member has no workouts!")		
+	return _Member.Has_Workouts
+def No_Workouts(user):
+	_Member = Member.objects.get(User=user)
+	if _Member.Has_Workouts:
+		print("Member already has workouts!")		
+	return not _Member.Has_Workouts
+# Finished Workouts
+def Member_Finished_Workouts(user):
+	_Member = Member.objects.get(User=user)
+	if not _Member.Finished_Workouts:
+		print("Member has no workouts!")		
+	return _Member.Finished_Workouts
+
+# BELOW TWO USED FOR ALL INSIDE-PAGES (EXCEPT FOR USERPAGE)
+# Member Expired
+def Member_Not_Expired(user):
+	_Member = Member.objects.get(User=user)
+	if _Member.Admin:
+		return True
+	if _Member.Expiry_Date == None or _Member.Expiry_Date < datetime.now(timezone.utc):
+		return False
+	return True
+# INSIDE ACCESS
+def Inside_Access(user):
+	if user.is_anonymous():
+		return False
+	else:
+		_Member = Member.objects.get(User=user)
+		if _Member.Paid and _Member.Agreed and _Member.Read and _Member.Has_Workouts:
+			return True
+	return False
+# FINISHED WORKOUTS
+def Member_Finished_Workouts(user):
+	_Member = Member.objects.get(User=user)
+	return _Member.Finished_Workouts
+
 
 def Tier_2(user):
 	if user.is_anonymous():
@@ -31,6 +106,14 @@ def Tier_2(user):
 			return True
 	return False
 
+def Read(user):
+	_Member = Member.objects.get(User=user)
+	return _Member.Read
+
+def Agreed(user):
+	_Member = Member.objects.get(User=user)
+	return _Member.Agreed
+
 def Tier_3(user):
 	if user.is_anonymous():
 		return False
@@ -38,7 +121,7 @@ def Tier_3(user):
 		_Member = Member.objects.get(User=user)
 		if _Member.Admin:
 			return True
-		elif _Member.Paid and _Member.Read and _Member.Agreed:
+		elif _Member.Paid and _Member.Read and _Member.Agreed and _Member.Has_Workouts:
 			return True
 	return False
 
@@ -46,28 +129,19 @@ def Expired_Check(user):
 	_Member = Member.objects.get(User=user)
 	if _Member.Admin:
 		return True
-	if _Member.Expiry_Date < datetime.now(timezone.utc):
+	if _Member.Expiry_Date == None or _Member.Expiry_Date < datetime.now(timezone.utc):
 		request.session["Expired"] = ["True"]
 		return False
 	return True
+
+def Not_New(user):
+	_Member = Member.objects.get(User=user)
+	return not _Member.New
 	
-# Liability Waiver
-def Not_Agreed(user):
-	_Member = Member.objects.get(User=user)
-	return not _Member.Agreed
-# Terms & Conditions
-def Not_Read(user):
-	_Member = Member.objects.get(User=user)
-	return not _Member.Read
 # Sign-Up Confirmation
 def New_Check(user):
 	_Member = Member.objects.get(User=user)
 	return _Member.New
-# Welcome
-def No_Workouts(user):
-	_Member = Member.objects.get(User=user)
-	return not _Member.Has_Workout
-
 
 
 def New_Check_Inverse(user):

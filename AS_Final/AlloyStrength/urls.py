@@ -1,8 +1,9 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 # from Users.views import Home, Member_Home, Admin, Test, User_Page, Workout_Update, Videos, AdminExercises, RPE_Update, SignUp_Confirmation, Welcome, Past_Workouts, User_Profile, Level_Up
 
 from Users.views import *
+from Users.blog_views import *
 
 from Users.admin_views import *
 from Users.admin_video_views import *
@@ -21,6 +22,7 @@ urlpatterns = [
 
     url(r'^admin-users/', Admin_Users, name='AdminUsers'),
     url(r'^admin-users-view-profile/', Admin_User_Profile, name='AdminUser_Profile'),
+    url(r'^admin-users-view-profile-workout/', Admin_User_Workout, name='AdminUser_Workout'),
 
     url(r'^admin-workouts/', Admin_Workouts, name='Home'),
 
@@ -49,8 +51,6 @@ urlpatterns = [
     url(r'^userpage/', User_Page, name="userpage"),
     # url(r'^userpage/', User_Page_Test, name="userpage"),
 
-    url(r'^userpage-alloy/', User_Page_Alloy, name="userpage_alloy"),
-
     url(r'^contact/', Contact_And_Support, name="contact"),
     url(r'^progress-report/', Level_Up, name="levelup"),
     url(r'^get-workouts/', Get_Workout_Block, name='get_workout_block'),
@@ -67,6 +67,10 @@ urlpatterns = [
     url(r'^videos/', Videos, name="videos"),
 
     url(r'^logout/', Logout, name='logout'),
+
+    url(r'^blog/', Blog, name='Home'),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    
 
     # url(r'^past-workouts/', Past_Workouts, name="pastworkouts"),
 ]

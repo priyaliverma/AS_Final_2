@@ -183,10 +183,7 @@ def User_Profile(request):
 			W.save()
 
 			if W.Alloy:
-				if W.Alloy_Passed:
-					Dict["Type"] = "Alloy (Passed)"
-				else:
-					Dict["Type"] = "Alloy (Failed)"
+				Dict["Type"] = "Alloy"
 			else:
 				Dict["Type"] = "Regular"
 			context["Completed_Workouts"].append(Dict)
@@ -203,8 +200,6 @@ def User_Profile(request):
 			Stat_Dict["Name"] = _Exercise.Name
 			Stat_Dict["Max"] = i.Max
 			context["Stats"].append(Stat_Dict)
-
-
 	print(_Member.Level)
 	context["Level"] = _Member.Level
 	return render(request, "userprofile_2.html", context)
@@ -213,15 +208,19 @@ def User_Profile(request):
 def Admin_Users(request): 
 	context = {}
 	context["Users"] = []
-	for _User in User.objects.all():
-		if Member.objects.filter(User=_User).exists():
-			_Member = Member.objects.get(User=_User)
-			row = []
-			row.append(_User.username)
-			row.append(_User.pk)
-			row.append(_User.first_name)
-			row.append(_User.last_name)
-			context["Users"].append(row)
+	context["Members"] = []
+	# _Members = Member.objects.filter(Paid = True, Admin = False)
+	_Members = Member.objects.filter(Paid = True)
+
+	for _Member in _Members:
+		_User = _Member.User
+		Member_Dict = {}
+		Member_Dict["Username"] = _User.username
+		Member_Dict["PK"] = _Member.pk
+		Member_Dict["First_Name"] = _User.first_name
+		Member_Dict["Last_Name"] = _User.last_name
+		context["Members"].append(Member_Dict)
+
 	if request.method == 'GET':
 		print("GET REQUEST RECEIVED")
 	if request.method == 'POST':
@@ -233,34 +232,105 @@ def Admin_Users(request):
 			print(type(i))
 			print(len(i))
 			if len(i) < 4:
-				request.session["User_PK"] = str(i)
+				request.session["Member_PK"] = str(i)
+				# request.session["User_PK"] = str(i)
 		print("POST REQUEST RECEIVED")
 		return HttpResponseRedirect("/admin-users-view-profile/")
 	return render(request, "admin_users.html", context)
 
 @user_passes_test(Admin_Check, login_url="/admin-login")
 def Admin_User_Profile (request):
-	User_PK = int(request.session["User_PK"])
-	_User = User.objects.get(pk=User_PK)
-	_Member = Member.objects.get(User=_User)
+
+	Member_PK = int(request.session["Member_PK"])
+	_Member = Member.objects.get(pk=Member_PK)
+	_User = _Member.User
 	_Workouts = _Member.workouts.all()
 	_Now = datetime.now()
 	_Past_Times = []
 	_Future_Times = []
-	print("From Admin User Profile: " + str(User_PK))
-	print("Current Time: " + str(datetime.now()))
+
 	context = {}
-	context["User_Info"] = []
-	context["User_Info"].append(_User.username)
-	context["User_Info"].append(_User.first_name)
-	context["User_Info"].append(_User.last_name)
-	context["User_Info"].append(_Member.Level)
+
+	context["Picture_URL"] = "/static/userpage/Profile_Placeholder.png"
+	if _Member.Picture != "":
+		context["Picture_URL"] = "/" + _Member.Picture.url
+
+	context["User_Info"] = {}
+	context["User_Info"]["Username"] = _User.username
+	context["User_Info"]["First_Name"] = _User.first_name
+	context["User_Info"]["Last_Name"] = _User.last_name
+	context["User_Info"]["Level"] = _Member.Level
+	context["User_Info"]["Stats"] = []
+	# User Info
+	context["DOB"] = _Member.DOB
+	context["Height"] = _Member.Height
+	context["Weight"] = _Member.Weight
+	# Training Experience
+	context["Training_Time"] = _Member.Training_Time
+	context["Sports"] = _Member.Primary_Sports
+	if _Member.Prior_RPE:
+		context["RPE"] = "Yes"
+	else:
+		context["RPE"] = "No"
+	# Lifts from Sign-Up
+	if _Member.Squat == 0:
+		context["Squat"] = "None"
+	else:
+		context["Squat"] = _Member.Squat
+
+	if _Member.Bench == 0:
+		context["Bench"] = "None"
+	else:
+		context["Bench"] = _Member.Bench
+
+	if _Member.D_Lift == 0:
+		context["D_Lift"] = "None"
+	else:
+		context["D_Lift"] = _Member.D_Lift
+
+	if _Member.OP == 0:
+		context["OP"] = "None"
+	else:
+		context["OP"] = _Member.OP
+
+	if _Member.PC == 0:
+		context["PC"] = "None"
+	else:
+		context["PC"] = _Member.PC
+
+	if _Member.CJerk == 0:
+		context["CJerk"] = "None"
+	else:
+		context["CJerk"] = _Member.CJerk
+
+	if _Member.Snatch == 0:
+		context["Snatch"] = "None"
+	else:
+		context["Snatch"] = _Member.Snatch
+
+	if _Member.Other == "":
+		context["Other"] = "None"
+	else:
+		context["Other"] = _Member.Other
+
+	_Stats = _Member.Stats.all()
+	for i in _Stats:
+		_Exercise, Created = Exercise.objects.get_or_create(Type=i.Type, Level=_Member.Level)
+		# if i.Type == "Squat" or i.Type == "UB Hor Press" or i.Type == "Hinge":
+		if True:
+			print("Stat: " + i.Type)
+			Stat_Dict = {}
+			Stat_Dict["Type"] = i.Type
+			Stat_Dict["Name"] = _Exercise.Name
+			Stat_Dict["Max"] = i.Max
+			context["User_Info"]["Stats"].append(Stat_Dict)
+
+
 	for i in _Workouts:
 		_Datetime = datetime.strptime(i._Date, '%m/%d/%Y')
 		i.Date = _Datetime.date()
 		i.save()
 		# print(str(i) + " " + i._Date + " " + str(datetime.strptime(i._Date, '%m/%d/%Y')))
-		print(str(i) + " " + i._Date + " " + str(i.Date))
 		if _Datetime >_Now:
 			_Distance = _Datetime - datetime.now()
 			_Future_Times.append(_Distance)
@@ -271,39 +341,178 @@ def Admin_User_Profile (request):
 			_Past_Times.append(_Distance)
 			if _Distance <= min(_Past_Times):
 				Last_Workout = i
-	print(_Future_Times)
-	print(_Past_Times)
-	context["Next_Workout"] = []
-	context["Last_Workout"] = []
+
+	context["Next_Workout"] = {}
+	context["Last_Workout"] = {}
+
 	if _Future_Times:
-		print("Future Min Time: " + str(min(_Future_Times)))
-		print("Next Workout: " + str(Next_Workout) + " " + Next_Workout._Date)
-		_Summary = ", Level " + str(Next_Workout.Level) + " Week " + str(Next_Workout.Week) + " Day " + str(Next_Workout.Day)
-		context["Next_Workout"].append(_Summary)
-		context["Next_Workout"].append(Next_Workout._Date)
-		_Subs = []
-		for _sub in Next_Workout.SubWorkouts.all():
-			_Description = str(_sub.Sets) + " x " + str(_sub.Reps) + " " + _sub.Exercise.Name
-			_Subs.append(_Description)
-		context["Next_Workout"].append(_Subs)
+		_Summary = "Level " + str(Next_Workout.Level) + ", Week " + str(Next_Workout.Template.Week) + " Day " + str(Next_Workout.Template.Day)
+		if Next_Workout.Template.Alloy:
+			_Summary += " (Alloy)"
+		context["Next_Workout"]["Summary"] = _Summary
+		context["Next_Workout"]["Date"] = Next_Workout._Date
+		context["Next_Workout"]["PK"] = Next_Workout.pk
+		context["Next_Workout"]["Subs"] = []
+		for i in Next_Workout.SubWorkouts.all():
+			Template = i.Template
+			Sub_Dict = {}
+			Sub_Dict["Number_Sets"] = i.Template.Sets
+			Sub_Dict["Sets"] = []
+			Sub_Dict["Type"] = i.Template.Exercise_Type
+			if i.Exercise != None:
+				Sub_Dict["Exercise_Name"] = i.Exercise.Name
+			Sets_List = i.Set_Stats.split("/")
+			if "" in Sets_List:
+				Sets_List.remove("")
+			Set_Num = 0
+			for Set in Sets_List:
+				Set_Num += 1
+				Set_Dict = {}
+				Set_Dict["Set_String"] = Set
+				Set_Dict["Code"] = Set[0]
+				Set_List = Set.split(",")
+				Type_Code = Set_List[0]
+				Set_Number = Set_List[0][1]
+				if Type_Code == "A" + str(i.Template.Sets):
+					Set_Dict["Type"] = "Alloy"
+					Type = "(Alloy)"
+				else:
+					Set_Dict["Type"] = "Regular"
+					Type = "(Regular)"
+				Reps = Set_List[1]
+				Weight = Set_List[2] + " lbs, "
+				RPE = Set_List[3]
+				Tempo = Set_List[4]
+				if Template.Reps == "" or Template.Reps == "0" or Template.Reps == "B":
+					Weight = "Bodyweight, "
+				Set_Dict["Set_Info"] = "Set " + str(Set_Num) + ": " + Weight + Reps + " reps @ " + RPE + " RPE "
+				if Set[0] != "B":
+					Sub_Dict["Sets"].append(Set_Dict)
+			context["Next_Workout"]["Subs"].append(Sub_Dict)
+		# _Subs = []
 	else:
-		context["Next_Workout"].append("None")		
+		context["Next_Workout"]["None"] = True
+
+	if request.GET.get("View_Next_Workout"):
+		request.session["Workout_PK"] = int(request.GET["Next_Workout_PK"])
+		return HttpResponseRedirect("/admin-users-view-profile-workout")
+
 	if _Past_Times:
-		print("Past Min Time: " + str(min(_Past_Times)))
-		print("Last Workout: " + str(Last_Workout) + " " + Last_Workout._Date)	
-		_Summary = ", Level " + str(Last_Workout.Level) + " Week " + str(Last_Workout.Template.Week) + " Day " + str(Last_Workout.Template.Day)
-		context["Last_Workout"].append(_Summary)
-		context["Last_Workout"].append(Last_Workout._Date)
-		_Subs = []
-		for _sub in Last_Workout.SubWorkouts.all():
-			Set_Stats = _sub.Set_Stats
-			# _Description = str(_sub.Sets) + " x " + str(_sub.Reps) + " " + _sub.Exercise.Name
-			_Subs.append(Set_Stats)
-		context["Last_Workout"].append(_Subs)
+		_Summary = "Level " + str(Last_Workout.Level) + ", Week " + str(Last_Workout.Template.Week) + " Day " + str(Last_Workout.Template.Day)
+		if Last_Workout.Template.Alloy:
+			_Summary += " (Alloy)"
+		context["Last_Workout"]["Summary"] = _Summary
+		context["Last_Workout"]["Date"] = Last_Workout._Date
+		context["Last_Workout"]["PK"] = Last_Workout.pk
+		context["Last_Workout"]["Subs"] = []
+		for i in Last_Workout.SubWorkouts.all():
+			Template = i.Template
+			Sub_Dict = {}
+			Sub_Dict["Number_Sets"] = i.Template.Sets
+			Sub_Dict["Sets"] = []
+			Sub_Dict["Type"] = i.Template.Exercise_Type
+			if i.Exercise != None:
+				Sub_Dict["Exercise_Name"] = i.Exercise.Name
+			Sets_List = i.Set_Stats.split("/")
+			if "" in Sets_List:
+				Sets_List.remove("")
+			Set_Num = 0
+			for Set in Sets_List:
+				Set_Num += 1
+				Set_Dict = {}
+				Set_Dict["Set_String"] = Set
+				Set_Dict["Code"] = Set[0]
+				Set_List = Set.split(",")
+				Type_Code = Set_List[0]
+				Set_Number = Set_List[0][1]
+				if Type_Code == "A" + str(i.Template.Sets):
+					Set_Dict["Type"] = "Alloy"
+					Type = "(Alloy)"
+				else:
+					Set_Dict["Type"] = "Regular"
+					Type = "(Regular)"
+				Reps = Set_List[1]
+				Weight = Set_List[2] + " lbs, "
+				RPE = Set_List[3]
+				Tempo = Set_List[4]
+				if Template.Reps == "" or Template.Reps == "0" or Template.Reps == "B":
+					Weight = "Bodyweight, "
+				Set_Dict["Set_Info"] = "Set " + str(Set_Num) + ": " + Weight + Reps + " reps @ " + RPE + " RPE "
+				if Set[0] != "B":
+					Sub_Dict["Sets"].append(Set_Dict)
+			context["Last_Workout"]["Subs"].append(Sub_Dict)
 	else:
-		context["Last_Workout"].append("None")
+		context["Last_Workout"]["None"] = True		
+
+	if request.GET.get("View_Last_Workout"):
+		request.session["Workout_PK"] = int(request.GET["Last_Workout_PK"])
+		return HttpResponseRedirect("/admin-users-view-profile-workout")
+
 
 	return render(request, "admin_user_profile.html", context)
+
+@user_passes_test(Admin_Check, login_url="/admin-login")
+def Admin_User_Workout (request):
+	context = {}
+
+	Member_PK = int(request.session["Member_PK"])
+	_Member = Member.objects.get(pk=Member_PK)
+	_User = _Member.User
+	context["Member_Name"] = _User.first_name + " " + _User.last_name
+
+	_PK = request.session["Workout_PK"]
+	_Workout = Workout.objects.get(pk=_PK)
+
+	context["Workout_Date"] = _Workout._Date
+	context["Workout_Info"] = "Week " + str(_Workout.Template.Week) + ", Day " + str(_Workout.Template.Day)
+	context["Workout_Level"] = "Level " + str(_Workout.Level)
+
+	context["Patterns"] = []
+	for i in _Workout.SubWorkouts.all():
+		Template = i.Template
+		print(i.Template.Exercise_Type + " Set Stats: ")
+		print(i.Set_Stats)
+		Sub_Dict = {}
+		Sub_Dict["Number_Sets"] = i.Template.Sets
+		Sub_Dict["Sets"] = []
+		Sub_Dict["Type"] = i.Template.Exercise_Type
+		if i.Exercise != None:
+			Sub_Dict["Exercise_Name"] = i.Exercise.Name
+		Sets_List = i.Set_Stats.split("/")
+		if "" in Sets_List:
+			Sets_List.remove("")
+		Set_Num = 0
+		for Set in Sets_List:
+			Set_Num += 1
+			print("Set: " + str(Set))
+			# if Set != "":
+			Set_Dict = {}
+			Set_Dict["Set_String"] = Set
+			Set_Dict["Code"] = Set[0]
+			Set_List = Set.split(",")
+			Type_Code = Set_List[0]
+			Set_Number = Set_List[0][1]
+			if Type_Code == "A" + str(i.Template.Sets):
+				Set_Dict["Type"] = "Alloy"
+				Type = "(Alloy)"
+			else:
+				Set_Dict["Type"] = "Regular"
+				Type = "(Regular)"
+			Reps = Set_List[1]
+			Weight = Set_List[2] + " lbs, "
+			RPE = Set_List[3]
+			Tempo = Set_List[4]
+
+			if Template.Reps == "" or Template.Reps == "0" or Template.Reps == "B":
+				Weight = "Bodyweight, "
+
+			Set_Dict["Set_Info"] = "Set " + str(Set_Num) + ": " + Weight + Reps + " reps @ " + RPE + " RPE "
+			if Set[0] != "B":
+				Sub_Dict["Sets"].append(Set_Dict)
+		context["Patterns"].append(Sub_Dict)
+
+	return render(request, "admin_user_workout_summary.html", context)
+
 
 
 @user_passes_test(Tier_3, login_url="/")

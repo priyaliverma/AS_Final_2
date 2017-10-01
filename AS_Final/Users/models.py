@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 import datetime
 from django.contrib.auth.models import User, Group
@@ -22,16 +24,33 @@ class Member(models.Model):
 	User = models.OneToOneField(User)
 	Picture = models.FileField(upload_to='static/user_profile_pictures', max_length=100, default="")
 	Level = models.IntegerField(default=1)
-	Squat = models.IntegerField(default=0)
-	Has_Workouts = models.BooleanField(default=False)
-	Finished_Workouts = models.BooleanField(default=False)
-	New = models.BooleanField(default=True)
+	# Checks
 	Admin = models.BooleanField(default=False)
+	New = models.BooleanField(default=True)
 	Signup_Date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
-	Paid = models.BooleanField(default=False)
 	Expiry_Date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
+	Paid = models.BooleanField(default=False)
 	Agreed = models.BooleanField(default=False)
 	Read = models.BooleanField(default=False)
+	Has_Workouts = models.BooleanField(default=False)
+	Finished_Workouts = models.BooleanField(default=False)
+	# Stats
+	DOB = models.CharField(max_length=10, default= "")
+	Height = models.CharField(max_length=10, default= "")
+	Weight = models.CharField(max_length=10, default= "")
+	# Lifts
+	Squat = models.DecimalField(max_digits=4, decimal_places=1, default=0, null=True)
+	Bench = models.DecimalField(max_digits=4, decimal_places=1, default=0, null=True, blank=True)
+	D_Lift = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+	OP = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+	PC = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+	CJerk = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+	Snatch = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+	Other = models.CharField(max_length=1000, default= "")
+	# Training Experience
+	Training_Time = models.CharField(max_length=30, default= "")
+	Primary_Sports = models.CharField(max_length=300, default= "")
+	Prior_RPE = models.BooleanField(default=False)
 
 class Stat(models.Model):
 	Type = models.CharField(default="", max_length=200)
@@ -163,3 +182,15 @@ class Workout(models.Model):
 	SubWorkouts = models.ManyToManyField(SubWorkout, default="")
 	# _User = models.OneToOneField(User, null=True)
 
+
+class Blog_Post(models.Model):
+	Title = models.CharField(max_length=200)
+	Content = RichTextUploadingField()
+	Date = models.DateTimeField(blank = True, null = True)
+
+	def publish(self): 
+		self.Date= timezone.now()
+		self.save()
+
+	def __str__(self): 
+		return self.Title 

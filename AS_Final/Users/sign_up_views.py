@@ -22,18 +22,101 @@ Exercise_Types = ["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",
 
 Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 
+def Create_Test_Users():
+	Test_1, created = User.objects.get_or_create(username="Test_1")
+	if created:
+		user.set_password("Test_1")
+		user.save()
+		_Member = Member.objects.create(User = Test_1)
+		_Member.save()
+
+	Test_2, created = User.objects.get_or_create(username="Test_2")
+	if created:
+		user.set_password("Test_2")
+		user.save()
+		_Member = Member.objects.create(User = Test_2)
+		_Member.Paid = True
+		_Member.Expiry_Date = datetime.now() + datetime.timedelta(days=3)
+		_Member.save()
+
+	Test_3, created = User.objects.get_or_create(username="Test_3")
+	if created:
+		user.set_password("Test_3")
+		user.save()
+		_Member = Member.objects.create(User = Test_3)
+		_Member.Paid = True
+		_Member.Expiry_Date = datetime.now() + datetime.timedelta(days=3)
+		_Member.Read = True
+		_Member.save()
+
+	Test_4, created = User.objects.get_or_create(username="Test_4")
+	if created:
+		user.set_password("Test_4")
+		user.save()
+		_Member = Member.objects.create(User = Test_4)
+		_Member.Paid = True
+		_Member.Expiry_Date = datetime.now() + datetime.timedelta(days=3)
+		_Member.Read = True
+		_Member.Agreed = True
+		_Member.save()
+
+	Expired, created = User.objects.get_or_create(username="Expired")
+	if created:
+		user.set_password("Expired")
+		user.save()
+		_Member = Member.objects.create(User = Expired)
+		_Member.Paid = True
+		_Member.Read = True
+		_Member.Agreed = True
+		_Member.Expiry_Date = datetime.now() - datetime.timedelta(days=3)
+		_Member.save()
+	return None
+
+
 def Home(request):
 	context = {}
-	Lift_Names = ["Squat", "Bench", "Deadlift", "Overhead_Press", "Power_Clean", "C_Jerk"]
+	Current_User = request.user
+	print("Current Username: " + Current_User.username)	
+	Test_Checks_User, created = User.objects.get_or_create(username="Test_Checks")
+	if created:
+		Test_Checks_User.set_password("Test_Checks")
+		Test_Checks_User.save()
+	Test_Checks_User = User.objects.get(username="Test_Checks")
+	Test_Checks_User.first_name = "Test"
+	Test_Checks_User.last_name = "Checks"
+	Test_Checks_User.set_password("Test_Checks")
+	Test_Checks_User.save()
+	Test_Member, created = Member.objects.get_or_create(User = Test_Checks_User)
+	if False:
+		Test_Member.New = True
+		Test_Member.Paid = False
+		Test_Member.Read = False
+		Test_Member.Agreed = False
+		Test_Member.Has_Workouts = False
+		Test_Member.Finished_Workouts = False
+		Test_Member.save()
+	if False:
+		Test_Member.Expiry_Date = datetime.now() - timedelta(days=3)
+		Test_Member.save()
+
+	print(Test_Checks_User.username)
+	print("New: " + str(Test_Member.New))
+	print("Paid: " + str(Test_Member.Paid))
+	print("Read: " + str(Test_Member.Read))
+	print("Agreed: " + str(Test_Member.Agreed))
+	print("Has Workouts: " + str(Test_Member.Has_Workouts))
+	print("Expiry Date: " + str(Test_Member.Expiry_Date))
+
+	Lift_Names = ["Squat", "Bench", "Deadlift", "Overhead_Press", "Power_Clean", "C_Jerk", "Snatch"]
 	context["Login_Failed"] = ""
 	context["Signup_Error"] = ""
 	Lifts = {}
 	Lifts_In_Pounds = {}
 	RPE_Experience = False
-	print("User: " + str(request.user))
-	print("USername: " + request.user.username)
-	for i in User.objects.all():
-		print("Existing username: " + i.username)
+	# print("User: " + str(request.user))
+	# print("USername: " + request.user.username)
+	# for i in User.objects.all():
+	# 	print("Existing username: " + i.username)
 
 	if request.POST.get("Log_In"):
 		print("Log In Button Pressed (Post)")
@@ -47,9 +130,10 @@ def Home(request):
 		    	login(request, user)
 			return HttpResponseRedirect('/userpage')
 		else:
+			print("LOGIN FAILED")
 			print("User not authenticated")
 			context["Login_Failed"] = "Login Failed - Please Try Again"
-		return render(request, "homepage.html", context)
+		return render(request, "homepage_3.html", context)
 
 	
 	for i in Lift_Names:
@@ -73,20 +157,30 @@ def Home(request):
 		P_Word_2 = request.GET.get("PWord_2")
 		
 		DOB = request.GET.get("DOB")
-		
-		Training_Months = request.GET.get("TrainingMonths")
 
 		Height = request.GET.get("Height").split(",")
 		Weight = request.GET.get("Weight").split(",")
 
+		if Height[2] == "Metric":
+			Member_Height = str(int(Height[0])*100 + int(Height[1])) + " cm"
+		else:
+			Member_Height = Height[0] + "' " + Height[1] + '" ' 
+
+		if Weight[1] == "Metric":
+			Member_Weight = Weight[0] + " kg"
+		else:
+			Member_Weight = Weight[0] + " lbs"
+
 		RPE_Exp = request.GET.get("RPE_Exp")
 		print("RPE Experience: " + RPE_Exp)
-		if RPE_Exp == "Y":
+		if RPE_Exp == "yes":
 			RPE_Experience = True
+		else:
+			RPE_Experience = False
 
 		print("Lifts: ")
 		for i in Lift_Names:
-			_Lift_Data = request.GET.get(i).split(",")			
+			_Lift_Data = request.GET.get(i).split(",")	
 			Lifts[i] = _Lift_Data
 			if _Lift_Data[0] == "":
 				Lifts_In_Pounds[i] = 0
@@ -94,7 +188,30 @@ def Home(request):
 				Lifts_In_Pounds[i] = float(_Lift_Data[0])*2.204
 			else:
 				Lifts_In_Pounds[i] = float(_Lift_Data[0])
+			print (i + " " + str(Lifts_In_Pounds[i]))
 
+		if Lifts_In_Pounds["Squat"] != 0:
+			Member_Squat = Lifts_In_Pounds["Squat"]
+		if Lifts_In_Pounds["Bench"] != 0:
+			Member_Squat = Lifts_In_Pounds["Bench"]
+		if Lifts_In_Pounds["Deadlift"] != 0:
+			Member_Squat = Lifts_In_Pounds["Deadlift"]
+		if Lifts_In_Pounds["Overhead_Press"] != 0:
+			Member_Squat = Lifts_In_Pounds["Overhead_Press"]
+		if Lifts_In_Pounds["Power_Clean"] != 0:
+			Member_Squat = Lifts_In_Pounds["Power_Clean"]
+		if Lifts_In_Pounds["C_Jerk"] != 0:
+			Member_Squat = Lifts_In_Pounds["C_Jerk"]
+
+		Other = request.GET["Other"]
+		Sport_1 = request.GET["Sport_1"]
+		Sport_2 = request.GET["Sport_2"]
+		Sport_3 = request.GET["Sport_3"]
+		Training_Years = request.GET["T_Years"]
+		Training_Months = request.GET["T_Months"]		
+		# Training_Months = request.GET.get("TrainingMonths")
+		Member_Training_Time = Training_Years + " Years, " + Training_Months + " Months"
+		Member_Sports = Sport_1 + ", " + Sport_2 + ", " + Sport_3
 		print(Lifts)
 		
 		print("Lifts In Pounds")
@@ -102,14 +219,25 @@ def Home(request):
 		for key in Lifts_In_Pounds:
 			print(key + " " + str(Lifts_In_Pounds[key]))
 
-		print("Squat Weight in Pounds: " + str(Lifts_In_Pounds["Squat"]))
-		print("Height: " + str(Height))
 		print("First Name: " + F_Name)
 		print("Email: " + Email)
 		print("Password 1: " + P_Word_1)
 		print("Password 2: " + P_Word_2)
 		print("Date of Birth: " + DOB)
 		print(Training_Months)
+
+		print("Squat Weight in Pounds: " + str(Lifts_In_Pounds["Squat"]))
+		print("Height: " + str(Member_Height))
+		print("Weight: " + str(Member_Weight))
+		print(Other)
+
+		print("Training Years: " + Training_Years)
+		print("Training Months: " + Training_Months)
+
+		print("Primary Sports: " + Sport_1 + " " + Sport_2 + " " + Sport_3)
+
+		print("RPE Experience: " + RPE_Exp)
+
 
 		Bench_Weight = 0
 		Squat_Weight = 0
@@ -148,11 +276,26 @@ def Home(request):
 				New_User.last_name = L_Name
 				# User(first_name = F_Name, last_name = L_Name, email= Email, username = Email, password = P_Word_1)
 				New_User.save()
+				# Creating Member
 				New_Member = Member(User = New_User, Level = Assigned_Level, Squat = Squat_Weight)
 				New_Member.New = True
-				if New_User.username == "Alloy_Admin":
-					New_Member.Admin = True
+				New_Member.DOB = DOB
+				New_Member.Height = Member_Height
+				New_Member.Weight = Member_Weight
+				New_Member.Squat = Lifts_In_Pounds["Squat"]
+				New_Member.Bench = Lifts_In_Pounds["Bench"]
+				New_Member.D_Lift = Lifts_In_Pounds["Deadlift"]
+				New_Member.OP = Lifts_In_Pounds["Overhead_Press"]
+				New_Member.PC = Lifts_In_Pounds["Power_Clean"]
+				New_Member.CJerk = Lifts_In_Pounds["C_Jerk"]
+				New_Member.Snatch = Lifts_In_Pounds["Snatch"]
+				New_Member.Other = Other
+				New_Member.Training_Time = Member_Training_Time
+				New_Member.Primary_Sports = Member_Sports
+				New_Member.Prior_RPE = RPE_Experience				
+				
 				New_Member.save()
+
 				user = authenticate(username=Email, password=P_Word_1)
 				if user is not None:
 				    	login(request, user)
@@ -160,55 +303,9 @@ def Home(request):
 				return HttpResponseRedirect("/waiver")
 				# return HttpResponseRedirect("/sign-up-confirmation")
 
-	if request.POST.get("Sign_Up"):
-		print("Sign Up Button Pressed")
-		F_Name = request.POST.get("F_Name")
-		Email = request.POST.get("Email")
-		P_Word_1 = request.GET.get("P_Word_1")
-		P_Word_2 = request.GET.get("P_Word_2")
-		DOB = request.GET.get("DOB")
-		Training_Months = request.POST["TrainingMonths"]
-		print(F_Name)
-		print(Email)
-		print(P_Word_1)
-		print(P_Word_2)
-		print(DOB)
-		print(Training_Months)
-
 	return render(request, "homepage_3.html", context)
 
-@user_passes_test(Tier_1, login_url="/")
-@user_passes_test(Not_Agreed, login_url="/")
-def Waiver(request):
-	context = {}
-	User = request.user
-	_Member = Member.objects.get(User=User)
-	if "Empty_Input" in request.session.keys():
-		context["Empty"] = "Please enter today's date, name and indicate agreement before continuing!"
-	if request.POST.get("Agree"):
-		print(request.POST.keys())
-		if request.POST["full_name"] != "" and request.POST["date"] != "" and "agree_check" in request.POST.keys():
-			_Member.Agreed = True
-			_Member.save()
-			return HttpResponseRedirect("/terms-conditions")
-		else:
-			request.session["Empty_Input"] = True
-		# print(request.POST["agree_check"])
-	return render(request, "waiver.html", context)
-
-@user_passes_test(Tier_1, login_url="/")
-@user_passes_test(Not_Read, login_url="/")
-def Terms_Conditions(request):
-	context = {}
-	User = request.user
-	_Member = Member.objects.get(User=User)
-	if request.POST.get("Continue"):
-		_Member.Read = True
-		_Member.save()
-		return HttpResponseRedirect("/sign-up-confirmation")
-	return render(request, "terms_conditions.html", context)
-
-@user_passes_test(Tier_1, login_url="/")
+@user_passes_test(Member_Exists, login_url="/")
 @user_passes_test(New_Check, login_url="/")
 def SignUp_Confirmation(request):
 	context = {}
@@ -229,8 +326,8 @@ def SignUp_Confirmation(request):
 	Total = 0
 	Subscription_Time = timedelta(days=30)
 
-	for i in stripe.Customer.all():
-		print("Stripe Customer: " + str(i.id))
+	# for i in stripe.Customer.all():
+	# 	print("Stripe Customer: " + str(i.id))
 
 	# if request.POST.get("Payment_Btn"):
 	if request.GET.get("Package"):
@@ -248,8 +345,8 @@ def SignUp_Confirmation(request):
 			context["Total"] = '{:.2f}'.format((i[2] + Processing_Fee))
 			context["End_Date"] = (datetime.now() + i[3]).date()
 			Subscription_Time = i[3]
-			print(datetime.now())
-			print(datetime.now() + i[3])
+			# print(datetime.now())
+			# print(datetime.now() + i[3])
 	for i in Packages:
 		if i[1] != request.session["Package"]:
 			context["Packages"].append(i)
@@ -285,7 +382,7 @@ def SignUp_Confirmation(request):
 			print(_Member.Signup_Date)
 			print(_Member.Expiry_Date)
 			# print("New Customer Charged! " + str(_ID) + " Amount: " + str(charge.amount))
-			return HttpResponseRedirect("/welcome")
+			return HttpResponseRedirect("/waiver")
 
 		except stripe.error.CardError:
 			print("Card Error - PAYMENT DECLINED")
@@ -297,7 +394,52 @@ def SignUp_Confirmation(request):
 		return HttpResponseRedirect("/Welcome")
 	return render(request, "signup_confirmation.html", context)
 
-@user_passes_test(Tier_2, login_url="/")
+# @user_passes_test(Tier_2, login_url="/")
+@user_passes_test(Member_Exists, login_url="/")
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
+@user_passes_test(Not_Agreed, login_url="/")
+def Waiver(request):
+	context = {}
+	User = request.user
+	_Member = Member.objects.get(User=User)
+	if "Empty_Input" in request.session.keys():
+		context["Empty"] = "Please enter today's date, name and indicate agreement before continuing!"
+	if request.POST.get("Agree"):
+		print(request.POST.keys())
+		if request.POST["full_name"] != "" and request.POST["date"] != "" and "agree_check" in request.POST.keys():
+			Start_Date_String = request.POST["date"]
+			Start_Datetime = datetime.strptime(Start_Date_String, "%Y-%m-%d")
+			if Start_Datetime.date() != datetime.now().date():
+				context["Error"] = "Please enter the correct date!"
+				return render(request, "waiver.html", context)
+			else:
+				_Member.Agreed = True
+				_Member.save()
+				return HttpResponseRedirect("/terms-conditions")
+		else:
+			context["Error"] = "Please enter today's date, name and indicate agreement before continuing!"
+			request.session["Empty_Input"] = True
+		# print(request.POST["agree_check"])
+	return render(request, "waiver.html", context)
+
+@user_passes_test(Member_Exists, login_url="/")
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
+@user_passes_test(Member_Agreed, login_url="/waiver")
+@user_passes_test(Not_Read, login_url="/")
+def Terms_Conditions(request):
+	context = {}
+	User = request.user
+	_Member = Member.objects.get(User=User)
+	if request.POST.get("Continue"):
+		_Member.Read = True
+		_Member.save()
+		return HttpResponseRedirect("/welcome")
+	return render(request, "terms_conditions.html", context)
+
+@user_passes_test(Member_Exists, login_url="/")
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
+@user_passes_test(Member_Agreed, login_url="/waiver")
+@user_passes_test(Member_Read, login_url="/terms-conditions")
 @user_passes_test(No_Workouts, login_url="/")
 def Welcome(request):
 	print("Username: " + request.user.username)
@@ -341,7 +483,7 @@ def Welcome(request):
 	return render(request, "welcome.html", context)
 
 
-@user_passes_test(Tier_3, login_url="/")
+@user_passes_test(Inside_Access, login_url="/")
 def Membership_Expired(request):
 	context = {}
 	User = request.user
@@ -441,6 +583,6 @@ def Membership_Expired(request):
 
 	if request.GET.get("Payment_btn"):
 		print("Payment Button Pressed")
-		return HttpResponseRedirect("/Welcome")
+		return HttpResponseRedirect("/welcome")
 	return render(request, "member_expired.html", context)
 

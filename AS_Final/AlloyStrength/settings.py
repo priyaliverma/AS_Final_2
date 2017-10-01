@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+CKEDITOR_IMAGE_BACKEND = "pillow"
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Users',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+CKEDITOR_UPLOAD_PATH = '/uploads'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

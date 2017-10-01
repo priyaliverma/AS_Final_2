@@ -107,14 +107,21 @@
     <div class="userprofile-col-12" 
     style="display:inline-block; vertical-align:top; border-style:solid; padding:2vw; padding-top:0vw; margin-left:3vw; width:50%">
         <h3>Your Next Set of Workouts Will Be At Level: {{Level}} </h3>    
+        {% if Passed %}
+        Test
+        {% endif %}
+        {{ Level_Up_Message|safe}}
+        <br>
+        <p>{{Level_Up_Static}}</p>
+        <img src='/static/{{Level_Up_Img_URL}}'>        
+
         <p>Congratulations John, you’ve reached Level 16! Here are some new things you need to know:</p>
 
         <p>Levels 16 and on still have two blocks per level, a Volume Block and a Strength/Power block.</p> 
 
         <p>The ‘Power’ days in the Strength block will continue to utilize Strength Stops, however for our strength or volume focused training sessions we have a new way to further utilize RPE and control training stress: the Strength Drop. The Strength Drop works similarly to the Strength Stop, in that you will work up to a set at the desired RPE listed.</p> 
         <p>The Strength Card will then ‘drop’ the weight you used by a certain percentage, and you will perform sets at this new weight until the desired RPE is again achieved, after which you will move on to the next exercise. For example, say I perform my Squat pattern exercise, working up to a set of 4 at a 9 RPE, with 7% as my Strength Drop. I work up to 300 pounds for 4 repetitions at a 9 RPE. I will now perform sets of 4 at 280 pounds (300 x .07 = 21, 300-21 = 279 =280 lbs) until I reach a 9 RPE again:</p>
-        <img src='{% static "userpage/level_16_example.png" %}' >        
-
+        <img src='{% static 'userpage/level_16_example.png' %}' >        
     </div>
 
     <!-- <br> -->

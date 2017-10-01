@@ -62,7 +62,7 @@ hr {
 
 #desc{
 	text-align: center;
-	margin-top: 40%;
+	margin-top: 38%;
 	z-index: 9999;
 	width: 40%;
 }
@@ -125,8 +125,9 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 	line-height: 0px !important;
 	height: 2.5vw !important;
-	margin-top: 2vw; 
-	margin-left:1vw;
+	margin-top: 4vw; 
+	margin-left: 5vw;
+	margin-right: 5vw;
 }
 
 @media (min-width: 840px) {
@@ -142,6 +143,17 @@ h1, h2, h3, h4, h5, h6 {
 
 #modal_button_container {
 	margin: 0px;
+}
+
+.input-container {
+	width: 75%;
+	text-align: left;
+	border-radius: 0.5vw;
+	margin: 1vw;
+	font-size: 1.25vw;
+	position: relative;
+	border: 1px solid cornflowerblue;
+	margin: 1vw;	
 }
 
 .modal-input-container {
@@ -168,6 +180,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: 0.3vw;
 	padding-left: 1vw;
 	padding-right: 1vw;
+	font-size:1vw;
 	font-family: 'Cabin', sans-serif;
 	width: 20%;
 	overflow: auto;
@@ -179,8 +192,49 @@ h1, h2, h3, h4, h5, h6 {
 	font-family:'Cabin', sans-serif;
 	padding: 0.2vw;
 	padding-left: 1vw;
+	font-color:red;
 	width: 70%; 
 	float: right;
 	background-color: transparent;
+	margin:auto;
 }
+
+/* 2 inputs */ 
+.modal-input-2 {
+	font-family:'Cabin', sans-serif;
+	padding: 0.2vw;
+	padding-left: 1vw;
+	width: 32.5%; 
+	float: right;
+	text-align: center;
+	background-color: transparent;
+}
+
+.modal-body {
+	/*margin-top:0px;*/
+	/*margin-bottom:0px;*/
+}
+
+.body {
+/*	margin-top:0px;
+	margin-bottom:0px;	
+*/}
+
+
+.or {
+	font-family:'Cabin', sans-serif;
+	width: 2%; 
+	float: right;
+	text-align: center;
+}
+
+/* 3 inputs */
+.modal-input-3 {
+	font-family:'Cabin', sans-serif;
+	padding: 0.2vw;
+	width: 21%; 
+	float: right;
+	background-color: transparent;
+} 
+
 
