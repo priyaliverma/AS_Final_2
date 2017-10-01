@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from .models import *
-from django.shortcuts import render
+from .forms import BlogPostForm
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -472,3 +473,35 @@ def Admin_Login(request):
 			context["Login_Failed"] = "Login Failed!"
 			return render(request, "admin_login.html", context)
 	return render(request, "admin_login.html", context)
+
+def Admin_Blog(request): 
+
+	if request.method == "POST":
+		form = BlogPostForm(request.POST)
+
+		if form.is_valid(): 
+
+			form_dict = form.cleaned_data
+
+			new_blog_post = Blog_Post(Title=form_dict['Title'], 
+				Content=form_dict['Content'])
+
+			new_blog_post.publish()
+
+			print Blog_Post.objects.all()
+
+	else: 
+		form = BlogPostForm()
+		
+
+	return render(request, 'admin_blog.html', {'form': form})
+
+
+def Admin_Blog_Posts(request): 
+	blog_posts = Blog_Post.objects.all()
+	return render(request, "admin_blog_posts.html", {'blog_posts': blog_posts })
+
+def Admin_Blog_Posts_Detail(request, pk): 
+	blog_post = get_object_or_404(Blog_Post, pk=pk)
+	return render(request, 'admin_blog_post_detail.html', {'blog_post': blog_post })
+

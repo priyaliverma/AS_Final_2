@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from .models import *
-from django.shortcuts import render
+from .forms import BlogPostForm
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -1011,3 +1012,11 @@ def Past_Workouts(request):
 		request.session["Selected_Date"] = request.POST["Submitted_Date"]
 		return HttpResponseRedirect("/past-workouts")
 	return render(request, "pastworkouts.html", context)
+
+
+def Blog(request): 
+	print Blog_Post.objects.all()
+	blog_posts = Blog_Post.objects.all()
+	return render(request, "blog.html", {'blog_posts': blog_posts }); 
+
+

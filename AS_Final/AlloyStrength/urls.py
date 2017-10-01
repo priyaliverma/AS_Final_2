@@ -1,12 +1,12 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+from django.conf import settings 
+from django.views.static import serve
 from django.contrib import admin
-# from Users.views import Home, Member_Home, Admin, Test, User_Page, Workout_Update, Videos, AdminExercises, RPE_Update, SignUp_Confirmation, Welcome, Past_Workouts, User_Profile, Level_Up
 
 from Users.views import *
 
 from Users.admin_views import *
 from Users.admin_video_views import *
-
 
 from Users.sign_up_views import *
 from Users.video_views import *
@@ -15,6 +15,9 @@ from Users.user_stat_views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^admin-blog/', Admin_Blog, name='AdminBlog'),
+    url(r'^admin-blog-posts/', Admin_Blog_Posts, name='AdminBlogPosts'),
+    url(r'^admin-blog-post-detail/(?P<pk>\d+)/$', Admin_Blog_Posts_Detail, name='AdminBlogPostsDetail'),
 
     url(r'^admin-login/', Admin_Login, name='AdminLogin'),
     url(r'^admin-logout/', Admin_Logout, name='AdminLogout'),
@@ -30,6 +33,10 @@ urlpatterns = [
     url(r'^admin-videos-2/', Admin_Videos_2, name=''),    
     url(r'^admin-videos-library/', Admin_Videos_Library, name='Home'),
     url(r'^admin-videos-library-edit/', Admin_Videos_Edit, name='Home'),
+
+    url(r'^blog/', Blog, name="Blog"), 
+
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
 
     url(r'^$', Home, name='Home'),
@@ -70,3 +77,11 @@ urlpatterns = [
 
     # url(r'^past-workouts/', Past_Workouts, name="pastworkouts"),
 ]
+
+# serving media files only on debug mode
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT
+        }),
+    ]
