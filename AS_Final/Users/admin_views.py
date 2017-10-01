@@ -474,9 +474,9 @@ def Admin_Login(request):
 			return render(request, "admin_login.html", context)
 	return render(request, "admin_login.html", context)
 
-def Admin_Blog(request): 
+def Admin_Blog_New_Post(request): 
 
-	if request.method == "POST":
+	if request.method == 'POST':
 		form = BlogPostForm(request.POST)
 
 		if form.is_valid(): 
@@ -493,15 +493,43 @@ def Admin_Blog(request):
 	else: 
 		form = BlogPostForm()
 		
-
-	return render(request, 'admin_blog.html', {'form': form})
+	return render(request, 'admin_blog_new_post.html', {'form': form})
 
 
 def Admin_Blog_Posts(request): 
 	blog_posts = Blog_Post.objects.all()
+
+	if request.method == 'POST' and (request.POST.get('Delete Post','') == 'Delete'):
+		pk = int(request.POST.get('key', ''))
+		blog_post = get_object_or_404(Blog_Post, pk=pk)
+		blog_post.delete()
+			
 	return render(request, "admin_blog_posts.html", {'blog_posts': blog_posts })
 
-def Admin_Blog_Posts_Detail(request, pk): 
+
+def Admin_Blog_Post_Detail(request, pk): 
+
 	blog_post = get_object_or_404(Blog_Post, pk=pk)
-	return render(request, 'admin_blog_post_detail.html', {'blog_post': blog_post })
+	blog_post_title = blog_post.Title
+
+	if request.method == 'POST' and (request.POST.get('Update Post','') == 'Update'):
+		form = BlogPostForm(request.POST)
+
+		if form.is_valid():
+			form_dict = form.cleaned_data
+			blog_post.Title = form_dict['Title']
+			blog_post.Content = form_dict['Content']
+			blog_post.publish()
+
+	elif request.method == 'POST' and (request.POST.get('Delete Post','') == 'Delete'):
+		form = BlogPostForm(request.POST)
+
+		if form.is_valid():
+			blog_post.delete()
+			return render(request, 'deleted_post.html', {'blog_post_title': blog_post_title})
+
+	else:
+		form = BlogPostForm({'Title': blog_post.Title, 'Content': blog_post.Content })
+
+	return render(request, 'admin_blog_post_detail.html', {'form': form})
 

@@ -1,0 +1,45 @@
+body {
+	font-family: "Cabin", sans-serif;
+}
+#banner {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+#desc{
+	text-align: center;
+	position: relative;
+	top: -15em;
+	z-index: 9999;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Cabin", sans-serif;
+}
+
+h3 {
+	font-weight: 600;
+}
+
+.mdl-button {
+	font-family: "Cabin", sans-serif;
+	font-size: 1.15em;
+	top: -1.5em;
+}
+
+#blue_btn {
+    background-color: rgb(83,109,254);
+    color: white;
+    cursor: pointer;
+    border-radius: 0.2vw;
+    border: none;
+    /*height: 2vw;*/
+    font-size: 1.5vw;
+    font-family: 'Cabin', sans-serif;
+    margin: 0 auto;
+    display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	margin-top: 1vw;
+}

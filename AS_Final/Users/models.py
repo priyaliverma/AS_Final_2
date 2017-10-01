@@ -168,13 +168,15 @@ class Workout(models.Model):
 	# _User = models.OneToOneField(User, null=True)
 
 class Blog_Post(models.Model):
-	Title = models.CharField(max_length=200)
+	Title = models.CharField(max_length = 200)
 	Content = RichTextUploadingField()
 	Date = models.DateTimeField(blank = True, null = True)
+	FriendlyDate = models.CharField(max_length = 200, null = True)
 	# Images = models.ImageField(upload_to=settings.MEDIA_ROOT, blank=True)
 
 	def publish(self): 
-		self.Date= timezone.now()
+		self.Date = timezone.now()
+		self.FriendlyDate = '{dt:%B} {dt.day}, {dt.year}'.format(dt=self.Date)
 		self.save()
 
 	def __str__(self): 

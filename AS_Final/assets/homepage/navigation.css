@@ -1,0 +1,43 @@
+#nav_bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; 
+    margin-top: 2em;
+    margin-left: 2vw;
+    list-style-type: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 0px;
+    width:100%;
+
+}
+
+ul {
+	font-size: 1.25em;
+	line-height: 0px;
+}
+
+#nav_bar li {
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+    z-index: 9999;
+    font-size: 1em;
+}
+
+.nav_link_1 {
+	color: white;
+	font-size: 1em;
+
+}
+
+.nav_link_2 {
+	color: black;
+	font-size: 1em;
+
+}
+
+a {
+	text-decoration: none
+}

@@ -20,7 +20,6 @@ hr {
 	position: absolute; 
 	top: 0;
 	left: 0;
-	z-index: 9999;
 }
 
 #left_desc {
@@ -62,7 +61,7 @@ hr {
 
 #desc{
 	text-align: center;
-	margin-top: 38%;
+	margin-top: 36%;
 	z-index: 9999;
 	width: 40%;
 }

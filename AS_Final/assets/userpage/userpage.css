@@ -1,0 +1,264 @@
+body {
+	font-family: "Cabin", sans-serif;
+}
+
+#stats_info {
+	margin: 0 auto;
+	text-align: center;
+	font-size: 1vw;
+}
+
+#stats_info hr {
+	border: 1px solid rgb(83,109,254);
+	width: 80%;
+	margin: 0 auto;
+}
+
+h1 {
+	font-size: 2vw;
+	padding-top: 1vw;
+	font-family: "Cabin", sans-serif;
+	font-weight: 600;
+}
+
+hr {
+	border-top: 1vw solid rgba(0, 0, 0, 0.9);
+	padding: 0;
+	margin: 0;
+	margin-top: 2vw; 
+	width: 100%;
+	margin-left: -1%;
+	position: relative;
+}
+
+#user_design_img {
+	position: absolute;
+	top: 1vw;
+	width: 17.5%;
+	height: auto;
+	left: 80%;
+	z-index: 1;
+}
+
+button, input[type=button], #blue_btn {
+    background-color: rgb(83,109,254);
+    color: white;
+    cursor: pointer;
+    border-radius: 0.2vw;
+    border: none;
+    height: 2vw;
+    font-size: 1vw;
+    font-family: 'Cabin', sans-serif;
+    margin: 0 auto;
+    display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	margin-top: 1vw;
+}
+
+table {
+	text-align: center;
+	z-index: 9999;
+}
+
+#right_container {
+	float: right;
+	width: 60%;
+}
+
+.table_header {
+	border: none;
+	padding-top: 0.75vw;
+	padding-bottom: 0.5vw;
+}
+
+.table_content {
+	height: 5vw;
+}
+
+table.table_calendar {
+	font-size: 1vw;
+	border-collapse: collapse;
+	width: 80%;
+	margin: 0 auto;
+}
+
+td, th {
+	border: 0.1em solid rgba(83,109,254,0.75);
+	padding: 0;
+	width: 11.42%;
+	position: relative;
+}
+
+
+table.table_calendar td input {
+	font-size: 1vw;
+}
+
+table.table_calendar td select {
+	font-size: 1vw;
+}
+
+textarea {
+	width: 90%;
+	margin: 0 auto;
+	border: none;
+  	top: 0; left: 0; right: 0; bottom: 0;
+  	text-align: center;
+  	font-family: 'Cabin', sans-serif;
+  	font-size: 1vw;
+  	position: absolute;
+	resize: none;
+	display: inline-block;
+  	vertical-align: middle;
+	line-height: normal;
+}
+
+textarea:focus {
+	border: none;
+}
+
+#left_container {
+	width: 40%;
+    float: left;
+}
+
+table.ui-datepicker-calendar{
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+}
+
+table.ui-datepicker-calendar td {
+	padding: 1vw;
+	border: 1px solid rgba(0, 10, 125, 0.2);
+	text-decoration: none;
+	font-size: 0.75vw;
+}
+
+table.ui-datepicker-calendar th {
+	padding: 0.15vw;
+	background-color: rgba(83,109,254, 0.75);
+	color: white;
+	font-weight: 400;
+	font-size: 1vw;
+
+}
+
+.ui-state-default {
+	margin: 0 auto;
+	padding: 0.5vw;
+	text-decoration: none;
+	text-align: center;
+	display: inline-block;
+    height: 1.4vw;
+    width: 1.4vw;
+    font-size: 0.75vw;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+#datepicker {
+	margin: 0 auto;
+	width: 80%;
+}
+
+#summary {
+	border: 1px solid black;
+	font-size: 1vw;
+	padding: 2vw;
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 2vw;
+
+}
+
+#dummy_divider {
+	border: none;
+	border-top: 1px solid rgba(0, 0, 0, 0.3);
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 2vw;
+}
+
+#nav-bar {
+ list-style: none;
+ display: flex;
+}
+
+#nav-bar a {
+ font-size: 1vw; 
+ padding: 0.5vw 1vw; 
+ text-decoration: none;
+ color: white;
+ background-color: rgb(19, 44, 181); / dark blue / 
+ margin: 0.5vw;
+ text-transform:UPPERCASE;
+ border-radius: 0.25vw;
+ border-bottom: 0.2vw solid rgba(0, 0, 0, 0.3); / light gray / 
+}
+#nav-bar li {
+	margin:0.5vw;
+}
+
+#header-left {
+ float: left;
+}
+
+#header-right {
+ float: right;
+ margin: 0;
+ margin-right: 20%;
+ margin-top: 1.5vw;
+}
+
+#nav-bar .page-active {
+ background-color: rgb(4, 23, 125);
+ box-shadow: 0 0 1vw 0.2vw rgba(0, 38, 255, 0.56);
+ border-bottom: 0.2vw solid rgba(255, 255, 255, 0.85);
+}
+
+.ui-datepicker-title {
+	font-size: 1.5vw;
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: 1vw;
+}
+
+#date_text_container {
+	/*text-align: center;*/
+}
+
+#date_text_container p {
+	/*font-size: 1.15vw;*/
+}
+
+#date_text {
+	color: gray;
+	margin: 0;
+}
+
+
+.ui-datepicker-next, .ui-datepicker-prev {
+    display: none;
+}
+
+
+#month_nav {
+	display: flex;
+	justify-content: space-between;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.month_button {
+	background-color: rgb(83,109,254);
+	color: white;
+    cursor: pointer;
+    border-radius: 0.2vw;
+    border: none;
+    font-size: 1vw;
+    font-family: 'Cabin', sans-serif;
+    padding: 0.5vw;
+}

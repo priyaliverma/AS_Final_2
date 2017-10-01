@@ -49,7 +49,7 @@ def Home(request):
 		else:
 			print("User not authenticated")
 			context["Login_Failed"] = "Login Failed - Please Try Again"
-		return render(request, "homepage.html", context)
+		return render(request, "homepage_3.html", context)
 
 	
 	for i in Lift_Names:

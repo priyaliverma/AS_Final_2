@@ -15,9 +15,9 @@ from Users.user_stat_views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^admin-blog/', Admin_Blog, name='AdminBlog'),
+    url(r'^admin-blog-new-post/', Admin_Blog_New_Post, name='AdminBlogNewPost'),
     url(r'^admin-blog-posts/', Admin_Blog_Posts, name='AdminBlogPosts'),
-    url(r'^admin-blog-post-detail/(?P<pk>\d+)/$', Admin_Blog_Posts_Detail, name='AdminBlogPostsDetail'),
+    url(r'^admin-blog-post-detail/(?P<pk>\d+)/$', Admin_Blog_Post_Detail, name='AdminBlogPostDetail'),
 
     url(r'^admin-login/', Admin_Login, name='AdminLogin'),
     url(r'^admin-logout/', Admin_Logout, name='AdminLogout'),

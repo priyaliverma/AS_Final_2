@@ -27,19 +27,15 @@
 
 <body style="width: 100%">
     <div style="width:100%; height:100%; overflow:hidden;">
-        <img style="height:102vh; overflow:hidden;" id='banner' src="{% static 'homepage/new_homepage_3.jpg' %}"/></img>
+        <img style="overflow:hidden;" id='banner' src="{% static 'homepage/new_homepage_3.jpg' %}"/></img>
     </div> 
 
     <div style="width: 100%">
-        <ul id='nav_bar'>
-    <!--             <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> ABOUT</a></li>
-                <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> PROGRAMS</a></li>
-     -->            
-                <li id="nav_link_1"><a href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i>HOME</a></li>
-                <li id="nav_link_2"><a href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i>BLOG</a></li>
-    <!--             <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> TESTIMONIALS</a></li>
-                <li><a class="nav_link_1" href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i> STORE</a></li>
-     --> </ul> 
+        <ul id='nav_bar'>   
+            <li id="nav_link_1"><a href="{% url 'AdminBlogPosts' %}" style='z-index:9999'> <i class="fa fa-caret-right" style="color:#00a9ff"></i>HOME</a></li>
+            
+            <li id="nav_link_2"><a href=""> <i class="fa fa-caret-right" style="color:#00a9ff"></i>BLOG</a></li>
+        </ul> 
     </div>
 
     <div id='desc-container' style='width:100%'>
