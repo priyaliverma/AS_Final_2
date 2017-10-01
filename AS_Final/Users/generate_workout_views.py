@@ -113,8 +113,8 @@ def Level_Up(request):
 	if not request.session["Level_Up"]:
 		context["Passed"] = False
 		context["Main_Message"] = "You need more time!"
-		context["Second_Message"] = "You results show that you need to spend more time at your current exercise level. " 						
-
+		context["Second_Message"] = "You results show that you need to spend more time at your current exercise level. " 	
+	else:					
 		context["Level_Up_Message"] = Messages_Dict[16]
 		Static_String = str(16) + "_Static"
 		context["Level_Up_Img_URL"] = Messages_Dict[Static_String]
