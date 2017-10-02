@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-CKEDITOR_IMAGE_BACKEND = "pillow"
+# CKEDITOR_IMAGE_BACKEND = "pillow"
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'Users',
 ]
 
-CKEDITOR_UPLOAD_PATH = '/uploads'
+# CKEDITOR_UPLOAD_PATH = '/uploads'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
