@@ -1,0 +1,30 @@
+                <!-- FILLED SETS -->
+                {% for Set in Pattern.All_Filled_Sets %}
+                    {% if Set.Type == "Bodyweight" %}
+                    {% elif Set.Type == "Dropped" %}
+                    {% elif Set.Type == "Alloy" %}
+                    {% else %}
+                    {% endif %}
+                {% endfor %}
+                <!-- UNFILLED SETS -->
+                {% for Set in Pattern.All_Unfilled %}
+                    {% if Pattern.Set_Type == 'Strength_Input' %}
+                    {% elif Pattern.Set_Type == 'Dropped_Set' %}
+                    {% elif Pattern.Set_Type == 'Regular_Set' %}
+                    {% endif %}
+                {% endfor %}
+                <!-- SS BUTTON -->
+                {% if Pattern.SS_Btn %}
+                {% endif %}
+                <!-- SD BUTTON -->
+                {% if Pattern.SD_Btn %}
+                {% endif %}
+                <!-- LAST ALLOY INPUT -->
+                {% if Pattern.Alloy_Sub %}
+                    {% if Pattern.Alloy_Set_Type == 'Input' %}
+                    {% elif Pattern.Alloy_Set_Type == 'Button' %}
+                    {% endif %}
+                {% endif %}
+                <!-- EMPTY SETS -->
+                {% for Set in Pattern.Empty_Sets %}
+                {% endfor %}

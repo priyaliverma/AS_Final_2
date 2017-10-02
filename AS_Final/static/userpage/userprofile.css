@@ -1,0 +1,91 @@
+#userprofile-container {
+	width: 90%;
+	margin: 0 auto; 
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	font-size: 2vw;
+}
+
+h4 {
+	font-size: 1.25vw;
+}
+
+.userprofile-row {
+	width: 100%; 
+	display: flex;
+	justify-content: space-between;
+}
+
+#profile-picture-container {
+	width: 15%;
+	height: 15%;
+	margin: 0 auto;
+	margin-top: 1vw;
+}
+
+#profile-picture {
+	position: relative;
+	height: 100%;
+	width: 100%; 
+	top: 0;
+	left: 0; 
+	border: 0.1vw solid rgba(0, 0, 0, 0.3);
+	border-radius: 0.2vw; 
+}
+
+#profile-summary-container {
+	width: 80%;
+}
+
+.profile-summary-left {
+	width: 49%;
+	float: left;
+	border-right: 0.1vw solid rgba(0, 0, 0, 0.3);
+}
+
+.profile-summary-right {
+	width: 49%;
+	float: right;
+}
+
+#physical-stats {
+	border-right:  0.1vw solid rgba(0, 0, 0, 0.3);
+}
+
+#training-background {
+	border-right:  0.1vw solid rgba(0, 0, 0, 0.3);
+}
+
+.userprofile-row-divider {
+	border: none;
+	border-top: 0.1vw solid rgba(0, 0, 0, 0.2);
+	position: relative;
+	margin: 0;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.userprofile-row-divider-small {
+	width: 100%;
+}
+
+.userprofile-col-3 {
+	width: 33%;
+	margin: 0 auto;
+}
+
+.userprofile-col-3 h1 {
+	text-align: center;
+}
+
+#userprofile-stats {
+	width: 100%;
+	margin: 0 auto;
+}
+
+#userprofile-stats h1 {
+	text-align: center;
+}
+

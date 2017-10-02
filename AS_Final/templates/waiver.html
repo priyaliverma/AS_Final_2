@@ -1,0 +1,103 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Include Vue.js Source Code -->
+<script src='https://unpkg.com/vue'></script>
+<!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
+
+<!-- Include HTML Code -->
+<!-- Head --> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
+
+    <title>User Page</title>
+
+</head>
+
+
+<!-- Body --> 
+<body>
+    <h1 style="display:inline-block; margin-left:2vw;">Liability Waiver</h1>
+    <hr>
+    <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
+
+</head>
+<body>
+    <div style="padding-left:30px; padding-right:30px;">
+        <form method="POST">{% csrf_token %}
+        <h3>Alloy Strength</h3>
+        <h3>LIABILITY WAIVER</h3>
+        <b>ASSUMPTION OF RISK, WAIVER AND RELEASE OF LIABILITY, AND INDEMNITY AGREEMENT DECLARATIONS:</b>
+        <p>This Agreement is entered into between San Diego Strength and Conditioning, LLC (DBA “Alloy Strength”) and the undersigned (“Client”). The provision of training services by Alloy Strength to Client, and Client’s use of alloystrengthtraining.com (this “Site”) are contingent upon this Agreement.</p>
+        <b>ASSUMPTION OF RISK:</b>
+        <p>You agree that if you engage in any physical exercise or activity, including personal training, or enter any premises or use any facility or equipment for any purpose, you do so at your own risk and assume the risk of any and all injury and/or damage you may suffer, whether while engaging in physical exercise or not. This includes injury or damage sustained while and/or resulting from using any premises or facility, using any equipment, or engaging in any type of physical activity, whether provided to you by Alloy Strength or otherwise, including injuries or damages arising out of the negligence of Alloy Strength, whether active or passive, or any of Alloy Strength’s affiliates, employees, agents, representatives, successors, and assigns.</p>
+        <p>Your assumption of risk includes, but is not limited to, your use of any exercise equipment (mechanical or otherwise), sports fields, courts, or other areas, locker rooms, pools, whirlpools, saunas, steam rooms, lobby or other general areas of any facilities, or any equipment. You assume the risk of your participation in any activity, class, program, instruction, or event, including but not limited to weightlifting, running, aerobic activities, or any other sporting or recreational endeavor. You agree that you are voluntarily participating in the aforementioned activities and assume all risk of injury, illness, damage, or loss to you or your property that might result, including, without limitation, any loss or theft of any personal property, whether arising out of the negligence of Alloy Strength or otherwise.</p>
+        <p>The content on this Site is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you have read on this Site. If you think you may have a medical emergency, call your doctor or 911 immediately. Alloy Strength does not recommend or endorse any specific tests, physicians, products, procedures, opinions, or other information that may be mentioned on this Site. Reliance on any information provided by Alloy Strength, Alloy Strength employees, others appearing on this Site at the invitation of Alloy Strength, or other visitors to this Site is solely at your own risk. Consult your healthcare professional before beginning any diet or fitness regimen and please refer to your healthcare professional with any medical related questions that may arise while training with the Alloy Strength Levels Progression.
+        </p>
+        <b>RELEASE:</b>
+        <p>You agree on behalf of yourself (and all your personal representatives, heirs, executors, administrators, agents, and assigns) to release and discharge Alloy Strength (and Alloy Strength’s affiliates, related entities, employees, agents, representatives, successors, and assigns) from any and all claims or causes of action (known or unknown) arising out of the negligence of Alloy Strength, whether active or passive, or any of Alloy Strength’s affiliates, employees, agents, representatives, successors, and assigns. This waiver and release of liability includes, without limitation, injuries which may occur as a result of (a) your use of any exercise equipment or facilities which may malfunction or break, (b) improper maintenance of any exercise equipment, premises or facilities, (c) negligent instruction or supervision, including personal training, (d) negligent hiring or retention of employees, and/or (e) slipping or tripping and falling while on any portion of a premises or while traveling to or from training, including injuries resulting from Alloy Strength’s or anyone else’s negligent inspection or maintenance of a facility or premises.</p>
+        <b>INDEMNIFICATION:</b>
+        <p> By execution of this agreement, you hereby agree to indemnify and hold harmless Alloy Strength from any loss, liability, damage, or cost Alloy Strength may incur due to the provision of online strength training by Alloy Strength to you. You agree to defend, indemnify, and hold Alloy Strength, its officers, directors, employees, agents, and licensors, harmless from and against any claims, actions or demands, liabilities and settlements including without limitation, reasonable legal and accounting fees, resulting from, or alleged to result from, your violation of this Liability Waiver and/or the Terms and Conditions on alloystrengthtraining.com.</p>
+        <b>ACKNOWLEDGMENTS:</b>
+        <p>You expressly agree that the foregoing release, waiver, assumption of risk and indemnity agreement is intended to be as broad and inclusive as permitted by the law in the State of California and that if any portion thereof is held invalid, it is agreed that the balance shall, notwithstanding, continue in full legal force and effect. You acknowledge that Alloy Strength offers a service to clients encompassing the entire recreational and/or fitness spectrum. Alloy Strength is not in the business of selling weightlifting equipment, exercise equipment, or other such products to the public, and the use of such items is incidental to the service provided by Alloy Strength. You acknowledge and agree that Alloy Strength does not place such items into the stream of commerce. This release is not intended as an attempted release of claims of gross negligence or intentional acts. You acknowledge that you have carefully read this waiver and release and fully understand that it is a release of liability, express assumption of risk and indemnity agreement. You are aware and agree that by executing this waiver and release, you are giving up your right to bring a legal action or assert a claim against Alloy Strength for Alloy Strength’s negligence, or for any defective product used while receiving online strength training from Alloy Strength. You have read and voluntarily signed the waiver and release and further agree that no oral representations, statements, or inducement apart from the foregoing written agreement have been made.</p>
+
+        Date:
+        <input type="date" name="date" style="margin-right:30px;">
+        Full Name:
+        <input type="text" name="full_name" style="margin-right:30px;">
+        <br><br>
+        <input type="checkbox" name="agree_check" value="checkbox">
+        I agree to these terms and conditions
+        <br>
+        <input type="submit" id="blue_btn" value="Continue" name="Agree" style="margin-left:0px; height:3vw; width:6vw; font-size:1.25vw; margin-bottom:3vw; margin-top:2vw; margin-right:3vw; display:inline-block;">
+        {{Error}}
+        <!-- <p style="display:inline-block; margin-left:2vw;">{{Empty}}</p> -->
+        </form>
+    </div>
+
+
+ 
+
+
+    </form>
+    </div>
+
+</body>
+
+</html>
+
+
+<script>
+
+</script>
+
+
+<style>
+    .workout .ui-state-default {
+        background-color: orange; 
+    }
+
+    .today .ui-state-default {
+        border: 1px solid black;
+    }
+
+</style>
+
+

@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+  <style>
+    th, td {
+    border:1px solid black; 
+    width:5vw;
+  }
+
+  </style>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/admin-users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-videos">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-workouts">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+<!--           <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+ -->        </ul>
+<!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <div id="userprofile-container">
+
+        <div class='userprofile-row'>
+
+            <div id='profile-summary-container' style="margin-left:2vw;">
+
+                <!-- <div class="profile-summary-left" style="margin-left:2vw; width:100%;"> -->
+                <br>
+                    <a href="/admin-users-view-profile">Back To Profile</a>
+                    <h4 style=""><span style="font-weight:normal;">Viewing Workout For:</span> {{Member_Name}}
+                    </h4>
+
+                <h1 style="text-align:left;">Workout Summary</h1>
+                <h5>{{Workout_Level}}, {{Workout_Info}} ({{Workout_Date}})</h5>
+                <table style="text-align:left; margin-bottom:2vw; border-style:solid;">
+                <tr>
+                    <th id="small" style="width:10vw;">
+                    Pattern
+                    </th>
+                    <th id="small" style="width:10vw;">
+                    Exercise Name
+                    </th>
+                    <th style="">
+                    Sets Completed
+                    </th>
+                </tr>
+                {% for Pattern in Patterns %}
+                <tr>
+                <td id="small" style="width:10vw;">{{Pattern.Type}}</td>
+                <td id="small" style="width:20vw;">{{Pattern.Exercise_Name}}</td>
+                <td style="width:20vw;">
+                {% for Set in Pattern.Sets %}
+                <!-- {{Set.Set_String}} -->
+                {{Set.Set_Info}}
+                <br>
+                {% endfor %}
+                </td>
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <hr class='userprofile-row-divider'>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% block script %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
+
+
+<!-- Include HTML Code -->
+<!-- Head --> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" />
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'videopage/videopage.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
+
+    <title>Admin Blog</title>
+
+</head>
+
+
+<!-- Body --> 
+<body>
+    <h1 id='title'>Admin Blog</h1>
+    <hr>
+
+    <img id="user_design" src='{% static "userpage/user_interface.svg" %}'>
+
+    {% block content %}
+        <div style="margin: 2vw">
+            <h1>New post</h1>
+            <form method="POST" class="post-form">{% csrf_token %}
+                <!-- {{ form.as_p }} -->
+                <button type="submit" class="save btn btn-default">Save</button>
+            </form>
+        </div>
+    {% endblock %}
+
+
+</body>
+
+</html>
+
+
+<style>
+
+
+</style>
+

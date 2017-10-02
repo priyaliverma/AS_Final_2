@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/admin-users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-videos">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-workouts">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+    </ul>
+<!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <div class="container">
+      <div class="jumbotron" style="margin-top:0px; margin-bottom:50px; display:inline-block; width:100%; height:1000px;">
+<form method="GET">
+<div style="width:50%; display:inline-block;">  
+  <img src='{{Picture_URL}}' style="max-height:10vw; max-width:20vw;" id='profile-picture'>
+  <br><br>
+  <h2>Profile</h2>
+  <b>Email:</b> {{User_Info.Username}}
+  <br>
+  <b>First Name:</b> {{User_Info.First_Name}}</b>
+  <br>
+  <b>Last Name:</b> {{User_Info.Last_Name}}
+  <br>
+  <b>Current Level:</b> {{User_Info.Level}}
+  <br>
+  <b>Date of Birth:</b> {{DOB}}
+  <br>
+  <b>Height:</b> {{Height}}
+  <br>
+  <b>Weight:</b> {{Weight}}
+  <br><br>
+  <h2>Experience</h2>
+  <b>Training Experience:</b> {{Training_Time}}
+  <br>
+  <b>Primary Sports:</b> {{Sports}}
+  <br>
+  <b>Prior RPE Experience:</b> {{RPE}}
+  <br><br>
+  <h2>Known Max Lifts</h2>
+  <b>Squat:</b> {{Squat}} lbs
+  <br>
+  <b>Bench:</b> {{Bench}} lbs
+  <br>
+  <b>Deadlift:</b> {{D_Lift}} lbs 
+  <br>
+  <b>Overhead Press:</b> {{OP}} lbs 
+  <br>
+  <b>Power Clean:</b> {{PC}} lbs 
+  <br>
+  <b>Clean and Jerk:</b> {{CJerk}} lbs 
+  <br>
+  <b>Snatch:</b> {{Snatch}} lbs 
+  <br>
+  <b>Other:</b> {{Other}} 
+  <br>
+
+</div>
+
+<div style="float:right; width:40%; display:inline-block;">
+  <div name="Next_Workout" style="height:100px;">
+    {% if Next_Workout.None %}
+      None
+    {% else %}
+      <h4>Next Workout:</h4>
+      <b>{{Next_Workout.Summary}}</b> ({{Next_Workout.Date}})
+      <br>
+      <input hidden name="Next_Workout_PK" value="{{Next_Workout.PK}}">
+      <input type="submit" name="View_Next_Workout" value="Click for details" style="background:none; border-width:0px; color:blue; 
+      text-decoration:underline; padding:0px; margin:0px; font-size:1vw;"/>  
+    {% endif %}
+  </div>
+
+  <div name="Last_Workout" style="height:200px;">
+    <h4>Last Workout:</h4>
+    {% if Last_Workout.None %}
+    None
+    {% else %}
+      <b>{{Last_Workout.Summary}}</b> ({{Last_Workout.Date}})
+      <br>
+      <input hidden name="Last_Workout_PK" value="{{Last_Workout.PK}}">
+      <input type="submit" name="View_Last_Workout" value="Click for details" style="background:none; border-width:0px; color:blue; 
+      text-decoration:underline; padding:0px; margin:0px; font-size:1vw;"/>  
+    {% endif %}
+  <br><br>
+  <h2>Estimated Max Lifts</h2>
+  {% for Stat in User_Info.Stats %}
+  <b>{{Stat.Type}} ({{Stat.Name}}):</b> {{Stat.Max}} 
+  <br>
+  {% endfor %}
+
+  </div>
+</div>
+<br>
+</form>
+<br>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

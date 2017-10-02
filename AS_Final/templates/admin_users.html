@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+  <style>
+  th, td {
+    border:1px solid black; 
+  }
+  </style>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-videos">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-workouts">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+<!--           <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+ -->        </ul>
+<!--         <ul class="navbar-nav mr-auto" style="margin-left:600px; float:right;">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Profile<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+ --><!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+<div class="container">
+<h1>Users List</h1>
+<form method="POST" action="#">{% csrf_token %}
+<table style="border:1px solid black; font-size:12px; border-collapse: collapse;">
+  <tr>
+    <th style="width:250px !important; text-align:left;">Email (Click to View Profile)</th>
+    <!-- <th style="width:100px !important; text-align:left;">Email</th> -->    
+    <th style="font-size:12px; border:1px solid black; width:100px !important; text-align:left;">First Name</th>
+    <th style="font-size:12px; border:1px solid black; width:100px !important; text-align:left;">Last Name</th>
+<!--     <th style="font-size:12px; border:1px solid black; width:50px !important; text-align:left;">Squat</th>
+    <th style="font-size:12px; border:1px solid black; width:50px !important; text-align:left;">Hinge</th>
+    <th style="font-size:12px; width:100px !important; text-align:left;">UB Hor Press</th>
+    <th style="font-size:12px; width:150px !important; text-align:left;">Last Workout (Date)</th>
+    <th style="font-size:12px; width:150px !important; text-align:left;">Next Workout (Date)</th>
+ -->  
+ </tr>
+  {% for Member in Members %}  
+  <tr>
+    <td>
+    Member:
+    <input type="submit" name="{{Member.PK}}" value="{{Member.Username}}" style="background:none; border-width:0px; color:blue; 
+    text-decoration:underline; padding:0px; margin:0px; font-size:12px;"/>
+    </td>
+    <td>{{Member.First_Name}}</td>
+    <td>{{Member.Last_Name}}</td>
+ </tr>
+  {% endfor %}
+
+  {% for User in Users %}
+  <tr>
+    <td>
+    <!-- <a href="/profile">{{User}}</a> -->
+    <input type="submit" name="{{User.1}}" value="{{User.0}}" style="background:none; border-width:0px; color:blue; 
+    text-decoration:underline; padding:0px; margin:0px; font-size:12px;"/>
+
+    </td>
+    <td>{{User.2}}</td>
+    <td>{{User.3}}</td>
+ </tr>
+  {% endfor %}
+</table>
+<br>
+</form>
+</div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

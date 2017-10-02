@@ -1,0 +1,174 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Include Vue.js Source Code -->
+<script src='https://unpkg.com/vue'></script>
+<!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
+<!-- Include HTML Code -->
+<!-- Head --> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+
+    <!-- Material Design code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
+    <link rel="stylesheet" href="{% static 'userpage/userprofile.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
+
+    <title>User Profile</title>
+<style>
+
+td, th {
+    padding-left:1vw;
+    width:15vw;
+}
+
+</style>
+
+</head>
+
+
+<!-- Body --> 
+<body>
+    <div id='header-left'>
+        <h1>Stats</h1>
+    </div>
+
+    <div id='header-right'>
+        <ul id='nav-bar'>
+            <li><a href="{%url 'userpage' %}">Home</a></li>
+            <li><a href="{%url 'videos' %}">Videos</a></li>
+            <li><a href="{%url 'tutorial' %}">Tutorial</a></li>
+            <li><a href="/tutorial/#RPE_Table">RPE Table</a></li>
+            <li><a href="{%url 'user_stats' %}" class='page-active'>Stats</a></li>
+            <li><a href="{%url 'userprofile' %}">Profile</a></li>
+            <!-- <li><a href="{%url 'contact' %}">Contact & Support</a></li> -->
+            <li><a href="{%url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
+
+    <div id="userprofile-container">
+
+        <div class='userprofile-row'>
+<!--             <div id='profile-picture-container'>
+                <img src="{% static 'userpage/Profile_Placeholder.png' %}" id='profile-picture'>
+            </div>
+ -->
+<!--             <div id='profile-summary-container'>
+
+                <div class="profile-summary-left">
+                    <h1>Name</h1>
+                    <h4>Age</h4>
+                    <h4>Email</h4>
+                    <h4>Other Contact Information</h4>
+                </div>
+
+                <div class="profile-summary-right">
+                    <h1>Level</h1>
+                    <h4>Last Workout Date</h4>
+                    <h4>Joined On</h4>
+                </div>
+                
+            </div>
+ -->        </div>
+
+        <hr class='userprofile-row-divider'>
+
+        <div class='userprofile-row'>
+            <div class='userprofile-col-3' id='' style="margin-left:2vw;">
+                <h1 style="text-align:left;">Estimated Max Lifts</h1>
+                <table style="text-align:left;">
+                <tr>
+                    <th>
+                    Exercise Name
+                    </th>
+                    <th>
+                    Max (lbs)
+                    </th>
+                </tr>
+                {% for Stat in Stats %}
+                <tr>
+                <td>{{Stat.1}}</td>
+                <td>{{Stat.2}}</td>
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+
+<!--             <div class='userprofile-col-3' id='training-background'> 
+                <h1> Training Background <h1>
+            </div>
+ -->
+            <div class='userprofile-col-6' style="padding:2vw; padding-top:1vw;"> 
+                <h1 style="margin-top:0vw;"> Last Month's Workouts </h1>
+                <table style="text-align:left; ">
+                <tr>
+                    <th>
+                    Date (Click For Details)
+                    </th>
+                    <th>
+                    Level
+                    </th>
+                    <th>
+                    Workout Week/Day
+                    </th>
+                    <th>
+                    Type
+                    </th>
+                </tr>
+                {% for Workout in Completed_Workouts %}
+                <tr>
+                <td>
+                <form method="GET">                
+                  <input hidden name="Workout_PK" value="{{Workout.PK}}">
+                  <input type="submit" name="Show_Workout_Details" value="{{Workout.Date}}" 
+                  style="background:none; border-width:0px; color:blue; text-decoration:underline; 
+                  padding:0px; margin:0px; font-size:15px; margin-top:0.5vw; margin-bottom:0.5vw;"/>                
+                <!-- {{Workout.Date}} -->
+                </form>
+                </td>
+                <td>{{Workout.Level_Block_Info}}</td>
+                <td>{{Workout.Week_Day_Info}}</td>
+                <td>{{Workout.Type}}</td>
+                </tr>
+                {% endfor %}
+                </table>
+                <form method="GET">
+                <input type='submit' value='RESET ALL' name="Reset_All" id='blue_btn'></input>
+                </form>
+
+            </div>
+        </div>
+
+        <hr class='userprofile-row-divider'>
+
+<!--         <div class='userprofile-row'>
+            <div id='userprofile-stats'>
+                <h1>Stats</h1>
+            </div>
+        </div>
+ -->
+    </div>
+
+    
+</body>
+
+</html>
+
+

@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>AlloyStrength Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="#">Alloy Strength Admin</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-workouts">Workouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-exercises">Exercises</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin-logout">Logout</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" style="margin-left:600px; float:right;">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Profile<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+<!--         <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+ -->      </div>
+    </nav>
+
+    <div class="container">
+      <div class="jumbotron" style="margin-top:0px; margin-bottom:50px; display:inline-block; width:100%; height:2000px;">
+      <div style="width:50%; display:inline-block;">
+      <form method="POST" style="margin-bottom:0px;" enctype="multipart/form-data">{% csrf_token %}       
+      <a href="/admin-videos-library">Back to Library</a> <br>
+        <h1 style="margin-bottom:10px; margin-top:0px; display:inline-block;">Edit Video</h1> 
+        <br>
+        <h5 style="display:inline-block;">Title: <span style="display:inline-block; font-weight:normal;">{{Video_Title}}</span></h5> 
+        <br>
+        <input style="margin-top:1vw;" type="text" name="New_Title" placeholder="Enter New Title">
+        <input type="submit" name="Change_Title" class="btn btn-sm btn-primary" value="Change Title">        
+        <br><br>
+        <h5>Video:</h5>
+        <br>
+        <video width="320" height="240" controls style="margin-top:0px; border-style:solid;">
+            <source src="{{Video_URL}}" type="video/mp4">
+        </video>
+        <br>
+        <input type="file" name="VideoUpload" id="VideoUpload">
+        <input type="submit" name="Edit_Video" class="btn btn-sm btn-primary" style="margin-left:-45px;" value="Edit File">        
+        <br>
+        <br>
+        <h5>Thumbnail:</h5>
+        <br>
+        <img src="{{Display.0}}" alt="Thumbnail" height="100" style="display:inline-block; margin-bottom:1vw;">
+        <br>
+        <input type="file" name="ThumbnailUpload" id="ThumbnailUpload">
+        <input type="submit" name="Edit_Thumbnail" class="btn btn-sm btn-primary" style="margin-left:-45px;" value="Edit File">        
+        <br><br>
+        <!-- <b>Current Tags:</b> -->
+        <!-- <br> -->
+<!--         {% for Tag in Tags %}
+        {{Tag}}, 
+        {% endfor %}
+        <br><br>
+        Add Tags (Separate by Comma):<br>
+        <input type="text" name="Tag" style="width:300px;">
+        <br>        
+        <input type="submit" class="btn btn-primary" name="Add_Tag" value="Add Tags" style="margin-top:5px;">
+ -->        <br>        
+        <br>
+      </form>
+      </div>
+      <div style="width:40%; display:inline-block; vertical-align:top;">
+      <form method="GET">
+        <h2>Related Exercises</h2>
+        <h4>Current Access Level: {{Level_Access}}</h4>
+          Change Access Level:
+          <select name="Level_Access">
+            <option value="0">None</option>
+            {%for Level in Levels %}
+              <option value="{{Level}}">{{Level}}</option>
+            {% endfor %}
+          </select>
+        <input type="submit" class="btn btn-primary btn-sm" value="Change" name="Change_Level_Access" style="margin-left:5px;">
+
+        <h4>Exercise Type</h4>
+        <br>
+          Current Exercise Type: <b>{{Display.1}}</b>
+          <br>
+          Change Type:
+          <select style="display:inline-block; margin-left:0px; font-size:15px;" name="Change_Type">
+          {%for Exercise in Exercise_Types %}
+            <option value="{{Exercise}}">{{Exercise}}</option>
+          {% endfor %}
+          </select>
+        <input type="submit" class="btn btn-primary btn-sm" value="Change" name="Change_Type_Btn" style="margin-left:5px;">
+        <br>
+          <p>
+          <br>
+          <span style="margin-bottom:10vw;"><b>Related Exercises and Descriptions (Select to Remove):</b></span>
+          </p>
+          {% for i in Assigned_Exercises %}
+          <!-- <br> -->
+          <input style="display:inline-block;" type="checkbox" name="Remove_Exercises" value="{{i.2}}"> 
+          <b>{{i.0}}</b> (Level {{i.1}})
+          <br>
+          <span style="margin-right:1vw;">Description: {{i.4}}</span>
+          <br>
+          <span style="margin-right:1vw;">Select Description:</span>
+          <select name="{{i.2}}_Describer" style="display:inline-block; margin-right:2vw;">
+            {% for Type in Exercise_Description_Types %}
+            <option value="{{Type.1}}">{{Type.0}}</option>
+            {% endfor %}
+          </select>
+
+          <!-- <textarea style="margin-top:0.5vw;" rows="2" cols="50" name="{{i.2}}_Description" placeholder="No Description">{{i.3}}</textarea> -->
+          <br>
+          {% endfor %}
+          <input type="submit" class="btn btn-primary btn-sm" name="RemoveExercises" value="Remove" 
+          style="background-color:red; border-color:red; margin-left:0px; margin-top:5px;">
+          <input type="submit" class="btn btn-primary btn-sm" name="Update_Descriptions" value="Update" style="margin-left:0px; margin-top:5px;">
+          <br><br>
+          <!-- <br><br> -->
+          <!-- <br> -->
+          <!-- <br> -->
+          Add New Exercises:
+          <br>
+          <!-- <div style="width:45%; display:inline-block;"> -->
+          {% for i in Exercise_List %}
+          <input type="checkbox" name="Assign_Exercises" value="{{i.2}}">{{i.0}} (Level {{i.1}})<br>
+          {% endfor %}
+          <input type="submit" class="btn btn-primary btn-sm" name="AddExercises" value="Add" style="margin-left:0px; margin-top:5px;">
+          <br><br>
+          <b>Delete Video</b>
+          <br>
+          <input type="submit" class="btn btn-primary btn-sm" name="Delete_Video" value="Delete Video" 
+          style="margin-left:0px; margin-top:5px; font-size:1vw; background-color: red; border-color:red;">
+
+<!--           </div>
+          <div style="width:45%; display:inline-block;">
+          Test 2
+          </div>
+ -->      </form>
+      </div>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.No('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

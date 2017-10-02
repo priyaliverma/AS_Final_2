@@ -1,0 +1,102 @@
+{% load static %}
+{{Placeholders.3.0.3}}
+
+<h2>Exercises</h2>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    /*border-collapse: collapse;*/
+}
+</style>
+
+<form method="GET">
+<table style="border: 1px solid black;">
+  <tr>
+    <th style="width:100px !important; text-align:left;">Levels</th>
+    {% for Exercise in Exercises_1 %}
+    <th style="width:220px !important; text-align:left;">{{Exercise.0}}</th>
+    {% endfor %}
+  </tr>
+  <tr>
+    <td>Level 1</td>
+    {% for Exercise in Exercises_1 %}
+    <td><input style="width:210px;" type="text" name="L1{{Exercise.2}}" placeholder="{{Exercise.1.0}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 2</td>
+    {% for Exercise in Exercises_1 %}
+    <td><input style="width:210px;" type="text" name="L2{{Exercise.2}}" placeholder="{{Exercise.1.1}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 3</td>
+    {% for Exercise in Exercises_1 %}
+    <td><input style="width:210px;" type="text" name="L3{{Exercise.2}}" placeholder="{{Exercise.1.2}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 4</td>
+    {% for Exercise in Exercises_1 %}
+    <td><input style="width:210px;" type="text" name="L4{{Exercise.2}}" placeholder="{{Exercise.1.3}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 5</td>
+    {% for Exercise in Exercises_1 %}
+    <td><input style="width:210px;" type="text" name="L5{{Exercise.2}}" placeholder="{{Exercise.1.4}}"></td> 
+    {% endfor %}
+ </tr>
+</table>
+<br>
+<table style="border: 1px solid black;">
+  <tr>
+    <th style="width:100px !important; text-align:left;">Levels</th>
+    {% for Exercise in Exercises_2 %}
+    <th style="width:180px !important; text-align:left;">{{Exercise.0}}</th>
+    {% endfor %}
+  </tr>
+  <tr>
+    <td>Level 1</td>
+    {% for Exercise in Exercises_2 %}
+    <td><input style="width:180px;" type="text" name="L1{{Exercise.2}}" placeholder="{{Exercise.1.0}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 2</td>
+    {% for Exercise in Exercises_2 %}
+    <td><input style="width:180px;" type="text" name="L2{{Exercise.2}}" placeholder="{{Exercise.1.1}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 3</td>
+    {% for Exercise in Exercises_2 %}
+    <td><input style="width:180px;" type="text" name="L3{{Exercise.2}}" placeholder="{{Exercise.1.2}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 4</td>
+    {% for Exercise in Exercises_2 %}
+    <td><input style="width:180px;" type="text" name="L4{{Exercise.2}}" placeholder="{{Exercise.1.3}}"></td> 
+    {% endfor %}
+ </tr>
+  <tr>
+    <td>Level 5</td>
+    {% for Exercise in Exercises_2 %}
+    <td><input style="width:180px;" type="text" name="L5{{Exercise.2}}" placeholder="{{Exercise.1.4}}"></td> 
+    {% endfor %}
+ </tr>
+</table>
+<br>
+<input type="submit" name="Update_Exercises" value="Update">
+</form>
+<br>
+<!-- <h3 style="display:inline-block;">Level 1</h3> 
+<input style="display:inline-block;" type="number" name="workout_level" placeholder="Level Number">
+<br>
+<h3 style="display:inline-block;">Level 2</h3>
+<h3>Level 3</h3>
+<h3>Level 4</h3>
+<h3>Level 5</h3>
+ -->

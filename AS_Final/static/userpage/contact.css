@@ -1,0 +1,50 @@
+
+.title-divider {
+	border: none; 
+	width: 100%; 
+	border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+p {
+	font-size: 1.25vw;
+}
+
+#contact-container {
+	width: 100%;
+}
+
+#contact-container-left {
+	width: 35%;
+	float: left;
+	margin-left: 2%;
+}
+
+#contact-container-right {
+	width: 60%;
+	float: right; 
+	background-color: rgba(0,0,0,0.1);
+	border-radius: 0.5vw;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0; 
+	margin-right: 1%;
+	text-align: center; 
+	padding-bottom: 2vw;
+}
+
+.contact-name {
+	font-weight: bold;
+}
+
+#contact-textarea {
+	display: block;
+	margin: 0 auto;
+	border: 0.1vw solid rgba(0,0,0,0.1);
+	position: relative;
+	text-align: left;
+	border-radius: 0.5vw;
+	padding: 1vw;
+	resize: vertical; 
+    overflow: auto;
+    width: 80%;
+    height: 20vh; 
+}
