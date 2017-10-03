@@ -445,7 +445,7 @@
  -->                    {% endfor %}
                     {% for Bool in Show_Submit %}
                         <input type='submit'
-                        onclick=""
+                        onclick="check_null()"
                         value='SUBMIT WORKOUT' name="Submit_Workout" id='blue_btn'></input>
                     {% endfor %}
 <!--                 <input type='submit' value='GET ALLOY WEIGHTS' name="Get_Alloy" style="background-color:red;" id='blue_btn'></input>
@@ -524,16 +524,16 @@
         }
         var Inputs = document.getElementsByTagName("input");
         for (index = 0; index < Inputs.length; index ++) {
-            // if (Inputs[index].value == "") {
-            //     event.preventDefault();
-            //     alert("Please fill in all required fields!");
-            //     return;
-            // }
-            if (typeof Inputs[index].value != 'number') {
+            if (Inputs[index].value == "") {
                 event.preventDefault();
-                alert("Please fill in fields with numerical values!");
+                alert("Please fill in all required fields!");
                 return;
             }
+            // if (typeof Inputs[index].value != 'number') {
+            //     event.preventDefault();
+            //     alert("Please fill in fields with numerical values!");
+            //     return;
+            // }
         }
         var Selects = document.getElementsByTagName("select");
         for (index = 0; index < Selects.length; index ++) {

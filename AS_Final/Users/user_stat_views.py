@@ -167,9 +167,8 @@ def User_Profile(request):
 
 	for W in _Workouts:
 		_Date = datetime.strptime(W._Date, "%m/%d/%Y")
-		# if W.Completed and _Date >= datetime.now() - timedelta(days=30):
-		if True:
-		# if not W.Completed:
+		# if False:
+		if W.Completed and _Date >= datetime.now() - timedelta(days=30) and _Date <= datetime.now():
 			Dict = {}
 			Dict["Date"] = W._Date
 			Dict["Week"] = W.Template.Week

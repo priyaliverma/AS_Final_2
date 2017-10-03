@@ -54,6 +54,8 @@ def Get_Workout_Block(request):
 			Workout.Completed = True
 			Workout.save()
 		print("Creating Program")
+		for Stat in _Member.Stats.all():
+			Stat.Reset()
 
 		Start_Date = datetime.now()
 
@@ -92,9 +94,9 @@ def Get_Workout_Block(request):
 def Level_Up(request):
 	User = request.user
 	_Member = Member.objects.get(User=User)
-	_Member.Level = 11
-	_Member.save()
-	# request.session["Level_Up"] = Check_Level_Up(_Member)
+	# _Member.Level = 1
+	# _Member.save()
+	request.session["Level_Up"] = Check_Level_Up(_Member, False)
 	context = {}
 	context["Name"] = User.first_name
 	context["Core_Stats"] = []
@@ -104,29 +106,29 @@ def Level_Up(request):
 	context["Second_Message"] = "You are now at level: " + str(_Member.Level)
 	context["Level"] = _Member.Level 
 	context["Level_Up"] = ["True"]
+	# TESTING
+	# request.session["Level_Up"] = False
 
 	if "Level_Up" not in request.session.keys():
 		context["Passed"] = True
 		request.session["Level_Up"] = False
 		context["Level_Up"] = []
-
 	if not request.session["Level_Up"]:
 		context["Passed"] = False
 		context["Main_Message"] = "You need more time!"
 		context["Second_Message"] = "You results show that you need to spend more time at your current exercise level. " 	
-		context["Level_Up"] = True
+		context["Level_Up"] = False
 	else:					
 		context["Level_Up_Message_Intro"] = "Congratulations " + User.first_name + " you've reached Level " + str(_Member.Level) + "!"
-		context["Level_Up_Message_Body"] = Messages_Dict[16]
-		Static_String = str(16) + "_Static"
-		context["Level_Up_Img_URL"] = Messages_Dict[Static_String]
-		context["Level_Up_Message_Body"] = Messages_Dict[16]
-		context["Level_Up_Img_URL"] = Messages_Dict["16_Static"]
-		# context["Level_Up"] = False
 		context["Level_Up"] = True
-
+		# context["Level_Up_Message_Body"] = Messages_Dict[16]
+		# Static_String = str(16) + "_Static"
+		# context["Level_Up_Img_URL"] = Messages_Dict[Static_String]
+		# context["Level_Up_Message_Body"] = Messages_Dict[16]
+		# context["Level_Up_Img_URL"] = Messages_Dict["16_Static"]
+		# context["Level_Up"] = False
 # if request.session["Level_Up"]:
-	context["Level_Up_Message_Intro"] = "Congratulations " + User.first_name + " you've reached Level " + str(_Member.Level) + "!"
+	# context["Level_Up_Message_Intro"] = "Congratulations " + User.first_name + " you've reached Level " + str(_Member.Level) + "!"
 	if _Member.Level == 6:
 		context["Level_Up_Message_Body"] = Messages_Dict[6]
 	elif _Member.Level == 11:
@@ -138,25 +140,26 @@ def Level_Up(request):
 
 	Stat_List = _Member.Stats.all()
 	for i in Stat_List:
-		Stat_Dict = {}
-		Stat_Dict["Type"] = i.Type
-		if not i.Level_Up:
-			Stat_Dict["Alloy_Outcome"] = "Failed"
-			Stat_Dict["PASSED"] = []
-			Stat_Dict["FAILED"] = ["FAILED"]
-		else:
-			Stat_Dict["Alloy_Outcome"] = "Passed"
-			Stat_Dict["PASSED"] = ["PASSED"]
-			Stat_Dict["FAILED"] = []
-		# Stat_Dict["Alloy_Reps"] = i.Alloy_Reps
-		# Stat_Dict["Alloy_Performance_Reps"] = i.Alloy_Performance_Reps
-		Stat_Dict["Exercise_Name"] = i.Exercise_Name
-		# Stat_Dict["Exercise_Name"] = i.Exercise_Name
-		# Stat_Dict["Alloy_Performance_Reps"] = i.Alloy_Performance_Reps
-		if i.Type == "Squat" or i.Type == "Hinge" or i.Type == "UB Hor Push":
-			context["Core_Stats"].append(Stat_Dict)
-		else:
-			context["Stats"].append(Stat_Dict)
+		if i.Level_Up or i.Failed:
+			Stat_Dict = {}
+			Stat_Dict["Type"] = i.Type
+			if i.Failed:
+				Stat_Dict["Alloy_Outcome"] = "Failed"
+				Stat_Dict["PASSED"] = []
+				Stat_Dict["FAILED"] = ["FAILED"]
+			elif i.Level_Up:
+				Stat_Dict["Alloy_Outcome"] = "Passed"
+				Stat_Dict["PASSED"] = ["PASSED"]
+				Stat_Dict["FAILED"] = []
+			# Stat_Dict["Alloy_Reps"] = i.Alloy_Reps
+			# Stat_Dict["Alloy_Performance_Reps"] = i.Alloy_Performance_Reps
+			Stat_Dict["Exercise_Name"] = i.Exercise_Name
+			# Stat_Dict["Exercise_Name"] = i.Exercise_Name
+			# Stat_Dict["Alloy_Performance_Reps"] = i.Alloy_Performance_Reps
+			if i.Type == "Squat" or i.Type == "Hinge" or i.Type == "UB Hor Push":
+				context["Core_Stats"].append(Stat_Dict)
+			else:
+				context["Stats"].append(Stat_Dict)
 	if request.GET.get("Next_Workouts"):
 		return HttpResponseRedirect("/get-workouts")
 	if request.GET.get("Get_Videos"):

@@ -558,11 +558,12 @@
         var RPE_Exp = document.getElementById("RPE_Exp");
 
 
-        if (_F_Name == "" || _L_Name == "" || _Email == "" || _P_Word_1 == "" || _P_Word_2 == "" || _DOB == ""
-        || Height == "" || Weight == "" || T_Years == "" || T_Months == ""
-        || Sport_3 == "" || Sport_2 == "" || Sport_1 == "" || RPE_Exp == "") {
+        if (_F_Name == "" || _L_Name == "" || _Email == "" || _P_Word_1 == "" || _P_Word_2 == "" 
+        || _DOB == ""
+        || Height == "" || Weight == "" || T_Years == "" || T_Months == "" || RPE_Exp == ""
+        ) {
             alert("Please fill out all required fields!");
-            // event.preventDefault();
+            event.preventDefault();
         }
 
 

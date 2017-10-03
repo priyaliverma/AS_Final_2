@@ -98,15 +98,20 @@
     style="display:inline-block; vertical-align:top; border-style:solid; padding:2vw; padding-top:0vw; margin-left:3vw; width:50%">
         <h3>Your Next Set of Workouts Will Be At Level: {{Level}} </h3>    
         {% if Level_Up %}
-        {{ Level_Up_Message_Intro }}        
+            {{ Level_Up_Message_Intro }}        
+            <br><br>
+            {{ Level_Up_Message_Body|safe}}
+            <img style="width:75%;" src='/static/{{Level_Up_Img_URL}}'>        
+            <br>
+            <input type="submit" id="blue_btn" style="font-size:1vw; height:3vw; margin-left:0vw; float:left; margin-bottom:0px;" 
+            value="View Unlocked Videos" name="Get_Videos">
+            <input type="submit" id="blue_btn" style="font-size:1vw; height:3vw; margin-left:2vw; float:left; margin-bottom:0px;" 
+            value="Get New Workouts" name="Next_Workouts">
+        {% else %}
         {{ Level_Up_Message_Body|safe}}
-        <img style="width:75%;" src='/static/{{Level_Up_Img_URL}}'>        
-        <br>
         <input type="submit" id="blue_btn" style="font-size:1vw; height:3vw; margin-left:0vw; float:left; margin-bottom:0px;" 
-        value="View Unlocked Videos" name="Get_Videos">
-        {% endif %}
-        <input type="submit" id="blue_btn" style="font-size:1vw; height:3vw; margin-left:2vw; float:left; margin-bottom:0px;" 
         value="Get New Workouts" name="Next_Workouts">
+        {% endif %}
     </div>
     </form>
     </div>

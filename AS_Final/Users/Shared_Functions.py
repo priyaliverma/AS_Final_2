@@ -23,7 +23,7 @@ def User_Ref_Dict(user):
 	Dict["Workouts"] = _Workouts
 	return Dict
 
-def Check_Level_Up(_Member):
+def Check_Level_Up(_Member, Add_Level):
 	Level_Up = False
 	Curr_Level = _Member.Level
 	Stats = _Member.Stats.all()
@@ -39,8 +39,9 @@ def Check_Level_Up(_Member):
 
 	if Level_Up:
 		print("Member Levelled Up!")
-		_Member.Level += 1
-		_Member.save()
+		if Add_Level:
+			_Member.Level += 1
+			_Member.save()
 		return True
 	else:
 		return False

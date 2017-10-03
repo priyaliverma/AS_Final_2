@@ -885,7 +885,7 @@ def User_Page(request):
 #			LAST WORKOUT/LEVEL-UP CHECK 
 				if _Workout.Template.Last:	
 					print("Last Workout Submitted")				
-					request.session["Level_Up"] = Check_Level_Up(_Member)			
+					request.session["Level_Up"] = Check_Level_Up(_Member, True)			
 					_Member.Finished_Workouts = True
 					_Member.save()		
 					_Workout.Completed = True

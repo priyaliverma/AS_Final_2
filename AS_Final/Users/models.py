@@ -55,6 +55,7 @@ class Stat(models.Model):
 		self.Updated = False
 		self.Level_Up = False
 		self.Max = 0
+		self.save()
 	# Email
 class Video(models.Model):
 	Tags = models.CharField(default = "", max_length=300)

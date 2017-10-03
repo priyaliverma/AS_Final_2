@@ -312,6 +312,9 @@ def SignUp_Confirmation(request):
 	User = request.user
 	_Member = Member.objects.get(User=User)
 	stripe.api_key = "sk_test_LKsnEFYm74fwmLbyfR3qKWgb"
+	# LIVE!!
+	# stripe.api_key = "pk_live_1PfxQb8lvkPeO1ogUgp2V5Ly"
+
 	Package_Description = "Gold"
 	print("RPE Test: " + str(Get_Weight(200, 8, 8)))
 
@@ -489,6 +492,8 @@ def Membership_Expired(request):
 	User = request.user
 	_Member = Member.objects.get(User=User)
 	stripe.api_key = "sk_test_LKsnEFYm74fwmLbyfR3qKWgb"
+	# LIVE!!
+	# stripe.api_key = "pk_live_1PfxQb8lvkPeO1ogUgp2V5Ly"
 	Package_Description = "Gold"
 	print("RPE Test: " + str(Get_Weight(200, 8, 8)))
 

@@ -352,8 +352,7 @@ def Admin_Workouts(request):
 
 	context["Users"] = []
 
-	context["Exercise_Types"] = Exercise_Types
-	context["Exercise_Types"].append("None")
+	context["Exercise_Types"] = Exercise_Types + ["None"]
 
 	context["Exercises"] = []
 	context["Sets"] = []
