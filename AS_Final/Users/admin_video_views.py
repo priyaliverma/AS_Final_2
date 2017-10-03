@@ -49,8 +49,10 @@ def Admin_Videos(request):
 		row.append(_Thumbnail_URL)
 		row.append(_Type)
 		Exercise_Names = []
-		for x in i.Exercises.all():
+
+		for x in i.exercises.all():
 			Exercise_Names.append(x)
+
 		row.append(Exercise_Names)
 		context["Video_Display"].append(row)
 
@@ -149,8 +151,8 @@ def Admin_Videos(request):
 		_Video.save()
 		for i in Add_Exercises:
 			_Exercise = Exercise.objects.get(Name = i)
-			_Video.Exercises.add(_Exercise)
-			_Video.save()
+			_Exercise.Video = _Video
+			_Exercise.save()
 		request.session["Uploading_Video_PK"] = _Video.pk
 
 		return HttpResponseRedirect("/admin-videos-library")
@@ -163,7 +165,7 @@ def Admin_Videos_2(request):
 	_Thumbnail_URL = _Video.Get_Thumbnail()
 	_Video_URL = "/" + _Video.File.url
 	_Title = _Video.Title
-	_Exercises = _Video.Exercises.all()
+	_Exercises = _Video.exercises.all()
 
 	context["Video_Title"] = _Title
 	context["Thumbnail_URL"] = _Thumbnail_URL
@@ -192,7 +194,7 @@ def Admin_Videos_Library(request):
 
 	for v in Video.objects.all():
 		row = []
-		_Exercises = v.Exercises.all()
+		_Exercises = v.exercises.all()
 		exercises_row = []
 		
 		for i in _Exercises:
@@ -218,6 +220,9 @@ def Admin_Videos_Library(request):
 		Delete_PK = request.GET["Delete_PK"]
 		print("Delete PK: " + str(Delete_PK))
 		Delete_Video = Video.objects.get(pk=Delete_PK)
+		Related_Exercises = Exercise.objects.filter(Video=Delete_Video)
+		for E in Related_Exercises.all():
+			Delete_Video.exercises.remove(E)
 		Delete_Video.delete()
 		print("Deleting")
 		# Delete_Video.Exercises.clear()
@@ -264,8 +269,10 @@ def Admin_Videos_Edit(request):
 	context = {}
 	_Video = Video.objects.get(pk=request.session["Video_PK"])
 	_Type = _Video.Exercise_Type
+
 	_Exercise_List = Exercise.objects.filter(Type=_Type)
-	_Assigned_Exercises = _Video.Exercises.all()
+
+	_Assigned_Exercises = _Video.exercises.all()
 	context["Display"] = []
 	_Thumbnail_URL = _Video.Get_Thumbnail()
 	_Video_URL = "/" + _Video.File.url
@@ -299,13 +306,25 @@ def Admin_Videos_Edit(request):
 		Describer_Labels_Dict[x[1]] = x[0]
 	# print("Test")
 	# print("PK from Edit: " + str(request.session["Video_PK"]))
-	for i in _Exercise_List:
-		if i not in _Video.Exercises.all():
-			row = []
-			row.append(i.Name)
-			row.append(i.Level)
-			row.append(i.pk)
-			context["Exercise_List"].append(row)
+	# for i in _Exercise_List:
+	# 	if i not in _Video.exercises.all():
+	# 		row = []
+	# 		row.append(i.Name)
+	# 		row.append(i.Level)
+	# 		row.append(i.pk)
+	# 		context["Exercise_List"].append(row)
+	# 	_Exercises = Exercise.objects.filter(Type = _Type)
+	for n in Levels:
+		if Exercise.objects.filter(Type = _Type, Level = n).exists():
+			_Exercise = Exercise.objects.get(Type=_Type, Level = n)
+			if _Exercise not in _Video.exercises.all():
+				row = []
+				row.append(_Exercise.Name)
+				row.append(_Exercise.Level)
+				row.append(_Exercise.pk)
+				context["Exercise_List"].append(row)
+
+
 	for i in _Assigned_Exercises:
 		row = []
 		row.append(i.Name)
@@ -364,7 +383,7 @@ def Admin_Videos_Edit(request):
 		PKs = request.GET.getlist("Remove_Exercises")
 		for i in PKs:
 			_Exercise = Exercise.objects.get(pk=i)
-			_Video.Exercises.remove(_Exercise)
+			_Video.exercises.remove(_Exercise)
 			_Video.save()
 		return HttpResponseRedirect('/admin-videos-library-edit')
 
@@ -392,8 +411,10 @@ def Admin_Videos_Edit(request):
 		for i in PKs:
 			print(i)
 			_Exercise = Exercise.objects.get(pk=i)
-			_Video.Exercises.add(_Exercise)
-			_Video.save()
+			_Exercise.Video = _Video
+			_Exercise.save()
+			# _Video.Exercises.add(_Exercise)
+			# _Video.save()
 		return HttpResponseRedirect('/admin-videos-library-edit')
 
 	if request.POST.get("Edit_Video"):
@@ -407,6 +428,10 @@ def Admin_Videos_Edit(request):
 		_Video.save()
 
 	if request.GET.get("Delete_Video"):
+		Related_Exercises = Exercise.objects.filter(Video=_Video)
+
+		for E in Related_Exercises.all():
+			_Video.exercises.remove(E)
 		_Video.delete()
 		if os.path.isfile(_Video.File.url):
 			 os.remove(_Video.File.url)

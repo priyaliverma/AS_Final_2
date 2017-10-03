@@ -271,7 +271,7 @@ def User_Page(request):
 			if Template.Reps == "" or Template.Reps == "0" or Template.Reps == "B":
 				Row["Suggested_Weight"] = "Bodyweight"
 				Row["Sets_Reps"] = str(i.Template.Sets) + " Sets " + " @ " + str(i.Template.RPE) + " RPE"
-				Row["Reps"] = "Bodyweight"
+				Row["Reps"] = "N/A"
 				Row["BodyWeight"] = True
 				Bodyweight = True
 			else:
@@ -336,9 +336,9 @@ def User_Page(request):
 			Row["Sets"] = i.Template.Sets
 			Row["RPE"] = i.Template.RPE
 
-			if (len(i.Exercise.Video.all()) > 0):
+			if i.Exercise.Video != None:
 				Row["Has_Video"] = True
-				_Video = i.Exercise.Video.all()[0]
+				_Video = i.Exercise.Video
 				Row["Video_PK"] = _Video.pk
 
 			Reps = i.Template.Reps
@@ -551,7 +551,7 @@ def User_Page(request):
 					else:
 						Row["Set_Type"] = "Strength_Input"
 					# Row["Strength_Sets"]["Input"].append(Set_Row)
-				elif i.Template.Stop_Set:
+				elif i.Template.Stop_Set or i.Template.Strength_Stop > 0:
 					Row["Set_Type"] = "Strength_Input"
 					# Row["Strength_Sets"]["Input"].append(Set_Row)
 				elif i.Template.Alloy and Alloy_Sub:

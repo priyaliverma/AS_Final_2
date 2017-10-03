@@ -56,10 +56,13 @@ def Videos(request):
 
 	for V in All_Videos:
 		if One_Level_Access:
-			if V.Level_Access == _Level:
+			if V.Level_Access == _Member.Level:
 				_Videos.append(V)
-		elif V.Level_Access <= _Level:
+		elif V.Level_Access <= _Member.Level:
 			_Videos.append(V)
+			print("Under Level")
+			print("Member Level: " + str(_Member.Level))
+			
 	# _Videos = Video.objects.filter(Give_Access(0) = True)
 
 	for i in _Videos:
@@ -76,7 +79,7 @@ def Videos(request):
 			context["Video_URL"] = "/" + Selected_Video.File.url
 			context["Video_Title"] = Selected_Video.Title
 			context["Related_Exercises"] = []
-			for i in Selected_Video.Exercises.all():
+			for i in Selected_Video.exercises.all():
 				if i.Type in Description_Dict.keys():
 					if i.Level in Description_Dict[i.Type].keys():
 						if not ("Description_Exercise_Name" in request.session.keys() and request.session["Description_Exercise_Name"] == i.Name):
@@ -89,7 +92,7 @@ def Videos(request):
 
 	if "Description_Exercise_Name" in request.session.keys() and Selected_Video != None:
 		Description_Exercise = Exercise.objects.get(Name=request.session["Description_Exercise_Name"])
-		if Description_Exercise in Selected_Video.Exercises.all():
+		if Description_Exercise in Selected_Video.exercises.all():
 			context["Selected_Exercise_Name"] = [Description_Exercise.Name]
 			if Description_Exercise.Type in Description_Dict.keys():
 				if Description_Exercise.Level in Description_Dict[Description_Exercise.Type].keys():

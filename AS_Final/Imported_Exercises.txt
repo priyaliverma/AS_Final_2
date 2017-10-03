@@ -1,431 +1,861 @@
 UB Vert Push,1,KB 1/2 Kneeling Overhead Press
+
 UB Hor Pull,1,DB Row
+
 UB Vert Pull,1,CC Neutral Pulldown
-Hinge,1,DB RDL
-Squat,1,Goblet Squat to Box
+
 Ant Chain,1,Deadbug
+
 UB Vert Push,2,DB Seated Overhead Press
+
 UB Hor Pull,2,CC Neutral Row
-Squat,2,Goblet Box Squat
+
 UB Vert Push,3,Standing Overhead Press
+
 UB Hor Pull,3,>45 degree Inverted Row
+
 UB Vert Pull,3,Pronated Pulldown
-Squat,3,Goblet Squat
-UB Hor Push,4,DB Alt Floor Press
-UB Hor Push,5,DB 1A Bench Press
+
 UB Vert Push,4,Alternating Seated OHP
+
 UB Vert Push,5,KB Bottoms Up 1/2 Kneeling OHP
+
 UB Hor Pull,5,DB Row Tempo
+
 UB Vert Pull,5,Supinated Pulldown
-Squat,4,KB/DB Front Squat
-Squat,5,Pause Goblet Squat
+
 Isolation,2,DB Hammer Curl
+
 LB Uni Push,1,1Leg Press
+
 LB Uni Push,2,DB Reverse Lunge
+
 LB Uni Push,3,DB Split Squat
+
 LB Uni Push,4,Pistol Box Squat
+
 LB Uni Push,5,DB Walking Lunge
+
 Ant Chain,2,Reverse Crunch
+
 Ant Chain,3,CC 1/2  Kneeling Pallof Press
+
 Ant Chain,4,Banded Deadbug
+
 Ant Chain,5,Reverse Crunch
+
 Post Chain,1,DB Hip Thrust
+
 Post Chain,2,Slider Hamstring Curl
+
 Post Chain,3,DB Hip Thrust
+
 Post Chain,4,SB Hamstring Curl
+
 Post Chain,5,BB Hip Thrust
+
 Isolation,1,DB Biceps Curl
+
 Isolation,3,BB Curl
+
 Isolation,4,CC Reverse Curl
+
 Isolation,5,DB Incline Curl
+
 Iso 3,1,CC Face Pull
+
 Iso 3,2,Band Pullapart
+
 Iso 3,3,CC Face Pull
+
 Iso 3,4,Band Pullapart
+
 Iso 3,5,Face Pull
+
 Iso 4,1,DB Lateral Raise
+
 Iso 4,2,BB Overhead Shrug
+
 Iso 4,3,Lateral Raise
+
 Iso 4,4,OH Shrug
+
 Iso 4,5,Lateral Raise
+
 Ant Chain,24,Ab Wheel Rollout
-UB Hor Push,1,DB Bench Press
-UB Hor Push,2,DB Floor Press
-UB Hor Push,3,DB Alt Bench Press
+
 ,1,
-Hinge,2,DB Pause RDL
-Hinge,3,BB RDL
-Hinge,4,DB Tempo RDL
-Hinge,5,BB Pause RDL
+
 UB Hor Pull,4,CC Pronated Row
+
 UB Vert Pull,2,1A 1/2 Kneeling Pulldown
+
 UB Vert Pull,4,1A Tempo Pulldown
+
 Carry,1,DB Farmer Carry
+
 Squat,13,Front Squat
+
 Hinge,13,Deficit RDL
+
 LB Uni Push,13,DB Walking Lunge
+
 UB Hor Pull,13,DB Row
+
 Isolation,13,BB Curl
+
 Iso 3,13,Low Face Pull
+
 Carry,13,KB Rack Carry
+
 Ant Chain,13,Buzzsaw
+
 RFL Load,13,
+
 Post Chain,13,1DB 1L RDL
+
 UB Hor Press,13,
+
 UB Hor Push,13,BB Incline Press
+
 UB Hor Push,10,DB Alternating Incline Press
+
 Squat,10,BB Back Squat
+
 UB Hor Press,10,
+
 Hinge,10,Snatch Grip RDL
+
 LB Uni Push,10,BB Bulgarian Split Squat
+
 Carry,10,Farmer Handle Carry
+
 Ant Chain,10,Hanging Knee Tuck
+
 UB Hor Pull,10,Pendlay Row
+
 Isolation,10,DB Incline Curl
+
 Iso 3,10,Face Pull
+
 RFL Load,10,
+
 Post Chain,10,DB 1L Hip Thrust
+
 Squat,16,Frankenstein Squat
+
 Hinge,16,Deadlift
+
 LB Uni Push,16,DB Bulgarian
+
 Carry,16,Suitcase Carry
+
 Ant Chain,16,Dragon Fly
+
 UB Vert Push,16,BB Standing OHP
+
 UB Vert Pull,16,Pronated Weighted Negative Pullups
+
 UB Hor Press,1,
-Squat,11,BB Box Front Squat
+
+Squat,11,Tempo Test
 Hinge,11,Snatch Grip Pause RDL
+
 LB Uni Push,11,Zercher Split Squat
+
 UB Hor Pull,11,BB Bent Row
+
 Isolation,11,KB Biceps Curl
+
 Iso 3,11,High Face Pull
+
 UB Hor Push,11,BB Pause Bench Press
-Carry,2,Suitcase Carry
-Carry,3,KB Rack Carry
-Carry,4,Trap Bar Carry
-Carry,5,Farmer Handle Carry
-UB Hor Push,6,BB Bench Press
-UB Hor Push,7,1A Floor Press
-UB Hor Push,8,DB Incline Press
-UB Hor Push,9,BB Floor Press
-Hinge,6,Trap Bar Deadlift
-Hinge,7,BB Tempo RDL
-Hinge,8,Rack Pull
-Hinge,9,BB Deadlift
-Squat,6,KB/DB Pause Front Squat
-Squat,7,Tempo Goblet Squat
-Squat,8,BB Box Back Squat
-Squat,9,KB/DB Tempo Front Squat
-UB Vert Push,6,BB Tall Kneeling Scrape the Rack Press
-UB Vert Push,7,BB Standing OHP
-UB Vert Push,8,1A Seated OHP
-UB Vert Push,9,BB Standing STR Press
-UB Vert Push,10,BB 1/2 Kneeling OHP
-UB Hor Pull,6,<45 deg Tempo Inverted Row
-UB Hor Pull,7,CC Pause Row
-UB Hor Pull,8,BB Elevated Pendlay
-UB Hor Pull,9,Weighted Inverted Row
-UB Vert Pull,6,Wide Grip Pulldown
-UB Vert Pull,7,Neutral Negative Pullups
-UB Vert Pull,8,CC Tempo Pulldown
-UB Vert Pull,9,Supinated Negative Pullups
-UB Vert Pull,10,Pronated Negative Pullups
-LB Uni Push,6,DB Bulgarian Split Squat
-LB Uni Push,7,1A OH Reverse Lunge
-LB Uni Push,8,BB Split Squat 
-LB Uni Push,9,Pistol Box Squat
-Ant Chain,6,Leg Raise
-Ant Chain,7,Kneeling 1A Slideout
-Ant Chain,8,Tall Kneeling Pallof Press
-Ant Chain,9,Banded Leg Raise
-Post Chain,6,1L Hip Thrust
-Post Chain,7,Slider 1L Ham Curl
-Post Chain,8,DB 1L Hip Thrust
-Post Chain,9,SB 1L Hamstring Curl
-Isolation,6,DB Biceps Curl
-Isolation,7,DB Hammer Curl
-Isolation,8,BB Curl
-Isolation,9,CC Reverse Curl
-Iso 2,6,CC Triceps Pressdown
-Iso 2,7,DB Skullcrusher
-Iso 2,8,DB OH Extension
-Iso 2,9,Rope Pressdown
-Iso 2,10,Decline Skullcrusher
-Iso 3,6,Face Pull
-Iso 3,7,Supine Band Pullapart
-Iso 3,8,Face Pull
-Iso 3,9,Foam Roll Band Pullapart
-Iso 4,6,Lateral Raise
-Iso 4,7,Prone YTI
-Iso 4,8,Lateral Raise 
-Iso 4,9,Prone YTI
-Iso 4,10,Lateral Raise
-RFD Load,6,Power Position Jump Shrug
-RFD Load,7,Power Position High Pull
-RFD Load,8,Hang Jump Shrug
-RFD Load,9,Hang High Pull
-RFD Load,10,Clean Pull
-RFD Unload 1,6,Pause Box Jump
-RFD Unload 1,7,Pause Broad Jump
-RFD Unload 1,8,Box Jump
-RFD Unload 1,9,Broad Jump
-RFD Unload 1,10,Continuous Broad Jump
-RFD Unload 2,6,Pause Bound
-RFD Unload 2,7,Bound
-RFD Unload 2,8,Continuous Bound
-RFD Unload 2,9,Bound to Box
-RFD Unload 2,10,45 deg Bound
-Medicine Ball,6,Tall Kneeling OH Slam
-Medicine Ball,7,Continuous Tall Kneeling OHS
-Medicine Ball,8,Squat to Throw
-Medicine Ball,9,1/2 Kneeling Chest Pass
-Medicine Ball,10,Continuous Tall Kneeling Chest Pass
-Carry,6,DB Farmer Carry
-Carry,7,Suitcase Carry
-Carry,8,KB Rack Carry
-Carry,9,Trap Bar Carry
-UB Hor Push,12,BB Pause Floor Press
-UB Hor Push,14,Close Grip Floor Press
-UB Hor Push,15,BB Pause Incline Press
-Hinge,12,Sumo Deadlift
-Hinge,14,Trap Bar Deadlift
-Hinge,15,Deficit Pause RDL
-Squat,12,Pause Back Squat
-Squat,14,Tempo Back Squat
-Squat,15,Pause Front Squat
-UB Vert Push,11,1A Standing OHP
-UB Vert Push,12,BB Javelin Press
-UB Vert Push,13,DB Seated OHP
-UB Vert Push,14,Tall Kneeling STR Press
-UB Vert Push,15,Alternating Standing OHP
-UB Hor Pull,12,Weighted Inverted Row
-UB Hor Pull,14,Weighted Feet Elevated Inverted Row 
-UB Hor Pull,15,Pendlay Row
-UB Vert Pull,11,Neutral Pullups
-UB Vert Pull,12,Supinated Pullups
-UB Vert Pull,13,Weighted Negative Pullups
-UB Vert Pull,14,Pronated Pullups
-UB Vert Pull,15,Weighted Negative Pullups
-LB Uni Push,12,1A OH Reverse Lunge
-LB Uni Push,14,DB Bulgarian
-LB Uni Push,15,Zercher Bulgarian
-Ant Chain,11,Banded Deadbug
-Ant Chain,12,Low Split Pallof Press
-Ant Chain,14,Ab Wheel Rollout
-Ant Chain,15,1L Buzzsaw
-Post Chain,11,1L RDL
-Post Chain,12,Glute Ham Raise
-Post Chain,14,GHR
-Post Chain,15,2DB RDL
-Isolation,12,Hammer Curl
-Isolation,14,BB Reverse Curl
-Isolation,15,DB Incline Curl
-Iso 2,11,CC Triceps Pressdown
-Iso 2,12,DB Skullcrusher
-Iso 2,13,DB OH Extension
-Iso 2,14,Rope Pressdown
-Iso 2,15,Decline Skullcrusher
-Iso 3,12,Supine Band Pullapart
-Iso 3,14,Foam Roll Band Pullapart
-Iso 3,15,Face Pull
-Iso 4,11,Lateral to Front Raise
-Iso 4,12,Incline YTI
-Iso 4,13,Lateral to Front Raise
-Iso 4,14,Incline YTI
-Iso 4,15,Lateral to Front Raise
-Carry,11,DB Farmer Carry
-Carry,12,Suitcase Carry
-Carry,14,Trap Bar Carry
-Carry,15,Farmer Handle Carry
-RFD Load,11,DB Snatch
-RFD Load,12,Hang Power Clean
-RFD Load,13,DB Snatch
-RFD Load,14,BB Snatch Pull
-RFD Load,15,Power Clean
-RFD Unload 1,11,Continuous Hurdle Jump
-RFD Unload 1,12,Pause Lateral Box Jump
-RFD Unload 1,13,Lateral Box Jump
-RFD Unload 1,14,Depth Jump
-RFD Unload 1,15,Pause Lateral Hurdle Jump
-RFD Unload 2,11,Pause Hop
-RFD Unload 2,12,Hop
-RFD Unload 2,13,Pause Lateral Bound
-RFD Unload 2,14,Lateral Bound
-RFD Unload 2,15,Continuous 45 deg Bound
-Medicine Ball,11,Standing OH Slam
-Medicine Ball,12,Tall Split OH Throw
-Medicine Ball,13,Squat to Throw
-Medicine Ball,14,Standing OH Rotational Slam
-Medicine Ball,15,Tall Kneeling Chest Pass Fallout
+
 UB Hor Push,16,Close Grip Press
+
+Hinge,1,DB RDL
+
+Hinge,2,DB Pause RDL
+
+Hinge,3,BB RDL
+
+Hinge,4,DB Tempo RDL
+
+Hinge,5,BB Pause RDL
+
+Squat,1,Goblet Squat to Box
+
+Squat,2,Goblet Box Squat
+
+Squat,3,Goblet Squat
+
+Squat,4,KB/DB Front Squat
+
+Squat,5,Pause Goblet Squat
+
+UB Hor Push,1,DB Bench Press
+
+UB Hor Push,2,DB Floor Press
+
+UB Hor Push,3,DB Alt Bench Press
+
+UB Hor Push,4,DB Alt Floor Press
+
+UB Hor Push,5,DB 1A Bench Press
+
+Carry,2,Suitcase Carry
+
+Carry,3,KB Rack Carry
+
+Carry,4,Trap Bar Carry
+
+Carry,5,Farmer Handle Carry
+
+UB Hor Push,6,BB Bench Press
+
+UB Hor Push,7,1A Floor Press
+
+UB Hor Push,8,DB Incline Press
+
+UB Hor Push,9,BB Floor Press
+
+Hinge,6,Trap Bar Deadlift
+
+Hinge,7,BB Tempo RDL
+
+Hinge,8,Rack Pull
+
+Hinge,9,BB Deadlift
+
+Squat,6,KB/DB Pause Front Squat
+
+Squat,7,Tempo Goblet Squat
+
+Squat,8,BB Box Back Squat
+
+Squat,9,KB/DB Tempo Front Squat
+
+UB Vert Push,6,BB Tall Kneeling Scrape the Rack Press
+
+UB Vert Push,7,BB Standing OHP
+
+UB Vert Push,8,1A Seated OHP
+
+UB Vert Push,9,BB Standing STR Press
+
+UB Vert Push,10,BB 1/2 Kneeling OHP
+
+UB Hor Pull,6,<45 deg Tempo Inverted Row
+
+UB Hor Pull,7,CC Pause Row
+
+UB Hor Pull,8,BB Elevated Pendlay
+
+UB Hor Pull,9,Weighted Inverted Row
+
+UB Vert Pull,6,Wide Grip Pulldown
+
+UB Vert Pull,7,Neutral Negative Pullups
+
+UB Vert Pull,8,CC Tempo Pulldown
+
+UB Vert Pull,9,Supinated Negative Pullups
+
+UB Vert Pull,10,Pronated Negative Pullups
+
+LB Uni Push,6,DB Bulgarian Split Squat
+
+LB Uni Push,7,1A OH Reverse Lunge
+
+LB Uni Push,8,BB Split Squat 
+
+LB Uni Push,9,Pistol Box Squat
+
+Ant Chain,6,Leg Raise
+
+Ant Chain,7,Kneeling 1A Slideout
+
+Ant Chain,8,Tall Kneeling Pallof Press
+
+Ant Chain,9,Banded Leg Raise
+
+Post Chain,6,1L Hip Thrust
+
+Post Chain,7,Slider 1L Ham Curl
+
+Post Chain,8,DB 1L Hip Thrust
+
+Post Chain,9,SB 1L Hamstring Curl
+
+Isolation,6,DB Biceps Curl
+
+Isolation,7,DB Hammer Curl
+
+Isolation,8,BB Curl
+
+Isolation,9,CC Reverse Curl
+
+Iso 2,6,CC Triceps Pressdown
+
+Iso 2,7,DB Skullcrusher
+
+Iso 2,8,DB OH Extension
+
+Iso 2,9,Rope Pressdown
+
+Iso 2,10,Decline Skullcrusher
+
+Iso 3,6,Face Pull
+
+Iso 3,7,Supine Band Pullapart
+
+Iso 3,8,Face Pull
+
+Iso 3,9,Foam Roll Band Pullapart
+
+Iso 4,6,Lateral Raise
+
+Iso 4,7,Prone YTI
+
+Iso 4,8,Lateral Raise 
+
+Iso 4,9,Prone YTI
+
+Iso 4,10,Lateral Raise
+
+RFD Load,6,Power Position Jump Shrug
+
+RFD Load,7,Power Position High Pull
+
+RFD Load,8,Hang Jump Shrug
+
+RFD Load,9,Hang High Pull
+
+RFD Load,10,Clean Pull
+
+RFD Unload 1,6,Pause Box Jump
+
+RFD Unload 1,7,Pause Broad Jump
+
+RFD Unload 1,8,Box Jump
+
+RFD Unload 1,9,Broad Jump
+
+RFD Unload 1,10,Continuous Broad Jump
+
+RFD Unload 2,6,Pause Bound
+
+RFD Unload 2,7,Bound
+
+RFD Unload 2,8,Continuous Bound
+
+RFD Unload 2,9,Bound to Box
+
+RFD Unload 2,10,45 deg Bound
+
+Medicine Ball,6,Tall Kneeling OH Slam
+
+Medicine Ball,7,Continuous Tall Kneeling OHS
+
+Medicine Ball,8,Squat to Throw
+
+Medicine Ball,9,1/2 Kneeling Chest Pass
+
+Medicine Ball,10,Continuous Tall Kneeling Chest Pass
+
+Carry,6,DB Farmer Carry
+
+Carry,7,Suitcase Carry
+
+Carry,8,KB Rack Carry
+
+Carry,9,Trap Bar Carry
+
+UB Hor Push,12,BB Pause Floor Press
+
+UB Hor Push,14,Close Grip Floor Press
+
+UB Hor Push,15,BB Pause Incline Press
+
+Hinge,12,Sumo Deadlift
+
+Hinge,14,Trap Bar Deadlift
+
+Hinge,15,Deficit Pause RDL
+
+Squat,12,Pause Back Squat
+
+Squat,14,Tempo Back Squat
+
+Squat,15,Pause Front Squat
+
+UB Vert Push,11,1A Standing OHP
+
+UB Vert Push,12,BB Javelin Press
+
+UB Vert Push,13,DB Seated OHP
+
+UB Vert Push,14,Tall Kneeling STR Press
+
+UB Vert Push,15,Alternating Standing OHP
+
+UB Hor Pull,12,Weighted Inverted Row
+
+UB Hor Pull,14,Weighted Feet Elevated Inverted Row 
+
+UB Hor Pull,15,Pendlay Row
+
+UB Vert Pull,11,Neutral Pullups
+
+UB Vert Pull,12,Supinated Pullups
+
+UB Vert Pull,13,Weighted Negative Pullups
+
+UB Vert Pull,14,Pronated Pullups
+
+UB Vert Pull,15,Weighted Negative Pullups
+
+LB Uni Push,12,1A OH Reverse Lunge
+
+LB Uni Push,14,DB Bulgarian
+
+LB Uni Push,15,Zercher Bulgarian
+
+Ant Chain,11,Banded Deadbug
+
+Ant Chain,12,Low Split Pallof Press
+
+Ant Chain,14,Ab Wheel Rollout
+
+Ant Chain,15,1L Buzzsaw
+
+Post Chain,11,1L RDL
+
+Post Chain,12,Glute Ham Raise
+
+Post Chain,14,GHR
+
+Post Chain,15,2DB RDL
+
+Isolation,12,Hammer Curl
+
+Isolation,14,BB Reverse Curl
+
+Isolation,15,DB Incline Curl
+
+Iso 2,11,CC Triceps Pressdown
+
+Iso 2,12,DB Skullcrusher
+
+Iso 2,13,DB OH Extension
+
+Iso 2,14,Rope Pressdown
+
+Iso 2,15,Decline Skullcrusher
+
+Iso 3,12,Supine Band Pullapart
+
+Iso 3,14,Foam Roll Band Pullapart
+
+Iso 3,15,Face Pull
+
+Iso 4,11,Lateral to Front Raise
+
+Iso 4,12,Incline YTI
+
+Iso 4,13,Lateral to Front Raise
+
+Iso 4,14,Incline YTI
+
+Iso 4,15,Lateral to Front Raise
+
+RFD Load,11,DB Snatch
+
+RFD Load,12,Hang Power Clean
+
+RFD Load,13,DB Snatch
+
+RFD Load,14,BB Snatch Pull
+
+RFD Load,15,Power Clean
+
+RFD Unload 1,11,Continuous Hurdle Jump
+
+RFD Unload 1,12,Pause Lateral Box Jump
+
+RFD Unload 1,13,Lateral Box Jump
+
+RFD Unload 1,14,Depth Jump
+
+RFD Unload 1,15,Pause Lateral Hurdle Jump
+
+RFD Unload 2,11,Pause Hop
+
+RFD Unload 2,12,Hop
+
+RFD Unload 2,13,Pause Lateral Bound
+
+RFD Unload 2,14,Lateral Bound
+
+RFD Unload 2,15,Continuous 45 deg Bound
+
+Medicine Ball,11,Standing OH Slam
+
+Medicine Ball,12,Tall Split OH Throw
+
+Medicine Ball,13,Squat to Throw
+
+Medicine Ball,14,Standing OH Rotational Slam
+
+Medicine Ball,15,Tall Kneeling Chest Pass Fallout
+
+Carry,11,DB Farmer Carry
+
+Carry,12,Suitcase Carry
+
+Carry,14,Trap Bar Carry
+
+Carry,15,Farmer Handle Carry
+
 UB Hor Push,17,DB Incline Press
+
 UB Hor Push,18,BB Pause Bench Press
+
 UB Hor Push,19,Alternating Incline Press
+
 UB Hor Push,20,BB Pause Floor Press
+
 Hinge,17,Deficit Tempo RDL
+
 Hinge,18,Sumo Deadlift
+
 Hinge,19,Pause Deadlift
+
 Hinge,20,Snatch Grip RDL
+
 Squat,17,Low Bar Box Squat
+
 Squat,18,SSB Squat
+
 Squat,19,Pause Frankenstein Squat
+
 Squat,20,Low Bar Squat
+
 UB Vert Push,17,DB Push Press
+
 UB Vert Push,18,Tall Kneeling STR Press
+
 UB Vert Push,19,BB Push Press
+
 UB Vert Push,20,BB 1/2 Kneeling OHP
+
 UB Hor Pull,16,T Bar Row
+
 UB Hor Pull,17,DB Tempo Row
+
 UB Hor Pull,18,BB Tempo Bent Row
+
 UB Hor Pull,19,Landmine Row
+
 UB Hor Pull,20,Pendlay Row
+
 UB Vert Pull,17,Neutral Weighted Pullups
+
 UB Vert Pull,18,Wide Grip Pullups
+
 UB Vert Pull,19,Supinated Weighted Pullups
+
 UB Vert Pull,20,Pronated Weighted Pullups
+
 LB Uni Push,17,Zercher Split Squat
+
 LB Uni Push,18,BB Bulgarian
+
 LB Uni Push,19,BB Front Split Squat
+
 LB Uni Push,20,Zercher Bulgarian
+
 Ant Chain,17,Hanging Leg Raise
+
 Ant Chain,18,Ab Wheel Rollout
+
 Ant Chain,19,Negative Dragon Flag
+
 Ant Chain,20,W Raise
+
 Post Chain,16,Nordic Hamstring
+
 Post Chain,17,1DB 1L RDL
+
 Post Chain,18,Nordic Ham
+
 Post Chain,19,BB 1L RDL
+
 Post Chain,20,Nordic Ham
+
 Isolation,16,DB Biceps Curl
+
 Isolation,17,KB Hammer Curl
+
 Isolation,18,BB Curl
+
 Isolation,19,CC Reverse Curl
+
 Isolation,20,KB Incline Curl
+
 Iso 2,16,1A Pressdown
+
 Iso 2,17,BB Skullcrusher
+
 Iso 2,18,DB OH Extension
+
 Iso 2,19,1A Rope Pressdown
+
 Iso 2,20,BB Decline Skullcrusher
+
 Iso 3,16,High Face Pull
+
 Iso 3,17,Band Pullapart
+
 Iso 3,18,Supinated Face Pull
+
 Iso 3,19,Supine Band Pullapart
+
 Iso 3,20,Face Pull
+
 Iso 4,16,Lateral Raise
+
 Iso 4,17,Hinge YTI
+
 Iso 4,18,Lateral Raise
+
 Iso 4,19,Hinge YTI
+
 Iso 4,20,Lateral Raise
+
 RFD Load,16,DB Snatch
+
 RFD Load,17,Clean Pull
+
 RFD Load,18,BB Hang Snatch High Pull
+
 RFD Load,19,Power Clean
+
 RFD Load,20,Hang Snatch
+
 RFD Unload 1,16,Lateral Hurdle Jumps
+
 RFD Unload 1,17,Depth Box Jumps
+
 RFD Unload 1,18,Pause 90 deg Box Jumps
+
 RFD Unload 1,19,90 deg Box Jump
+
 RFD Unload 1,20,Pause 90 deg Hurdle Jumps
+
 RFD Unload 2,16,Continuous Hop
+
 RFD Unload 2,17,Pause Medial Hop
+
 RFD Unload 2,18,Continuous Lateral Bound
+
 RFD Unload 2,19,Medial Hop
+
 RFD Unload 2,20,90 deg Bound
+
 Medicine Ball,16,Approach OH Throw
+
 Medicine Ball,17,Continuous OH Slam
+
 Medicine Ball,18,Rotational Hip Toss
+
 Medicine Ball,19,Continuous OH Rotational Slam
+
 Medicine Ball,20,Figure 8 Shoulder Toss
+
 Carry,17,Trap Bar Carry
+
 Carry,18,Farmer Handle Carry
+
 Carry,19,Trap Bar Carry
+
 Carry,20,Farmer Handle Carry
+
 UB Hor Push,21,BB Incline Press
+
 UB Hor Push,22,Close Grip Floor Press
+
 UB Hor Push,23,Pause Incline Press
+
 UB Hor Push,24,Close Grip Press
+
 UB Hor Push,25,Bench Press
+
 Hinge,21,Deficit Deadlift
+
 Hinge,22,Rack Pull
+
 Hinge,23,Trap Bar Deadlift
+
 Hinge,24,Deadlift
+
 Hinge,25,Sumo Deadlift
+
 Squat,21,SSB Squat
+
 Squat,22,Pause Low Bar Squat
+
 Squat,23,Tempo Front Squat
+
 Squat,24,SSB Pause Squat
+
 Squat,25,Low Bar Squat
+
 UB Vert Push,21,Javelin Press
+
 UB Vert Push,22,BB 1/2 Kneeling OHP
+
 UB Vert Push,23,Standing STR Press
+
 UB Vert Push,24,Standing OHP
+
 UB Vert Push,25,BB Push Press
+
 UB Hor Pull,21,T Bar Row
+
 UB Hor Pull,22,DB Tempo Row
+
 UB Hor Pull,23,BB Tempo Bent Row
+
 UB Hor Pull,24,Landmine Tempo Row
+
 UB Hor Pull,25,Pendlay Row
+
 UB Vert Pull,21,Tabletop Pullup
+
 UB Vert Pull,22,Weighted Negative Pullups
+
 UB Vert Pull,23,Weighted Tabletop Pullups
+
 UB Vert Pull,24,Weighted Pullups
+
 UB Vert Pull,25,Weighted Tabletop Pullups
+
 LB Uni Push,21,DB Bulgarian
+
 LB Uni Push,22,Zercher Split Squat
+
 LB Uni Push,23,BB Bulgarian
+
 LB Uni Push,24,Front Split Squat
+
 LB Uni Push,25,Zercher Bulgarian
+
 Ant Chain,21,Hanging Leg Raise
+
 Ant Chain,22,W Raise
+
 Ant Chain,23,Dragon Flag
+
 Ant Chain,25,Dragon Flag
+
 Post Chain,21,Nordic Ham
+
 Post Chain,22,2DB 1L RDL
+
 Post Chain,23,Weighted Nordic Ham
+
 Post Chain,24,BB 1L RDL
+
 Post Chain,25,Weighted Nordic Ham
+
 Isolation,21,KB Biceps Curl
+
 Isolation,22,DB Hammer Curl
+
 Isolation,23,BB Curl
+
 Isolation,24,CC Reverse Curl
+
 Isolation,25,KB Incline Curl
+
 Iso 2,21,1A Pressdown
+
 Iso 2,22,KB Skullcrusher
+
 Iso 2,23,DB OH Extension
+
 Iso 2,24,1A Rope Pressdown
+
 Iso 2,25,KB Decline Skullcrusher
+
 Iso 3,21,Face Pull
+
 Iso 3,22,Scap Pullup
+
 Iso 3,23,Supinated Face Pull
+
 Iso 3,24,Scap Pullup
+
 Iso 3,25,Face Pull
+
 Iso 4,21,TRX YTI
+
 Iso 4,22,DB Lateral to Front Raise
+
 Iso 4,23,TRX YTI
+
 Iso 4,24,Lateral to Front Raise
+
 Iso 4,25,TRX YTI
+
 Carry,21,Suitcase Carry
+
 Carry,22,Trap Bar Carry
+
 Carry,23,Farmer Handle Carry
+
 Carry,24,Trap Bar Carry
+
 Carry,25,Farmer Handle Carry
+
 RFD Load,21,DB Snatch
+
 RFD Load,22,Clean Pull
+
 RFD Load,23,Hang Snatch
+
 RFD Load,24,Snatch Pull
+
 RFD Load,25,Power Clean
+
 RFD Unload 1,21,Depth Box Jump
+
 RFD Unload 1,22,90 deg Hurdle Jump
+
 RFD Unload 1,23,Lateral Depth Box Jump
+
 RFD Unload 1,24,90 deg Depth Box Jump
+
 RFD Unload 1,25,Continuous 90 deg Hurdle Jump
+
 RFD Unload 2,21,Medial Hop to Box
+
 RFD Unload 2,22,Continuous 90 deg Bound
+
 RFD Unload 2,23,Pause Lateral Hop
+
 RFD Unload 2,24,Continuous Medial Hop
+
 RFD Unload 2,25,Continuous Lateral Hop
+
 Medicine Ball,21,Squat to Throw
+
 Medicine Ball,22,Continuous OH Slam
+
 Medicine Ball,23,Approach OH Throw
+
 Medicine Ball,24,Tall Kneeling Chest Pass Fallout
+
 Medicine Ball,25,Figure 8 Shoulder Toss
+

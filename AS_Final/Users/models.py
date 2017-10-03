@@ -55,32 +55,14 @@ class Stat(models.Model):
 		self.Updated = False
 		self.Level_Up = False
 		self.Max = 0
-
 	# Email
-
-# Specific exercise as in 'All Levels'
-class Exercise(models.Model):
-	# ID = models.CharField(default="", max_length=20)
-	# Video = models.ForeignKey(Video, blank=True, null=True, related_name="exercises")
-	Video_Description = models.CharField(default="", max_length = 1000)
-	New_Code = models.CharField(default="", max_length=20)
-	Code = models.CharField(default="", max_length=20)
-	Name = models.CharField(default="", max_length=200)
-	Type = models.CharField(default="", max_length=200)
-	Level = models.IntegerField(default=0)
-	Bodyweight = models.BooleanField(default=False)
-	Tempo = models.BooleanField(default=False)
-	Tempo_Value = models.CharField(default="", max_length=10)
-	Pause = models.CharField(default="", max_length=10)
-	Description_Code = models.CharField(default="", max_length=20)
-
 class Video(models.Model):
 	Tags = models.CharField(default = "", max_length=300)
 	Title = models.CharField(default = "", max_length=200)
 	File = models.FileField(upload_to='static/videos/', max_length=100)
 	Has_Thumbnail = models.BooleanField(default=False)
 	Thumbnail = models.FileField(upload_to='Thumbnails', max_length=100, default=None)
-	Exercises = models.ManyToManyField(Exercise, default="", related_name="Video")
+	# Exercises = models.ManyToManyField(Exercise, default="", related_name="Video")
 	# Thumbnail = models.FileField(upload_to='static/videos/Thumbnails', max_length=100)
 	Exercise_Type = models.CharField(default="", max_length=200)
 	Description = models.CharField(default="", max_length=1000)
@@ -96,6 +78,22 @@ class Video(models.Model):
 			return "/" + self.Thumbnail.url
 		else:
 			return "/static/videos/Thumbnails/Default_Thumbnail.png"
+
+# Specific exercise as in 'All Levels'
+class Exercise(models.Model):
+	# ID = models.CharField(default="", max_length=20)
+	Video = models.ForeignKey(Video, blank=True, null=True, related_name="exercises", on_delete=models.PROTECT)
+	Video_Description = models.CharField(default="", max_length = 1000)
+	New_Code = models.CharField(default="", max_length=20)
+	Code = models.CharField(default="", max_length=20)
+	Name = models.CharField(default="", max_length=200)
+	Type = models.CharField(default="", max_length=200)
+	Level = models.IntegerField(default=0)
+	Bodyweight = models.BooleanField(default=False)
+	Tempo = models.BooleanField(default=False)
+	Tempo_Value = models.CharField(default="", max_length=10)
+	Pause = models.CharField(default="", max_length=10)
+	Description_Code = models.CharField(default="", max_length=20)
 
 
 class Set(models.Model):

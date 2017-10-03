@@ -285,7 +285,9 @@
                     <div style="height:20px; border-top:solid; border-color:rgba(83,109,254,0.75); padding-left:0px !important;
                     padding-top:1px; padding-bottom:2px;">
                     {% if Pattern.Set_Type == 'Strength_Input' %}
-                        {% if Set.Has_Weight %}
+                        {% if Pattern.BodyWeight %}
+                            Bodyweight
+                        {% elif Set.Has_Weight %}
                             {{Set.Weight}}
                         {% else %}
                             <input type="number" placeholder="Enter Weight" class="{{Pattern.Input_ID}}"

@@ -29,11 +29,15 @@ def Recreate_Exercises():
 	r = open("Imported_Exercises.txt", "r")
 	l = r.readlines()
 	for line in l:
-		List = line.split(",")
-		_Level = int(List[1])
-		_Exercise, Created = Exercise.objects.get_or_create(Level = _Level, Type=List[0])
-		_Exercise.Name = List[2]
-		_Exercise.save()
+		if line != "":
+			List = line.split(",")
+			print(List)
+			# print(len(List))
+			if len(List) > 2:
+				_Level = int(List[1])
+				_Exercise, Created = Exercise.objects.get_or_create(Level = _Level, Type=List[0])
+				_Exercise.Name = List[2]
+				_Exercise.save()
 	r.close()
 
 def Update_Tempo_Pause():
@@ -235,8 +239,11 @@ def Recreate_Workouts():
 		Week = line_list[0][3]
 		Day = line_list[0][5]
 		Block = line_list[0][7]
+
 		print("Group " + Group + " Block " + Block + " Week " + Week + " Day " + Day)
+
 		_Related_Workout = Workout_Template.objects.get(Level_Group = int(Group), Block_Num=int(Block), Week=int(Week), Day=int(Day))
+		
 		print(str(_Related_Workout) + " " + str(_Related_Workout.SubWorkouts.all().count()))
 		print("Reading line: " + line)
 		Sub_List = line_list[1].split("/")
