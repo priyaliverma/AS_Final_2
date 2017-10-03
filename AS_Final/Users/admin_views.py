@@ -353,6 +353,7 @@ def Admin_Workouts(request):
 	context["Users"] = []
 
 	context["Exercise_Types"] = Exercise_Types
+	context["Exercise_Types"].append("None")
 
 	context["Exercises"] = []
 	context["Sets"] = []
@@ -505,36 +506,39 @@ def Admin_Workouts(request):
 
 					if (i.SubWorkouts.all().filter(Order = Order).exists()):
 						_Edit_Sub = i.SubWorkouts.all().get(Order = Order)
-						_Edit_Sub.Exercise_Type = _Type
-						if _Sets != "":
-							_Edit_Sub.Sets = _Sets
-						if _Reps != "":
-							_Edit_Sub.Reps = _Reps
-						if _RPE != "":
-							_Edit_Sub.RPE = _RPE
-						if _Deload != "":
-							_Edit_Sub.Deload = _Deload
-						# ALLOY
-						if _Alloy_Reps != "":
-							_Edit_Sub.Alloy_Reps = _Alloy_Reps
-							_Edit_Sub.Alloy = True
-						if _Alloy_Reps == "0" or _Alloy_Reps == 0:
-							_Edit_Sub.Alloy = False
-						# STRENGTH STOP
-						if _SS != "":
-							_Edit_Sub.Strength_Stop = _SS
-							_Edit_Sub.Stop_Set = True				
-						if _SS == "0" or _SS == 0:			
-							_Edit_Sub.Stop_Set = False				
-						# STRENGTH DROP
-						if _SD != "":
-							_Edit_Sub.Strength_Drop = _SD
-							_Edit_Sub.Drop_Set = True				
-						if _SD == "0" or _SD == 0:			
-							_Edit_Sub.Drop_Set = False				
-						_Edit_Sub.save()
-						i.save()
-					else:
+						if _Type == "None":
+							_Edit_Sub.delete()
+						else:
+							_Edit_Sub.Exercise_Type = _Type
+							if _Sets != "":
+								_Edit_Sub.Sets = _Sets
+							if _Reps != "":
+								_Edit_Sub.Reps = _Reps
+							if _RPE != "":
+								_Edit_Sub.RPE = _RPE
+							if _Deload != "":
+								_Edit_Sub.Deload = _Deload
+							# ALLOY
+							if _Alloy_Reps != "":
+								_Edit_Sub.Alloy_Reps = _Alloy_Reps
+								_Edit_Sub.Alloy = True
+							if _Alloy_Reps == "0" or _Alloy_Reps == 0:
+								_Edit_Sub.Alloy = False
+							# STRENGTH STOP
+							if _SS != "":
+								_Edit_Sub.Strength_Stop = _SS
+								_Edit_Sub.Stop_Set = True				
+							if _SS == "0" or _SS == 0:			
+								_Edit_Sub.Stop_Set = False				
+							# STRENGTH DROP
+							if _SD != "":
+								_Edit_Sub.Strength_Drop = _SD
+								_Edit_Sub.Drop_Set = True				
+							if _SD == "0" or _SD == 0:			
+								_Edit_Sub.Drop_Set = False				
+							_Edit_Sub.save()
+							i.save()
+					elif _Type != "None":
 						New_Sub = SubWorkout_Template(Exercise_Type = _Type, Order = Order)
 						if _Sets != "":
 							New_Sub.Sets = _Sets
