@@ -26,6 +26,27 @@
     <!-- <link rel="stylesheet" href="path/to/plyr.css"> -->
 
     <title>Training Library</title>
+<style>
+    .plyr--video, plyr--setup {
+        /*max-height:29vw;*/
+    }
+    .plyr {
+        /*height:27vw;*/
+    }
+.PlyrvideoWrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 0px;
+    height: 0;
+}
+.PlyrvideoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}    
+</style>
 
 </head>
 
@@ -60,11 +81,17 @@
     <div id="left_container" style="">
         <h2 style="text-align:center; margin-right:4vw;">{{Video_Title}}</h2>
         <br>
-        <div class="container" style="width:550px; margin-right:2vw; margin-left:2vw; margin-top:2vw; height:29vw !important;">
-
-        <video style="text-align:center; margin-top:2vw; margin-bottom:2vw; margin:auto; width:100%; height:27vw;" controls controlsList="nodownload">
-            <source src="{{Video_URL}}" type="video/mp4">
-        </video>
+        <div class="container" 
+        style="width:550px; margin-right:2vw; padding-top:0vw !important; margin-left:2vw; margin-top:0vw; 
+        max-height:29vw !important;">
+        
+        <!-- <iframe height="1000" width="500"> -->
+            <video style="text-align:center; margin-top:2vw; margin-bottom:2vw; margin:auto; width:100%;
+            padding-bottom:5vh; padding-top:5vh; padding:5vh; max-height:29vw;">
+                <source src="{{Video_URL}}" type="video/mp4">
+            </video>
+        <!-- </iframe> -->
+        
         </div>
         <br>
         <form method="POST" style="margin-top:-1vw;">{% csrf_token %}
@@ -94,12 +121,6 @@
         <div id='video_tabs' class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <form method="GET">{% csrf_token %}
                 <div class="mdl-tabs__tab-bar" style="height:0px;">
-                <!-- <a href="#levels_group_1" class="mdl-tabs__tab is-active" id="tab1">1-5</a> -->
-<!--                 <a href="#levels_group_2" class="mdl-tabs__tab" id="tab2">5-10</a>
-                <a href="#levels_group_3" class="mdl-tabs__tab" id="tab3">11-15</a>
-                <a href="#levels_group_4" class="mdl-tabs__tab" id="tab4">16-20</a>
-                <a href="#levels_group_5" class="mdl-tabs__tab" id="tab5">21-25</a>
- -->
             </div>
             <!-- <div id="search_container"> -->
             <h5 style="margin-bottom:0vw; margin-top:-2vw;">Videos (Click Image to View)</h5>
@@ -125,6 +146,21 @@
                 <hr style="border-top: 0.02vw solid rgba(0,0,0,0.2); margin-top: 0.75vw; width: 85%">
             <!-- </div> -->
         </form>
+<script>
+    var _Video = document.getElementById("Video");
+    var players = plyr.setup('.js-player');
+
+    var Player = players[0] 
+    var Full_Screen = Player.isFullscreen();
+
+    var _Video = document.getElementById("Video");
+    _Video.style.height = "100%";
+
+    if (Full_Screen) {     
+        // _Video.style.height = "100%";
+    }
+</script>
+
         <div class="mdl-tabs__panel is-active" id="levels_group_1" style="overflow-y:scroll; height:28vw; border:solid;">
         <form method="GET">
             <input type="hidden" name="Video_PK" value="">
@@ -145,7 +181,39 @@
 <script>plyr.setup();</script>
  -->
 <script src="https://cdn.plyr.io/2.0.13/plyr.js"></script>
-<script>plyr.setup();</script>
+<script>
+plyr.setup();
+
+var players = plyr.setup('.js-player');
+
+var Player = players[0] 
+var Full_Screen = Player.isFullscreen();
+
+// var _Video = document.getElementById("Video");
+// _Video.style.height = "100%";
+
+// instance.on('enterfullscreen') {
+//     var _Video = document.getElementById("Video");
+//     _Video.style.height = "100%";
+
+// }
+
+// if (Full_Screen) {
+//     var _Video = document.getElementById("Video");
+//     _Video.style.height = "100%";
+// }
+// if players[0].isFullscreen() {
+//     _Video = document.getElementById("Video");
+//     _Video.style.max-height = 100%;
+// }
+
+// instance.on('enterfullscreen', function (event) {
+
+//     _Video = document.getElementById("Video");
+//     _Video.style.max-height = 100%;
+// })
+
+</script>
 </body>
 
 </html>

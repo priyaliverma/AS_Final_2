@@ -23,7 +23,7 @@ def Admin_Videos(request):
 	context["Video_Display"] = []
 	context["Video_Display_Test"] = ["videos/Dashboard_Shot.png", 1]
 	context["Exercise_Types"] = ["UB Hor Push", "Hinge", "Squat", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",  "LB Uni Push", 
-	"Ant Chain", "Post Chain",  "Isolation", "Iso 2", "Iso 3", "Iso 4", "RFL Load", "RFD Unload 1", "RFD Unload 2"]
+	"Ant Chain", "Post Chain",  "Isolation", "Iso 2", "Iso 3", "Iso 4", "RFL Load", "RFD Unload 1", "RFD Unload 2", "Carry"]
 	context["Levels"] = Levels
 	context["Level_Display"] = []
 	# context["Level_Access_Options"] = ["0"]

@@ -105,9 +105,14 @@ def User_Profile(request):
 	context["Last_Name"] = _User.last_name
 	_Member = Member.objects.get(User=_User)
 	context["Expiry_Date"] = _Member.Expiry_Date.date()
+
 	context["Picture_URL"] = "/static/userpage/Profile_Placeholder.png"
 	if _Member.Picture != "":
-		context["Picture_URL"] = "/" + _Member.Picture.url
+		print(_Member.Picture.url)
+		context["Picture_URL"] = _Member.Picture.url
+
+	# context["Picture_URL"] = "/static/userpage/Profile_Placeholder_Final.png"
+
 	if request.GET.get("Delete_Picture"):
 
 		_Member.Picture = ""

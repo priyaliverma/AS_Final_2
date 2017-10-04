@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 
 class Member(models.Model):
 	User = models.OneToOneField(User)
-	Picture = models.FileField(upload_to='static/user_profile_pictures', max_length=100, default="")
+	Picture = models.FileField(upload_to='User_Profile_Pictures', max_length=100, default="")
 	Level = models.IntegerField(default=1)
 	# Checks
 	Admin = models.BooleanField(default=False)
@@ -60,7 +60,7 @@ class Stat(models.Model):
 class Video(models.Model):
 	Tags = models.CharField(default = "", max_length=300)
 	Title = models.CharField(default = "", max_length=200)
-	File = models.FileField(upload_to='static/videos/', max_length=100)
+	File = models.FileField(upload_to='Videos', max_length=100)
 	Has_Thumbnail = models.BooleanField(default=False)
 	Thumbnail = models.FileField(upload_to='Thumbnails', max_length=100, default=None)
 	# Exercises = models.ManyToManyField(Exercise, default="", related_name="Video")

@@ -1,7 +1,8 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 # from Users.views import Home, Member_Home, Admin, Test, User_Page, Workout_Update, Videos, AdminExercises, RPE_Update, SignUp_Confirmation, Welcome, Past_Workouts, User_Profile, Level_Up
-
+from django.conf import settings
+from django.conf.urls.static import static
 from Users.views import *
 
 from Users.admin_views import *
@@ -69,3 +70,6 @@ urlpatterns = [
 
     # url(r'^past-workouts/', Past_Workouts, name="pastworkouts"),
 ]
+
+if settings.DEBUG is True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
