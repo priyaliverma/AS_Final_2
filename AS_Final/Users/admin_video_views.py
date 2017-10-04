@@ -127,8 +127,8 @@ def Admin_Videos(request):
 			_Thumbnail = File(request.FILES['Thumbnail'])
 			No_Thumbnail = False
 		else:
-			Default_Thumbnail = open("static/videos/Thumbnails/Default_Thumbnail.png", "r")
-			_Thumbnail = File(Default_Thumbnail)
+			# Default_Thumbnail = open("static/videos/Thumbnails/Default_Thumbnail.png", "r")
+			# _Thumbnail = File(Default_Thumbnail)
 			No_Thumbnail = True
 
 		_Description = ""

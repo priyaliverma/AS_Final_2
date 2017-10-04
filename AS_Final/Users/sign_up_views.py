@@ -302,7 +302,6 @@ def Home(request):
 				# return HttpResponseRedirect("/terms-conditions")
 				return HttpResponseRedirect("/waiver")
 				# return HttpResponseRedirect("/sign-up-confirmation")
-
 	return render(request, "homepage_3.html", context)
 
 @user_passes_test(Member_Exists, login_url="/")
