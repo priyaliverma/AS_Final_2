@@ -21,11 +21,11 @@ ul {
 }
 
 #nav_link_1 {
-    margin-left: 32.5%;
+    margin-left: 48.5%; /* change to 32.5% with 2 items in head */ 
 }
 
 #nav_link_2 {
-    margin-left: 28%; 
+    margin-left: 28%; /* doesn't currently apply to any item */ 
 }
 
 a {

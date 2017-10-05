@@ -1,0 +1,94 @@
+body {
+	font-family: 'Cabin', sans-serif;
+}
+
+h1 {
+	font-size: 4vw;
+	padding: 0;
+	margin: 0;
+}
+
+
+#banner {
+	position: relative;
+	z-index: 2;
+}
+
+#blog-container {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	z-index: 3;
+	top: 2.5%;
+}
+
+#blog-left {
+	width: 30%;
+}
+
+#blog-left-content {
+	text-align: center;
+}
+
+#blog-left-alloy-strength {
+	font-size: 2vw;
+	padding; 0; 
+	margin: 0;
+}
+
+#blog-left-alloy-strength-desc {
+	font-size: 1.5vw;
+	padding: 1vw;
+	margin: 0;
+	margin-bottom: 1vw;
+}
+
+#blog-decoration {
+	width: 100%;
+}
+
+#blog-logo {
+	width: 100%;
+	position: relative;
+	top: 5%;
+	left: -2%;
+	z-index: 3;
+	margin-bottom: 1vw;
+}
+
+#blog-left-posts {
+	background-color: rgba(205, 219, 254, 0.5);
+	text-align: left;
+	width: 96%;
+	margin-top: 2%;
+	margin-left: 4%;
+	border-radius: 0.5vw;
+	
+	padding: 1%
+}
+
+#blog-left-post-title {
+	font-size: 1.25vw;
+	padding-left: 2vw;
+}
+
+#blog-right {
+	width: 66%;
+	background-color: rgba(0,0,0,0.1);
+	margin: 2%;
+	padding: 2%;
+	border-radius: 0.5vw;
+}
+
+.blog-post-title {
+	font-size: 2.5vw;
+}
+
+.blog-post-date {
+	font-size: 1.25vw;
+	color: rgb(83,109,254);
+	margin-top: -1%;
+	height: 1.25vw;
+	line-height: 1.25vw;
+}
+
