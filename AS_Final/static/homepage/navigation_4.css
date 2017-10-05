@@ -20,8 +20,13 @@ ul {
     font-size: 1vw;
 }
 
+#nav_bar li a {
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
 #nav_link_1 {
-    margin-left: 48.5%; /* change to 32.5% with 2 items in head */ 
+    margin-left: 47.66%; /* change to 32.5% with 2 items in head */ 
 }
 
 #nav_link_2 {
