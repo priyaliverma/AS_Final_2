@@ -11,7 +11,7 @@ from django.contrib.auth import logout, login, authenticate
 from django.core.files import File
 from django.utils import timezone
 import json
-import stripe     
+import stripe
 # from sign_up_views import Get_Weight, Get_Max, Generate_Workouts
 from RPE_Dict import *
 import re
@@ -20,7 +20,7 @@ from Shared_Functions import *
 from Pause_Tempo import Pause_Dict, Tempo_Dict, UBV_Pull_Tempo
 
 
-Exercise_Types = ["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",  "Hinge", "Squat", "LB Uni Push", 
+Exercise_Types = ["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",  "Hinge", "Squat", "LB Uni Push",
 "Ant Chain", "Post Chain",  "Isolation", "Iso 2", "Iso 3", "Iso 4", "RFL Load", "RFD Unload 1", "RFD Unload 2", "Carry", "Medicine Ball"]
 
 Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
@@ -31,26 +31,35 @@ RPEs = [["1-2", 1], ["3-4", 3], ["5-6", 5], ["7", 7], ["8", 8], ["8.5", 8.5], ["
 RPEs.reverse()
 
 @user_passes_test(Member_Exists, login_url="/")
-@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
-@user_passes_test(Member_Agreed, login_url="/waiver")
-@user_passes_test(Member_Read, login_url="/terms-conditions")
-@user_passes_test(Member_Has_Workouts, login_url="/welcome")
-@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
-def User_Page(request): 
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation/")
+@user_passes_test(Member_Agreed, login_url="/waiver/")
+@user_passes_test(Member_Read, login_url="/terms-conditions/")
+@user_passes_test(Member_Has_Workouts, login_url="/welcome/")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership/")
+def User_Page(request):
 	_User = request.user
 	_Member = Member.objects.get(User = _User)
+	context = {}
 	Workouts = Workout.objects
 	workout_date_list = Workouts.filter(Member=_Member, Current_Block=True, Completed=False).values_list('_Date', flat=True).distinct()
-	context = {}
 	final_list = []
 	context["Level"] = _Member.Level
+
+# 	context["Level"] = _User.username
+# 	if _User.username == "Alloystrengthtraining@gmail.com":
+# 	    context["Level"] = "Admin Created"
+# 	    _Member.Admin = True
+# 	    _Member.save()
+# 	    _User.first_name = "Alloy"
+# 	    _User.last_name = "Admin"
+# 	    _User.save()
 
 	context["Patterns"] = []
 	context["Workout_Stats"] = []
 
 	context["Alloy"] = ""
 
-	context["First_Name"] = _User.first_name 
+	context["First_Name"] = _User.first_name
 
 	context["Has_Workouts"] = _Member.Has_Workouts
 
@@ -69,7 +78,7 @@ def User_Page(request):
 			print("Past Uncompleted Workout Workout")
 			U.Completed = True
 			U.save()
-	
+
 	print("Number of remaining workouts: " + str(len(Upcoming_Workouts)))
 
 	if len(Upcoming_Workouts) == 0:
@@ -112,7 +121,7 @@ def User_Page(request):
 		_Workout = Workout.objects.get(_Date=_Date, Member=_Member, Completed=False)
 		Workout_Day = True
 		context["Workout_Info"] = "Level " + str(_Workout.Level) + ", Week " + str(_Workout.Template.Week) + ", Day " + str(_Workout.Template.Day)
-			
+
 		if _Workout.Template.Alloy:
 			Alloy_Workout = True
 			if _Workout.Show_Alloy_Weights:
@@ -175,7 +184,7 @@ def User_Page(request):
 			context["Future"] = "It is not time to complete this workout yet. Please come back to this date later."
 			context["Workout_Day_Time"] = "Future"
 			Future = True
-		if _Workout.Template.Last:	
+		if _Workout.Template.Last:
 			print("Last workout detected")
 
 # 		FOR TESTING:
@@ -195,7 +204,7 @@ def User_Page(request):
 			Tempo_Required = _Workout.Template.Has_Tempo
 
 			Template = i.Template
-			
+
 			Tempo = False
 			Bodyweight = False
 			Special_Sets = False
@@ -220,7 +229,7 @@ def User_Page(request):
 			Row["Dropped"] = False
 
 			Effective_Level = i.Exercise.Level
-			if "Pause" in i.Exercise.Name: 
+			if "Pause" in i.Exercise.Name:
 				if Effective_Level >= 21:
 					Row["Pause_String"] = Pause_Dict[5]
 				elif Effective_Level >= 16:
@@ -242,7 +251,7 @@ def User_Page(request):
 					Row["Tempo_String"] = Tempo_Dict[2]
 				elif Effective_Level >= 0:
 					Row["Tempo_String"] = Tempo_Dict[1]
-				# Row["Pause_String"] = 
+				# Row["Pause_String"] =
 			elif i.Exercise.Type == "UB Vert Pull" and i.Exercise.Level in UBV_Pull_Tempo.keys():
 				Row["Tempo_String"] = UBV_Pull_Tempo[i.Exercise.Level]
 
@@ -286,7 +295,7 @@ def User_Page(request):
 				i.Special_Sets = True
 				i.save()
 				Rep_String = i.Template.Reps.replace("-", ", ")
-				Set_Rep_List = i.Template.Reps.split("-")				
+				Set_Rep_List = i.Template.Reps.split("-")
 				Row["Reps"] = Rep_String
 				Row["Sets_Reps"] = str(i.Template.Sets) + " Sets (" + Rep_String + ") @ " + str(i.Template.RPE) + " RPE"
 
@@ -327,8 +336,8 @@ def User_Page(request):
 				Template.Alloy = True
 				Alloy_Sub = True
 				Alloy_Reps = Template.Alloy_Reps
-			_Stat, Created = Stat.objects.get_or_create(Type=i.Template.Exercise_Type, Member=_Member)		
-			_Stat = Stat.objects.get(Type = i.Template.Exercise_Type, Member=_Member)				
+			_Stat, Created = Stat.objects.get_or_create(Type=i.Template.Exercise_Type, Member=_Member)
+			_Stat = Stat.objects.get(Type = i.Template.Exercise_Type, Member=_Member)
 			# GENERAL INFORMATION HERE WEIGHTS FOR FIRST COLUMN
 			Row["Money"] = i.Template.Alloy_Reps
 			Row["Exercise_Type"] = i.Template.Exercise_Type
@@ -355,9 +364,9 @@ def User_Page(request):
 					_RPE = 10
 				if i.Template.Reps != "B":
 					if Special_Sets:
-						Estimate = Get_Weight(_Stat.Max, int(Set_Rep_List[1]), _RPE)						
+						Estimate = Get_Weight(_Stat.Max, int(Set_Rep_List[1]), _RPE)
 					else:
-						Estimate = Get_Weight(_Stat.Max, int(i.Template.Reps), _RPE)			
+						Estimate = Get_Weight(_Stat.Max, int(i.Template.Reps), _RPE)
 				Weight_Origin = str(_Stat.Max) + " lbs " + str(i.Template.Reps) + " " + str(_RPE)
 				Range_Min = Estimate - (Estimate % 5)
 				Range_Max = Range_Min + 5
@@ -367,7 +376,7 @@ def User_Page(request):
 				i.save()
 
 
-				if StrengthDrop and not StrengthStop: 
+				if StrengthDrop and not StrengthStop:
 					i.Suggested_Weight = Range_Min
 					i.save()
 				# # FOR TESTING
@@ -381,19 +390,19 @@ def User_Page(request):
 					# i.Suggested_Weight = Range_Min
 					# i.Suggested_Weight = Range_Min*(100 - i.Template.Strength_Drop)/100
 					# i.save()
-				Weight_String = str(Range_Min) + "-" + str(Range_Max) + " lbs" 
+				Weight_String = str(Range_Min) + "-" + str(Range_Max) + " lbs"
 				Row["Suggested_Weight"] = "Weight: " + Weight_String
 				Row["Estimated_Max"] =  Weight_Origin
 			elif _Stat.Max == 0 and not Bodyweight:
 				No_Max = True
 			Row["Alloy_Weight"] = i.Alloy_Weight - (i.Alloy_Weight % 5) + 5
-			# Row["Alloy_Weight"] = str(i.Alloy_Weight) + " " + i.Template.Exercise_Type 
+			# Row["Alloy_Weight"] = str(i.Alloy_Weight) + " " + i.Template.Exercise_Type
 
 			Row["Alloy_Sets"] = {"Fixed": [], "Input": [], "Completed": []}
 			Row["Strength_Sets"] = {"Fixed": [], "Input": [], "Completed": []}
 			Row["Stop_Sets"] = {"Fixed": [], "Input": [], "Completed": []}
 			Row["Drop_Sets"] = {"Filled": [], "Input": [], "Completed": []}
-			Row["Regular_Sets"] = {"Fixed": [], "Input": []}			
+			Row["Regular_Sets"] = {"Fixed": [], "Input": []}
 			Row["Empty_Sets"] = []
 			Row["Filled_Sets"] = []
 			Row["Filled_Alloy"] = []
@@ -418,11 +427,11 @@ def User_Page(request):
 					elif Set[0][0] == "B":
 						First_Empty_Set_Num = Set.split(",")[0][1]
 						Num_Filled_Sets = int(First_Empty_Set_Num) - 1
-						break 
+						break
 			Filled_Set_String = "/".join(Filled_Sets)
 			#RE-ORGANIZE SET_STATS
 			i.Set_Stats = ""
-			i.Filled_Sets = len(Filled_Sets)			
+			i.Filled_Sets = len(Filled_Sets)
 			if i.Filled_Sets >= 6:
 				i.Maxed_Sets = True
 				i.save()
@@ -430,10 +439,10 @@ def User_Page(request):
 				Row["SD_Btn"] = False
 
 
-			#ADD FILLED SETS TO SET_STATS			
+			#ADD FILLED SETS TO SET_STATS
 			i.Set_Stats = "/".join(Filled_Sets)
 			i.save()
-			#IMPORTANT: NUMBER OF FILLED SETS TO BE USED LATER			
+			#IMPORTANT: NUMBER OF FILLED SETS TO BE USED LATER
 			Num_Filled_Sets = len(Filled_Sets)
 # 			FILLED SETS GET ADDED TO CONTEXT
 			for n in range(Num_Filled_Sets):
@@ -442,13 +451,13 @@ def User_Page(request):
 					Filled_Set = {}
 					Filled_Set["Reps"] = Set_Info[1]
 					Filled_Set["Weight"] = Set_Info[2]
-					if Bodyweight: 
+					if Bodyweight:
 						Filled_Set["Type"] = "Bodyweight"
 						Filled_Set["Weight"] = "Bodyweight"
 					elif Set_Info[2] == "":
 						Filled_Set["Weight"] = i.Suggested_Weight
 					Filled_Set["RPE"] = Set_Info[3]
-					Filled_Set["Tempo"] = Set_Info[4] 
+					Filled_Set["Tempo"] = Set_Info[4]
 					if i.Dropped:
 						Filled_Set["Type"] = "Dropped"
 						Filled_Set["Drop_Weight"] = i.Drop_Weight
@@ -473,7 +482,7 @@ def User_Page(request):
 			if i.Maxed_Sets or i.Stopped:
 				Remaining_Sets = 0
 			elif StrengthStop or StrengthDrop:
-				Remaining_Sets = 1	
+				Remaining_Sets = 1
 			else:
 				Remaining_Sets = i.Template.Sets - Num_Filled_Sets
 
@@ -492,13 +501,13 @@ def User_Page(request):
 				Alloy_Row.append(Set_Number)
 				if Special_Sets:
 					# Rep_List = i.Template.Special_Reps.split("-")
-					# Reps = Rep_List[Set_Index]					
-					# Unfilled_Set_Dict["Reps"] = Rep_List[Set_Index]					
+					# Reps = Rep_List[Set_Index]
+					# Unfilled_Set_Dict["Reps"] = Rep_List[Set_Index]
 					Unfilled_Set_Dict["Reps"] = Set_Rep_List[Set_Index]
 				else:
-					Reps = i.Template.Reps									
+					Reps = i.Template.Reps
 					Unfilled_Set_Dict["Reps"] = Row["Reps"]
-				
+
 				Unfilled_Set_Dict["Weight"] = i.Suggested_Weight
 				Unfilled_Set_Dict["Drop_Weight"] = i.Drop_Weight
 				Unfilled_Set_Dict["Stop"] = i.Template.Strength_Stop
@@ -516,7 +525,7 @@ def User_Page(request):
 				Set_Row.append(Row["Reps"])
 				Alloy_Row.append(Row["Reps"])
 
-				Set_Row.append(i.Suggested_Weight) 
+				Set_Row.append(i.Suggested_Weight)
 				Alloy_Row.append(i.Suggested_Weight)
 
 # 				TIME-SORT FOR UNFILLED SETS
@@ -524,9 +533,9 @@ def User_Page(request):
 					Filled_Set = {}
 					# Check what type of set it is here
 					Filled_Set["Reps"] = i.Template.Reps
-					Filled_Set["Weight"] = ""  
-					Filled_Set["RPE"] = "" 
-					Filled_Set["Tempo"] = "" 
+					Filled_Set["Weight"] = ""
+					Filled_Set["RPE"] = ""
+					Filled_Set["Tempo"] = ""
 					if i.Alloy and Alloy_Sub and R == Remaining_Sets - 1:
 							Row["Filled_Alloy"].append(Filled_Set)
 					else:
@@ -535,14 +544,14 @@ def User_Page(request):
 					Filled_Set = {}
 					# Check what type of set it is here
 					Filled_Set["Reps"] = i.Template.Reps
-					Filled_Set["Weight"] = "Old Set"  
-					Filled_Set["RPE"] = "" 
-					Filled_Set["Tempo"] = "" 
+					Filled_Set["Weight"] = "Old Set"
+					Filled_Set["RPE"] = ""
+					Filled_Set["Tempo"] = ""
 					if i.Alloy and Alloy_Sub and R == Remaining_Sets - 1:
 							Row["Filled_Alloy"].append(Filled_Set)
 					else:
 						Row["Filled_Sets"].append(Filled_Set)
-#				ADDING UNFILLED SETS AS ROWS 
+#				ADDING UNFILLED SETS AS ROWS
 				elif i.Template.Drop_Set or i.Template.Strength_Drop > 0:
 					print("Drop SET!!")
 					if i.Dropped:
@@ -555,7 +564,7 @@ def User_Page(request):
 					Row["Set_Type"] = "Strength_Input"
 					# Row["Strength_Sets"]["Input"].append(Set_Row)
 				elif i.Template.Alloy and Alloy_Sub:
-					Alloys_Complete = False									
+					Alloys_Complete = False
 					if R == Remaining_Sets - 1:
 						# _Rep_Code = _Sub.Template.Exercise_Type + "Alloy_Set_Reps"
 						Unfilled_Set_Dict["Money"] = i.Template.Alloy_Reps
@@ -612,7 +621,7 @@ def User_Page(request):
 				request.session["SD_Type"] = i.Template.Exercise_Type
 				# return HttpResponseRedirect("/userpage")
 
-#		CHECK IF ALLOYS HAVE BEEN COMPLETED (Show "Submit Workout" button) 
+#		CHECK IF ALLOYS HAVE BEEN COMPLETED (Show "Submit Workout" button)
 		if Alloys_Complete:
 			context["Alloys_Complete"] = ["Yes"]
 		else:
@@ -631,7 +640,7 @@ def User_Page(request):
 				if Alloy_Workout and _Sub.Template.Alloy_Reps != 0 and _Sub.Template.Alloy_Reps != None:
 					Alloy_Sub = True
 				_E_Type = _Sub.Template.Exercise_Type
-				_E_Name = _Sub.Exercise.Name				
+				_E_Name = _Sub.Exercise.Name
 				if "Carry" in _E_Name:
 					Carry_True = True
 				else:
@@ -672,7 +681,7 @@ def User_Page(request):
 
 					Rep_Code = Prefix + "_Reps"
 					Weight_Code = Prefix + "_Weight"
-					RPE_Code = Prefix + "_RPE" 
+					RPE_Code = Prefix + "_RPE"
 
 					Tempo_Code_1 = Prefix + "_Tempo_1"
 					Tempo_Code_2 = Prefix + "_Tempo_2"
@@ -697,9 +706,9 @@ def User_Page(request):
 						if _RPE == "":
 							Filled = False
 					if Tempo_Code_1 in request.GET.keys():
-						Tempo_1 = request.GET[Tempo_Code_1] 
-						Tempo_2 = request.GET[Tempo_Code_2] 
-						Tempo_3 = request.GET[Tempo_Code_3] 
+						Tempo_1 = request.GET[Tempo_Code_1]
+						Tempo_2 = request.GET[Tempo_Code_2]
+						Tempo_3 = request.GET[Tempo_Code_3]
 						_Tempo = Tempo_1 + "-" + Tempo_2 + "-" + Tempo_3
 						if Tempo_1 == "" or Tempo_2 == "" or Tempo_3 == "":
 							Filled = False
@@ -711,7 +720,7 @@ def User_Page(request):
 							Set_Label = "A" + str(n + 1)
 						else:
 							Set_Label = "R" + str(n + 1)
-						Set_Label + "," + _Reps + "," + _Weight + "," + _RPE + "," + _Tempo	
+						Set_Label + "," + _Reps + "," + _Weight + "," + _RPE + "," + _Tempo
 						Last_Filled_Set = (Set_Label + "," + _Reps + "," + _Weight + "," + _RPE + "," + _Tempo).split(',')
 					else:
 						Unfilled = True
@@ -730,7 +739,7 @@ def User_Page(request):
 					Set_List.remove('')
 				print("Set_List: " + str(Set_List))
 
-#				ADDING FILLED SETS TO SUBWORKOUT SET STRING 
+#				ADDING FILLED SETS TO SUBWORKOUT SET STRING
 				_Sub.Set_Stats += "/" + "/".join(Set_List)
 				_Sub.save()
 				# if _Sub.Filled_Sets + 1 < 6:
@@ -741,7 +750,7 @@ def User_Page(request):
 				# 	_Sub.save()
 
 				Last_Set = ["", "", "", "", ""]
-				if len(Set_List) >= 1: 
+				if len(Set_List) >= 1:
 					Last_Set = Set_List[-1].split(",")
 					print("Got Last Set: " + _Stat_.Type)
 					print("Reps: " + _Sub.Template.Reps)
@@ -781,9 +790,9 @@ def User_Page(request):
 					# 	else:
 
 						# return HttpResponseRedirect("/userpage")
-				if Get_Set_SS and request.session["SS_Type"] == _Sub.Template.Exercise_Type:	
+				if Get_Set_SS and request.session["SS_Type"] == _Sub.Template.Exercise_Type:
 					print("Last Set: " + str(Last_Set))
-					print("Checking Strength Stop")				
+					print("Checking Strength Stop")
 					print("Last Set 3: " + str(Last_Set[3]))
 					print(_Sub.Template.Strength_Stop)
 					if _Sub.Maxed_Sets:
@@ -798,9 +807,9 @@ def User_Page(request):
 						_Sub.save()
 						print("Strength Stop Not Matched!!")
 						return HttpResponseRedirect("/userpage")
- 
-				if Get_Set_SD and request.session["SD_Type"] == _Sub.Template.Exercise_Type:		
-				# if Get_Set_SS and request.session["SS_Type"] == _Sub.Template.Exercise_Type:	
+
+				if Get_Set_SD and request.session["SD_Type"] == _Sub.Template.Exercise_Type:
+				# if Get_Set_SS and request.session["SS_Type"] == _Sub.Template.Exercise_Type:
 					print("DROP SET BUTTON PRESSED!!!!")
 					# _Stat.Alloy_Weight = Get_Weight(_Stat.Max, _Sub.Template.Alloy_Reps + 1, 10)
 					# _Stat.save()
@@ -834,7 +843,7 @@ def User_Page(request):
 					print("New Alloy Weight for : " + str(_Sub.Alloy_Weight) + _Sub.Template.Exercise_Type)
 
 # 				ALLOY SET SUBMISSIONS HANDLED HERE
-				elif request.GET.get("Submit_Workout") or (Get_Alloy_Pressed 
+				elif request.GET.get("Submit_Workout") or (Get_Alloy_Pressed
 				and request.session["Show_Alloy_Type"] != _Sub.Template.Exercise_Type):
 					# print("Line 803 Executing")
 					if Alloy_Sub and _Sub.Show_Alloy:
@@ -877,17 +886,17 @@ def User_Page(request):
 								Stat_List.remove('')
 							_Sub.Set_Stats += "/" + Stat_String
 							_Sub.save()
-#			WORKOUT SUBMITTED 
+#			WORKOUT SUBMITTED
 			if request.GET.get("Submit_Workout"):
 				print("Submitted")
 				_Workout.Completed = True
 				_Workout.save()
-#			LAST WORKOUT/LEVEL-UP CHECK 
-				if _Workout.Template.Last:	
-					print("Last Workout Submitted")				
-					request.session["Level_Up"] = Check_Level_Up(_Member, True)			
+#			LAST WORKOUT/LEVEL-UP CHECK
+				if _Workout.Template.Last:
+					print("Last Workout Submitted")
+					request.session["Level_Up"] = Check_Level_Up(_Member, True)
 					_Member.Finished_Workouts = True
-					_Member.save()		
+					_Member.save()
 					_Workout.Completed = True
 					_Workout.save()
 					return HttpResponseRedirect("/progress-report")
@@ -895,27 +904,27 @@ def User_Page(request):
 					# 	return HttpResponseRedirect("/next-block")
 
 			_Workout.Submitted = True
-			_Workout.save()			
+			_Workout.save()
 			return HttpResponseRedirect("/userpage")
 
 
 		print(str(Workout_Date.strftime("%y/%m/%d")))
-		print(str(datetime.now().strftime("%y/%m/%d")))			
+		print(str(datetime.now().strftime("%y/%m/%d")))
 
-# 	VIDEO-BUTTON CHECK HERE 
+# 	VIDEO-BUTTON CHECK HERE
 	if request.GET.get("Video"):
 		print("Video PK: " + request.GET["Video"])
 		_PK = int(request.GET["Video"])
 		request.session["Video_PK"] = _PK
 		return HttpResponseRedirect("/videos")
 
-# 	RESET-BUTTON CHECK  HERE 
+# 	RESET-BUTTON CHECK  HERE
 	if request.GET.get("clear_all"):
 		_Workout.Completed = False
 		_Workout.save()
 		for i in _Workout.SubWorkouts.all():
 			Reset_Sets = []
-			for n in range(i.Template.Sets):				
+			for n in range(i.Template.Sets):
 				Reset_Sets.append("B" + str(n + 1) + ",,,,")
 			i.Set_Stats = "/".join(Reset_Sets)
 			# i.Set_Stats = "/".join(Filled_Sets)
@@ -930,7 +939,7 @@ def User_Page(request):
 	for workout_date in workout_date_list:
 		parsed_date_list = workout_date.split('/')
 		parsed_date_dict = {}
-		if (len(parsed_date_list) == 3): 
+		if (len(parsed_date_list) == 3):
 			parsed_date_dict[str('month')] = str(parsed_date_list[0])
 			parsed_date_dict[str('day')] = str(parsed_date_list[1])
 			parsed_date_dict[str('year')] = str(parsed_date_list[2])
@@ -945,99 +954,99 @@ def User_Page(request):
 
 	return render(request, "userpage.html", context)
 
-@csrf_exempt 
-def Workout_Update(request): 
+@csrf_exempt
+def Workout_Update(request):
 	context = {}
 	context["Date"] = ""
 	_User = request.user
 	_Member = Member.objects.get(User = _User)
-	if request.method == 'POST': 
-		if 'TempDate' in request.POST: 
-			# test_var = date 
+	if request.method == 'POST':
+		if 'TempDate' in request.POST:
+			# test_var = date
 			context["Date"] = request.POST["TempDate"]
 			request.session["Calendar_Date"] = request.POST["TempDate"]
 			test_var = request.POST['TempDate']
-			# print "Request is", request 
+			# print "Request is", request
 			# print test_var
 			# print isinstance(test_var, basestring)
 			workoutDict = {}
 			# need to filter on user id here
 			workout_list = Workout.objects.filter(_Date=test_var, Member=_Member)
-			counter = 0 
+			counter = 0
 			return HttpResponseRedirect("/userpage")
-		else: 
+		else:
 			return HttpResponseRedirect("/userpage")
 
-@csrf_exempt 
-def RPE_Update(request): 
-	if request.method == 'POST': 
+@csrf_exempt
+def RPE_Update(request):
+	if request.method == 'POST':
 		current_date = request.POST['current_date']
 		# need to filter on user id here
 		workout_list = Workout.objects.filter(_Date=current_date);
 
-		for workout in workout_list: 
+		for workout in workout_list:
 				subworkout_list = workout.SubWorkouts.all()
-				subworkout_counter = 0 
-				 
-				for subworkout in subworkout_list: 
-					if (subworkout_counter == 0): 
+				subworkout_counter = 0
+
+				for subworkout in subworkout_list:
+					if (subworkout_counter == 0):
 						subworkout.RPE = request.POST['RPE_row1']
 						subworkout.save()
 						workout.save()
-					elif (subworkout_counter == 1): 
+					elif (subworkout_counter == 1):
 						subworkout.RPE = request.POST['RPE_row2']
 						subworkout.save()
 						workout.save()
-					elif (subworkout_counter == 2): 
+					elif (subworkout_counter == 2):
 						subworkout.RPE = request.POST['RPE_row3']
 						subworkout.save()
 						workout.save()
-					elif (subworkout_counter == 3): 
+					elif (subworkout_counter == 3):
 						subworkout.RPE = request.POST['RPE_row4']
 						subworkout.save()
 						workout.save()
-					elif (subworkout_counter == 4): 
+					elif (subworkout_counter == 4):
 						subworkout.RPE = request.POST['RPE_row5']
 						subworkout.save()
-						workout.save()					
+						workout.save()
 					subworkout_counter += 1
 
-		return HttpResponse('success'); 
+		return HttpResponse('success');
 
 Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 @user_passes_test(Inside_Access, login_url="/")
-@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
-def Contact_And_Support(request): 
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership/")
+def Contact_And_Support(request):
 	return render(request, "contact.html")
 
 @user_passes_test(Inside_Access, login_url="/")
-@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
-def Logout(request): 
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership/")
+def Logout(request):
 	logout(request)
 	return HttpResponseRedirect("/")
 
 @user_passes_test(Inside_Access, login_url="/")
-@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership/")
 def Exercise_Descriptions(request):
 	context = {}
 	return render(request, "exercise_descriptions.html", context)
 
 @user_passes_test(Inside_Access, login_url="/")
-@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership/")
 def Tutorial(request):
 	context = {}
 	return render(request, "tutorial.html", context)
 
 
 @user_passes_test(Inside_Access, login_url="/")
-@user_passes_test(Member_Not_Expired, login_url="/renew-membership")
+@user_passes_test(Member_Not_Expired, login_url="/renew-membership/")
 def Past_Workouts(request):
 	context = {}
 	_User = request.user
 	_Member = Member.objects.get(User=_User)
 	Workouts = _Member.workouts.all()
-	
+
 	context["Workout_Info"] = []
 	context["Selected_Workout"]  = []
 	context["Workout_Date"] = [[], []]

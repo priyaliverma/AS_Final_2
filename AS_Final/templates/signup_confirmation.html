@@ -9,12 +9,14 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-    var stripe = Stripe('pk_test_XXOQiKnnXqjJlJG5euwKirzj');
+    var stripe = Stripe('pk_live_aKn1qVsWQHgr14RWEpC8MFWs');
+    // var stripe = Stripe('pk_test_j9HyDhWDwXoX74tDBzYPtdVP');
+    // var stripe = Stripe('pk_live_aKn1qVsWQHgr14RWEpC8MFWs');
     var elements = stripe.elements();
 </script>
 
 <!-- Include HTML Code -->
-<!-- Head --> 
+<!-- Head -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,9 +38,9 @@
 </head>
 
 
-<!-- Body --> 
+<!-- Body -->
 <body>
-    <h1 style="margin-left:4vw;">Payment & Confirmation</h1>
+    <h1 style="margin-left:4vw;">Payment & Confirmation Test</h1>
     <hr>
 
     <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
@@ -72,8 +74,8 @@
 
         <div id="summary">
         <form method="GET">
-        <b>Select Package</b><br><br>
-        Package: 
+        <b>Select Package </b><br><br>
+        Package:
         <select name="Package" onchange="this.form.submit()" style="margin-left:1vw;">
         {% for Package in Packages %}
             <option value="{{Package.1}}">{{Package.0}}</option>
@@ -81,7 +83,7 @@
         </select>
         <br>
         <br>
-        <b style="">Total: &nbsp ${{Total}}</b> 
+        <b style="">Total: &nbsp ${{Total}}</b>
         <br><br>
         <b style="">Membership Effective Until: </b> {{End_Date}}
         <!-- (+ ${{Processing_Fee}} Processing Fee) -->
@@ -173,7 +175,7 @@
 
 <style>
     .workout .ui-state-default {
-        background-color: orange; 
+        background-color: orange;
     }
 
     .today .ui-state-default {

@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^admin-exercises/', AdminExercises, name='Home'),
 
     url(r'^admin-videos/', Admin_Videos, name='Home'),
-    url(r'^admin-videos-2/', Admin_Videos_2, name=''),    
+    url(r'^admin-videos-2/', Admin_Videos_2, name=''),
     url(r'^admin-videos-library/', Admin_Videos_Library, name='Home'),
     url(r'^admin-videos-library-edit/', Admin_Videos_Edit, name='Home'),
 
@@ -58,7 +58,7 @@ urlpatterns = [
 
     url(r'^userpageUpdate/', Workout_Update, name="userpageUpdate"),
     url(r'^userpageRPEUpdate/', RPE_Update, name="userpageRPEUpdate"),
-    
+
     url(r'^profile-view/', User_Profile, name="userprofile"),
     url(r'^profile-stats/', User_Stats, name="user_stats"),
 
@@ -66,10 +66,10 @@ urlpatterns = [
 
     url(r'^videos/', Videos, name="videos"),
 
-    url(r'^logout/', Logout, name='logout'),    
+    url(r'^logout/', Logout, name='logout'),
 
     # url(r'^past-workouts/', Past_Workouts, name="pastworkouts"),
 ]
 
-if settings.DEBUG is True:
+if False:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

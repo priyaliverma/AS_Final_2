@@ -21,11 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'k2tzyyri_hzu^_1o)y+#$$yucp=hz@$=%d@vp+0tl8#!od2f8)'
+SECURE_SSL_REDIRECT = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # CKEDITOR_IMAGE_BACKEND = "pillow"
@@ -122,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/mc2147/AS_Final_2.1/AS_Final_2/AS_Final/static'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
@@ -129,4 +131,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT = '/var/www/static/media'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/home/mc2147/AS_Final_2.1/AS_Final_2/AS_Final/media'
+

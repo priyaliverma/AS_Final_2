@@ -9,12 +9,13 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-    var stripe = Stripe('pk_test_XXOQiKnnXqjJlJG5euwKirzj');
+    // var stripe = Stripe('pk_test_XXOQiKnnXqjJlJG5euwKirzj');
+    var stripe = Stripe('pk_live_1PfxQb8lvkPeO1ogUgp2V5Ly');
     var elements = stripe.elements();
 </script>
 
 <!-- Include HTML Code -->
-<!-- Head --> 
+<!-- Head -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +37,7 @@
 </head>
 
 
-<!-- Body --> 
+<!-- Body -->
 <body>
     <h1 style="margin-left:4vw;">Renew Membership</h1>
     <hr>
@@ -74,7 +75,7 @@
         <div id="summary">
         <form method="GET">
         <b>Select Package</b><br><br>
-        Package: 
+        Package:
         <select name="Package" onchange="this.form.submit()" style="margin-left:1vw;">
         {% for Package in Packages %}
             <option value="{{Package.1}}">{{Package.0}}</option>
@@ -174,7 +175,7 @@
 
 <style>
     .workout .ui-state-default {
-        background-color: orange; 
+        background-color: orange;
     }
 
     .today .ui-state-default {

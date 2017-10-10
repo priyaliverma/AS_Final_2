@@ -45,7 +45,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-}    
+}
 </style>
 
 </head>
@@ -81,20 +81,20 @@
     <div id="left_container" style="">
         <h2 style="text-align:center; margin-right:4vw;">{{Video_Title}}</h2>
         <br>
-        <div class="container" 
-        style="width:550px; margin-right:2vw; padding-top:0vw !important; margin-left:2vw; margin-top:0vw; 
-        max-height:29vw !important;">
-        
+        <div class="container"
+        style="width:550px; margin-right:2vw; padding-top:0vw !important; margin-left:2vw; margin-top:0vw;
+        height:29vw !important;">
+
         <!-- <iframe height="1000" width="500"> -->
             <video style="text-align:center; margin-top:2vw; margin-bottom:2vw; margin:auto; width:100%;
-            padding-bottom:5vh; padding-top:5vh; padding:5vh; max-height:29vw;">
+            padding-bottom:5vh; padding-top:5vh; padding:5vh; height:29vw;">
                 <source src="{{Video_URL}}" type="video/mp4">
             </video>
         <!-- </iframe> -->
-        
+
         </div>
         <br>
-        <form method="POST" style="margin-top:-1vw;">{% csrf_token %}
+        <form method="POST" style="margin-top:2vw;">{% csrf_token %}
             <span style="margin-top:-0.5vw; margin-left:2.5vw; margin-bottom:1vw;">Show Description For:</span>
             <select name="Description_Exercise_Name" style="margin-left:0.5vw; font-size:1vw;" onchange="this.form.submit()">
                 {% for Name in Selected_Exercise_Name %}
@@ -150,13 +150,13 @@
     var _Video = document.getElementById("Video");
     var players = plyr.setup('.js-player');
 
-    var Player = players[0] 
+    var Player = players[0]
     var Full_Screen = Player.isFullscreen();
 
     var _Video = document.getElementById("Video");
     _Video.style.height = "100%";
 
-    if (Full_Screen) {     
+    if (Full_Screen) {
         // _Video.style.height = "100%";
     }
 </script>
@@ -186,7 +186,7 @@ plyr.setup();
 
 var players = plyr.setup('.js-player');
 
-var Player = players[0] 
+var Player = players[0]
 var Full_Screen = Player.isFullscreen();
 
 // var _Video = document.getElementById("Video");

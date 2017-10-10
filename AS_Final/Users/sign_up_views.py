@@ -17,7 +17,7 @@ from Shared_Functions import *
 
 Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-Exercise_Types = ["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",  "Hinge", "Squat", "LB Uni Push", 
+Exercise_Types = ["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",  "Hinge", "Squat", "LB Uni Push",
 "Ant Chain", "Post Chain",  "Isolation", "Iso 2", "Iso 3", "Iso 4", "RFL Load", "RFD Unload 1", "RFD Unload 2"]
 
 Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
@@ -76,36 +76,6 @@ def Create_Test_Users():
 def Home(request):
 	context = {}
 	Current_User = request.user
-	print("Current Username: " + Current_User.username)	
-	Test_Checks_User, created = User.objects.get_or_create(username="Test_Checks")
-	if created:
-		Test_Checks_User.set_password("Test_Checks")
-		Test_Checks_User.save()
-	Test_Checks_User = User.objects.get(username="Test_Checks")
-	Test_Checks_User.first_name = "Test"
-	Test_Checks_User.last_name = "Checks"
-	Test_Checks_User.set_password("Test_Checks")
-	Test_Checks_User.save()
-	Test_Member, created = Member.objects.get_or_create(User = Test_Checks_User)
-	if False:
-		Test_Member.New = True
-		Test_Member.Paid = False
-		Test_Member.Read = False
-		Test_Member.Agreed = False
-		Test_Member.Has_Workouts = False
-		Test_Member.Finished_Workouts = False
-		Test_Member.save()
-	if False:
-		Test_Member.Expiry_Date = datetime.now() - timedelta(days=3)
-		Test_Member.save()
-
-	print(Test_Checks_User.username)
-	print("New: " + str(Test_Member.New))
-	print("Paid: " + str(Test_Member.Paid))
-	print("Read: " + str(Test_Member.Read))
-	print("Agreed: " + str(Test_Member.Agreed))
-	print("Has Workouts: " + str(Test_Member.Has_Workouts))
-	print("Expiry Date: " + str(Test_Member.Expiry_Date))
 
 	Lift_Names = ["Squat", "Bench", "Deadlift", "Overhead_Press", "Power_Clean", "C_Jerk", "Snatch"]
 	context["Login_Failed"] = ""
@@ -133,9 +103,9 @@ def Home(request):
 			print("LOGIN FAILED")
 			print("User not authenticated")
 			context["Login_Failed"] = "Login Failed - Please Try Again"
-		return render(request, "homepage_3.html", context)
+		return render(request, "homepage_abridged.html", context)
 
-	
+
 	for i in Lift_Names:
 		Lifts[i] = []
 		Lifts_In_Pounds[i] = 0
@@ -150,125 +120,29 @@ def Home(request):
 
 		F_Name = request.GET.get("F_Name")
 		L_Name = request.GET.get("L_Name")
-
 		Email = request.GET.get("Email")
-
 		P_Word_1 = request.GET.get("PWord_1")
 		P_Word_2 = request.GET.get("PWord_2")
-		
 		DOB = request.GET.get("DOB")
-
-		Height = request.GET.get("Height").split(",")
-		Weight = request.GET.get("Weight").split(",")
-
-		if Height[2] == "Metric":
-			Member_Height = str(int(Height[0])*100 + int(Height[1])) + " cm"
-		else:
-			Member_Height = Height[0] + "' " + Height[1] + '" ' 
-
-		if Weight[1] == "Metric":
-			Member_Weight = Weight[0] + " kg"
-		else:
-			Member_Weight = Weight[0] + " lbs"
-
-		RPE_Exp = request.GET.get("RPE_Exp")
-		print("RPE Experience: " + RPE_Exp)
-		if RPE_Exp == "yes":
-			RPE_Experience = True
-		else:
-			RPE_Experience = False
-
-		print("Lifts: ")
-		for i in Lift_Names:
-			_Lift_Data = request.GET.get(i).split(",")	
-			Lifts[i] = _Lift_Data
-			if _Lift_Data[0] == "":
-				Lifts_In_Pounds[i] = 0
-			elif _Lift_Data[1] == "Metric":
-				Lifts_In_Pounds[i] = float(_Lift_Data[0])*2.204
-			else:
-				Lifts_In_Pounds[i] = float(_Lift_Data[0])
-			print (i + " " + str(Lifts_In_Pounds[i]))
-
-		if Lifts_In_Pounds["Squat"] != 0:
-			Member_Squat = Lifts_In_Pounds["Squat"]
-		if Lifts_In_Pounds["Bench"] != 0:
-			Member_Squat = Lifts_In_Pounds["Bench"]
-		if Lifts_In_Pounds["Deadlift"] != 0:
-			Member_Squat = Lifts_In_Pounds["Deadlift"]
-		if Lifts_In_Pounds["Overhead_Press"] != 0:
-			Member_Squat = Lifts_In_Pounds["Overhead_Press"]
-		if Lifts_In_Pounds["Power_Clean"] != 0:
-			Member_Squat = Lifts_In_Pounds["Power_Clean"]
-		if Lifts_In_Pounds["C_Jerk"] != 0:
-			Member_Squat = Lifts_In_Pounds["C_Jerk"]
-
-		Other = request.GET["Other"]
-		Sport_1 = request.GET["Sport_1"]
-		Sport_2 = request.GET["Sport_2"]
-		Sport_3 = request.GET["Sport_3"]
-		Training_Years = request.GET["T_Years"]
-		Training_Months = request.GET["T_Months"]		
-		# Training_Months = request.GET.get("TrainingMonths")
-		Member_Training_Time = Training_Years + " Years, " + Training_Months + " Months"
-		Member_Sports = Sport_1 + ", " + Sport_2 + ", " + Sport_3
-		print(Lifts)
-		
-		print("Lifts In Pounds")
-		print(Lifts_In_Pounds)
-		for key in Lifts_In_Pounds:
-			print(key + " " + str(Lifts_In_Pounds[key]))
-
-		print("First Name: " + F_Name)
-		print("Email: " + Email)
-		print("Password 1: " + P_Word_1)
-		print("Password 2: " + P_Word_2)
-		print("Date of Birth: " + DOB)
-		print(Training_Months)
-
-		print("Squat Weight in Pounds: " + str(Lifts_In_Pounds["Squat"]))
-		print("Height: " + str(Member_Height))
-		print("Weight: " + str(Member_Weight))
-		print(Other)
-
-		print("Training Years: " + Training_Years)
-		print("Training Months: " + Training_Months)
-
-		print("Primary Sports: " + Sport_1 + " " + Sport_2 + " " + Sport_3)
-
-		print("RPE Experience: " + RPE_Exp)
-
-
-		Bench_Weight = 0
-		Squat_Weight = 0
-		Body_Weight = 0
-
-		if Lifts_In_Pounds["Bench"] != "None":
-			Bench_Weight = Lifts_In_Pounds["Bench"]
-
-		if Lifts_In_Pounds["Squat"] != "None":
-			Squat_Weight = Lifts_In_Pounds["Squat"]
-
-		if Weight[1] == "Metric":
-			Body_Weight = float(Weight[0])*2.204
-		elif Weight[0] != "":
-			Body_Weight = float(Weight[0])
-
-		# ASSIGNING LEVEL
-		Assigned_Level = 1
-		if Squat_Weight < Body_Weight:
-			Assigned_Level = 1
-		elif Squat_Weight > Body_Weight*1.5 and Bench_Weight > Body_Weight and RPE_Experience:
-			Assigned_Level = 11
-		else:
-			Assigned_Level = 6
-		print("Assigned Level: " + str(Assigned_Level))
+		Weight_lbs = request.GET.get("Weight_lbs")
+		Weight_kg = request.GET.get("Weight_kgs")
+		Squat = request.GET["Squat_lbs_Input"]
+		RPE_Exp = request.GET["RPE_Exp_Input"]
 
 		if (F_Name != "" and L_Name != "" and Email != "" and P_Word_1 != "" and P_Word_1 == P_Word_2):
+			print(F_Name)
+			print(L_Name)
+			print(Email)
+			print(P_Word_1)
+			print(P_Word_2)
+			print(DOB)
+			print(Weight_lbs)
+			print(Squat)
+			print(RPE_Exp)
 			if User.objects.filter(username = Email).exists():
 				context["Signup_Error"] = "An account with that email has already been created!"
 				print("Sign-up Error")
-				return render(request, "homepage_3.html", context)
+				return render(request, "homepage_abridged.html", context)
 			else:
 				print("Signing Up...")
 				New_User = User.objects.create_user(Email, password=P_Word_1)
@@ -276,54 +150,60 @@ def Home(request):
 				New_User.last_name = L_Name
 				# User(first_name = F_Name, last_name = L_Name, email= Email, username = Email, password = P_Word_1)
 				New_User.save()
-				# Creating Member
+				Body_Weight = int(Weight_lbs)
+				if Squat != "":
+					Squat_Weight = int(Squat)
+				else:
+					Squat_Weight = 0
+				if RPE_Exp == "yes":
+					RPE_Experience = True
+				else:
+					RPE_Experience = False
+				Assigned_Level = 1
+				if Squat_Weight < Body_Weight:
+					Assigned_Level = 1
+				elif Squat_Weight > Body_Weight*1.5 and Bench_Weight > Body_Weight and RPE_Experience:
+					Assigned_Level = 11
+				else:
+					Assigned_Level = 6
 				New_Member = Member(User = New_User, Level = Assigned_Level, Squat = Squat_Weight)
+				# Creating Member
 				New_Member.New = True
 				New_Member.DOB = DOB
-				New_Member.Height = Member_Height
-				New_Member.Weight = Member_Weight
-				New_Member.Squat = Lifts_In_Pounds["Squat"]
-				New_Member.Bench = Lifts_In_Pounds["Bench"]
-				New_Member.D_Lift = Lifts_In_Pounds["Deadlift"]
-				New_Member.OP = Lifts_In_Pounds["Overhead_Press"]
-				New_Member.PC = Lifts_In_Pounds["Power_Clean"]
-				New_Member.CJerk = Lifts_In_Pounds["C_Jerk"]
-				New_Member.Snatch = Lifts_In_Pounds["Snatch"]
-				New_Member.Other = Other
-				New_Member.Training_Time = Member_Training_Time
-				New_Member.Primary_Sports = Member_Sports
-				New_Member.Prior_RPE = RPE_Experience				
-				
+				# New_Member.Height = Member_Height
+				Body_Weight = int(Weight_lbs)
+				New_Member.Weight = Body_Weight
+				New_Member.Squat = Squat_Weight
 				New_Member.save()
 
 				user = authenticate(username=Email, password=P_Word_1)
 				if user is not None:
 				    	login(request, user)
 				# return HttpResponseRedirect("/terms-conditions")
-				return HttpResponseRedirect("/waiver")
-				# return HttpResponseRedirect("/sign-up-confirmation")
-	return render(request, "homepage_3.html", context)
+				# return HttpResponseRedirect("/waiver")
+				return HttpResponseRedirect("/sign-up-confirmation")
+	return render(request, "homepage_abridged.html", context)
 
 @user_passes_test(Member_Exists, login_url="/")
-@user_passes_test(New_Check, login_url="/")
+# @user_passes_test(New_Check, login_url="/")
 def SignUp_Confirmation(request):
 	context = {}
 	User = request.user
 	_Member = Member.objects.get(User=User)
-	stripe.api_key = "sk_test_LKsnEFYm74fwmLbyfR3qKWgb"
+# 	stripe.api_key = "sk_test_KTmWLzrdvb6Zt6K0SLOD22Zk"
 	# LIVE!!
-	# stripe.api_key = "pk_live_1PfxQb8lvkPeO1ogUgp2V5Ly"
+	stripe.api_key = "sk_live_rDFsGbC9IPjseHT9GhF0xDic"
 
 	Package_Description = "Gold"
 	print("RPE Test: " + str(Get_Weight(200, 8, 8)))
 
-	Packages = [["Gold ($300.00)", "G", 300, timedelta(days=365)], ["Silver ($180.00)", "S", 180, timedelta(days=180)], 
+	Packages = [["Gold ($300.00)", "G", 300, timedelta(days=365)], ["Silver ($180.00)", "S", 180, timedelta(days=180)],
 	["Bronze ($40.00)", "B", 40, timedelta(days=30)]]
 	request.session["Package"] = "G"
-	context["Packages"] = [] 
+	context["Packages"] = []
 
 	Processing_Fee = 0
-	context["Processing_Fee"] = Processing_Fee 
+	context["Processing_Fee"] = Processing_Fee
 
 	Total = 0
 	Subscription_Time = timedelta(days=30)
@@ -398,7 +278,7 @@ def SignUp_Confirmation(request):
 
 # @user_passes_test(Tier_2, login_url="/")
 @user_passes_test(Member_Exists, login_url="/")
-@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation/")
 @user_passes_test(Not_Agreed, login_url="/")
 def Waiver(request):
 	context = {}
@@ -425,8 +305,8 @@ def Waiver(request):
 	return render(request, "waiver.html", context)
 
 @user_passes_test(Member_Exists, login_url="/")
-@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
-@user_passes_test(Member_Agreed, login_url="/waiver")
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation/")
+@user_passes_test(Member_Agreed, login_url="/waiver/")
 @user_passes_test(Not_Read, login_url="/")
 def Terms_Conditions(request):
 	context = {}
@@ -439,9 +319,9 @@ def Terms_Conditions(request):
 	return render(request, "terms_conditions.html", context)
 
 @user_passes_test(Member_Exists, login_url="/")
-@user_passes_test(Member_Paid, login_url="/sign-up-confirmation")
-@user_passes_test(Member_Agreed, login_url="/waiver")
-@user_passes_test(Member_Read, login_url="/terms-conditions")
+@user_passes_test(Member_Paid, login_url="/sign-up-confirmation/")
+@user_passes_test(Member_Agreed, login_url="/waiver/")
+@user_passes_test(Member_Read, login_url="/terms-conditions/")
 @user_passes_test(No_Workouts, login_url="/")
 def Welcome(request):
 	print("Username: " + request.user.username)
@@ -461,7 +341,7 @@ def Welcome(request):
 		Day_3_String = request.GET.get("Day_3")
 		Day_4_String = request.GET.get("Day_4")
 
-		if Day_1_String == "" or Day_1_String == None or Day_2_String == "" or Day_2_String == None or Day_3_String == "" or Day_3_String == None or Day_4_String == "" or Day_4_String == None: 
+		if Day_1_String == "" or Day_1_String == None or Day_2_String == "" or Day_2_String == None or Day_3_String == "" or Day_3_String == None or Day_4_String == "" or Day_4_String == None:
 			context["Error"] = "Please choose 4 different workout days!"
 			return render(request, "welcome.html", context)
 
@@ -490,19 +370,19 @@ def Membership_Expired(request):
 	context = {}
 	User = request.user
 	_Member = Member.objects.get(User=User)
-	stripe.api_key = "sk_test_LKsnEFYm74fwmLbyfR3qKWgb"
+# 	stripe.api_key = "sk_test_LKsnEFYm74fwmLbyfR3qKWgb"
 	# LIVE!!
-	# stripe.api_key = "pk_live_1PfxQb8lvkPeO1ogUgp2V5Ly"
+	stripe.api_key = "sk_live_rDFsGbC9IPjseHT9GhF0xDic"
 	Package_Description = "Gold"
 	print("RPE Test: " + str(Get_Weight(200, 8, 8)))
 
-	Packages = [["Gold ($300.00)", "G", 300.00, timedelta(days=365)], ["Silver ($180.00)", "S", 180.00, timedelta(days=180)], 
+	Packages = [["Gold ($300.00)", "G", 300.00, timedelta(days=365)], ["Silver ($180.00)", "S", 180.00, timedelta(days=180)],
 	["Bronze ($40.00)", "B", 40.00, timedelta(days=30)]]
 	request.session["Package"] = "G"
-	context["Packages"] = [] 
+	context["Packages"] = []
 
 	Processing_Fee = 0
-	context["Processing_Fee"] = Processing_Fee 
+	context["Processing_Fee"] = Processing_Fee
 
 	Extension_Start = datetime.now()
 
