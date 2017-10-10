@@ -71,5 +71,5 @@ urlpatterns = [
     # url(r'^past-workouts/', Past_Workouts, name="pastworkouts"),
 ]
 
-if False:
+if True:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

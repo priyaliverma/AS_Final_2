@@ -21,10 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'k2tzyyri_hzu^_1o)y+#$$yucp=hz@$=%d@vp+0tl8#!od2f8)'
-SECURE_SSL_REDIRECT = True
 
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
+# SECURE_SSL_REDIRECT = False
+# SECURE_REDIRECT_EXEMPT = ['http://127.0.0.1:8000/home/', '127.0.0.1:8000/home/',
+# 'http://127.0.0.1:8000/', '127.0.0.1:8000/']
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -132,6 +136,6 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = '/var/www/static/media'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_ROOT = '/home/mc2147/AS_Final_2.1/AS_Final_2/AS_Final/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT = '/home/mc2147/AS_Final_2.1/AS_Final_2/AS_Final/media'
 

@@ -77,9 +77,9 @@ def Videos(request):
 		if Video.objects.filter(pk=request.session["Video_PK"]).exists():
 			
 			Selected_Video = Video.objects.get(pk=request.session["Video_PK"])
+			# context["Video_URL"] = Selected_Video.File.url[1:]
 			context["Video_URL"] = Selected_Video.File.url
 			print(Selected_Video.File.url)
-
 			context["Video_Title"] = Selected_Video.Title
 			context["Related_Exercises"] = []
 			for i in Selected_Video.exercises.all():
