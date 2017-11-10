@@ -72,6 +72,8 @@ def Create_Test_Users():
 		_Member.save()
 	return None
 
+def coach_biographies(request):
+	return render (request, "coach_biographies.html")
 
 def Home(request):
 	context = {}

@@ -35,6 +35,7 @@ urlpatterns = [
 
 
     url(r'^$', Home, name='Home'),
+    url(r'^coach-biographies', coach_biographies, name='coach_biographies'),    
     url(r'^waiver/', Waiver, name='SignUpConfirmation'),
     url(r'^terms-conditions/', Terms_Conditions, name='SignUpConfirmation'),
 

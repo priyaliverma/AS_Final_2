@@ -1,0 +1,138 @@
+<!-- Coach Biography's Page -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coach Biographies</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage/coach_biographies.css' %}">
+</head>
+<body>
+
+<!-- Header Section: For Logo and Heading -->
+    <header class = "header">
+        <div class = "row">
+            <div class = "col-md-1 col-sm-1">
+                <img class = "alloylogo" src = "{% static 'homepage/Alloy_logo.jpg' %}" alt = "Alloy Logo">
+            </div>
+            <div class = "col-md-11 col-sm-11 text-center" style = "font-size:45px; font-family:Arial, Helvetica, sans-serif; padding: 1%;">
+                Meet Our Coaches 
+            </div>
+        </div>
+    </header>
+
+<!-- This section for Coach Sterner Biography -->
+    <section>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col-md-4 col-sm-4 imginsta">
+                    <figure>
+                            
+                        <img class = "coachpics" src = "{% static 'homepage/coach_sterner_1_AWS.jpg' %}" alt = "Coach Sterner" >
+                        <div class="middle">
+                            <div class="coachname"> Alex Sterner </div>
+                        </div>
+                        <div class = "text-center" style = "padding: 3%">
+                                Follow Coach Sterner on Instagram: 
+                                <br>
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                                <a href = "https://www.instagram.com/alex.sterner/?hl=en">@alex.sterner</a>
+                        </div>
+                    </figure>
+                </div>
+                <div class = "col-md-8 col-sm-8">
+                    <div class="panel panel-default coachbio-text-panel"> 
+                        <div class="panel-body">
+                            <p>Alex Sterner, BS, CSCS, USAW is the Co-Founder and Head Strength Coach at Alloy Strength. He is a Certified Strength and Conditioning Specialist (CSCS) through the National Strength and Conditioning Association (NSCA). His education in the field began at the University of Connecticut, where he obtained a bachelor's degree in Kinesiology in 2014. While enrolled, he interned in the varsity weight room for 7 of the school's athletic teams, and accumulated over 1000 hours under Coach Maureen Butler and Coach Travis Illian. </p>
+                            <p>Since graduating from UConn, Coach Sterner worked in a commercial fitness setting for a year until moving to San Diego in the summer of 2015. He then worked at the Parisi Speed School, providing a sport-performance environment to athletes of various ages. In October of 2016 he began working at the University of California San Diego where he teaches Recreation classes, provides post-rehab care and personal training. </p>
+                            <p>Upon moving to San Diego, Coach Sterner continued competing in Brazilian Jiu-jitsu under Andre Galvao at Atos HQ. It was here that he first met JT Torres, who he began strength training at Parisi in the fall of 2015. Since then he and Coach Bryce have trained the majority of the Atos HQ competition team. This includes organizing group lifting sessions for the 2017 IBJJF Worlds camp, where Atos secured their first ever team title. In a 1-on-1 setting he coached Andre Galvao through the 2017 IBJJF Worlds and 2017 ADCC Superfight, resulting in a gold medal for Galvao on both occasions. </p>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class = "container"></div>
+
+<!-- This section for Coach Sterner Picture with Prof. Andre Galvao -->
+    <section>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col-md-2 col-sm-2"></div>
+                <div class = "col-md-8 col-sm-8">
+                    <figure class = "coach1prof">
+                        <img class = "coach1" src = "{% static 'homepage/coach_sterner_with_prof_andre_galvao.jpg' %}" alt = "With Prof Andre Galvao">
+                        <div class = "text-center" style = "font-family:Arial, Helvetica, sans-serif; font-size:20px;">
+                            Coach Sterner with 5x IBJJF and 5x ADCC World Champion Professor Andre Galvao
+                        </div>
+                    </figure>
+                </div>
+                <div class = "col-md-2 col-sm-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class = "container"></div>
+
+<!-- This section for Coach Bryce Biography -->
+    <section>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col-md-4 col-sm-4 imginsta">
+                    <figure>
+                        <img class = "coachpics" src = "{% static 'homepage/coach_bryce.png' %}" alt = "Coach Bryce" >
+                        <div class="middle">
+                            <div class="coachname"> Alex Bryce </div>
+                        </div>
+                        <div class = "text-center" style = "padding: 2%">
+                                Follow Coach Bryce on Instagram: 
+                                <br>
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                                <a href = "https://www.instagram.com/arbryce/"> @arbryce </a>
+                        </div>
+                    </figure>
+                </div>
+                <div class = "col-md-8 col-sm-8">
+                    <div class="panel panel-default coachbio-text-panel"> 
+                        <div class = "panel-body">
+                            <p>Alex Bryce, MSE, CSCS is the Co-Founder and Head Strength Coach at Alloy Strength. Bryce is a Certified Strength and Conditioning Specialist (CSCS) through the National Strength and Conditioning Association (NSCA). He has experience working with all ages and training levels, and an extensive background in exercise technique, program design and periodization for both individuals and teams.</p>    
+                            <p>Bryce resides in San Diego, working at the University of California San Diego as a trainer, coach, and class lecturer. He is also a Strength Coach for the Atos Brazilian Jiu-Jitsu competition team, who in June 2017 won the IBJJF World Title for the first time.</p>
+                            <p>Bryce is a former Performance Specialist at EXOS, a top sports performance company with locations worldwide. He earned his master’s degree in Exercise Science from the University of Kansas while working as a Graduate Teaching Assistant, conducting research in KU’s Neuromechanics and Jayhawk Athletic Performance Laboratories.</p>
+                            <p>A native of Storrs, CT, Alex received his bachelor's degree from the University of Connecticut in Strength and Conditioning with a minor in Nutrition for Exercise and Sport. He spent two years as an Intern with the Strength and Conditioning staff, and also interned at Cressey Performance, an elite training center for professional baseball players.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class = "container"></div>
+
+<!-- This section for Coach Bryce Picture with Erberth Santos -->
+    <section>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col-md-2 col-sm-2"></div>
+                <div class = "col-md-8 col-sm-8">
+                    <figure class = "coach1prof">
+                            
+                        <img class = "coach1" src = "{% static 'homepage/coach_bryce_with_Erberth_Santos.jpg' %}" alt = "With Erberth Santos">
+                        <div class = "text-center" style = "font-family:Arial, Helvetica, sans-serif; font-size:20px;">
+                            Coach Bryce with 2017 IBJJF World Champion and 2017 #2 ranked overall black belt, Erberth Santos
+                        </div>
+                    </figure>
+                </div>
+                <div class = "col-md-2 col-sm-2"></div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
