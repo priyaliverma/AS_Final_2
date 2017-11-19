@@ -22,6 +22,13 @@ Exercise_Types = ["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",
 
 Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 
+STRIPE_API_TEST_KEY = 'sk_test_KTmWLzrdvb6Zt6K0SLOD22Zk'
+STRIPE_API_LIVE_KEY = 'sk_live_rDFsGbC9IPjseHT9GhF0xDic'
+use_live_key = True
+
+def resolve_api_key():
+	return STRIPE_API_LIVE_KEY if use_live_key else STRIPE_API_TEST_KEY
+
 def Create_Test_Users():
 	Test_1, created = User.objects.get_or_create(username="Test_1")
 	if created:
@@ -128,15 +135,15 @@ def Home(request):
 		print("Password: " + _Password)
 		user = authenticate(username=_Username, password=_Password)
 		if user is not None:
-			# print("User authenticated")
+			print("User authenticated")
 		    	login(request, user)
 			return HttpResponseRedirect('/userpage')
 		else:
+			print ('Amount monthly.')
 			print("LOGIN FAILED")
 			print("User not authenticated")
 			context["Login_Failed"] = "Login Failed - Please Try Again"
 		return render(request, "homepage_3.html", context)
-
 	
 	for i in Lift_Names:
 		Lifts[i] = []
@@ -308,76 +315,101 @@ def Home(request):
 
 @user_passes_test(Member_Exists, login_url="/")
 @user_passes_test(New_Check, login_url="/")
-def SignUp_Confirmation(request):
+def SignUp_Confirmation (request):
+
+	# Create Context, User, Member
+
 	context = {}
 	User = request.user
 	_Member = Member.objects.get(User=User)
-	stripe.api_key = "sk_test_LKsnEFYm74fwmLbyfR3qKWgb"
-	# LIVE!!
-	# stripe.api_key = "pk_live_1PfxQb8lvkPeO1ogUgp2V5Ly"
+	stripe.api_key = resolve_api_key()
 
-	Package_Description = "Gold"
-	print("RPE Test: " + str(Get_Weight(200, 8, 8)))
+	# Create Packages
 
-	Packages = [["Gold ($300.00)", "G", 300, timedelta(days=365)], ["Silver ($180.00)", "S", 180, timedelta(days=180)], 
-	["Bronze ($40.00)", "B", 40, timedelta(days=30)]]
+	Packages = [
+		["Gold ($25.00)", "G", 25, timedelta(days=365), 'gold-365', 'subscription'], 
+		["Silver ($30.00)", "S", 30, timedelta(days=180), 'silver-180', 'subscription'], 
+		["Bronze ($40.00)", "B", 40, timedelta(days=30), 'bronze-30', 'charge']
+		]
 	request.session["Package"] = "G"
 	context["Packages"] = [] 
 
-	Processing_Fee = 0
-	context["Processing_Fee"] = Processing_Fee 
+	# Store selected package in session
 
-	Total = 0
-	Subscription_Time = timedelta(days=30)
-
-	# for i in stripe.Customer.all():
-	# 	print("Stripe Customer: " + str(i.id))
-
-	# if request.POST.get("Payment_Btn"):
 	if request.GET.get("Package"):
 		Package = request.GET.get("Package")
 		print("Package: " + str(Package))
 		request.session["Package"] = Package
+	
+	# Calculate total amount for chosen package
 
-	# if "Package" not in request.session.keys():
-	# 	request.session["Package"] = "G"
-
+	Total = 0
+	plan_id = None
+	is_subscription = False
+	payment_description = None
 	for i in Packages:
 		if i[1] == request.session["Package"]:
 			context["Packages"].append(i)
-			Total = i[2] + Processing_Fee
-			context["Total"] = '{:.2f}'.format((i[2] + Processing_Fee))
+			Total = i[2]
+			context["Total"] = '{:.2f}'.format((i[2]))
 			context["End_Date"] = (datetime.now() + i[3]).date()
 			Subscription_Time = i[3]
-			# print(datetime.now())
-			# print(datetime.now() + i[3])
+			plan_id = i[4]
+			is_subscription = i[5] == 'subscription'
+			payment_description = i[0]
+
+	# If package not in context; append
+
 	for i in Packages:
 		if i[1] != request.session["Package"]:
 			context["Packages"].append(i)
+	
+	# Total amount for chosen package
 
 	Charge_Amount = int(Total*100)
+
+	# User makes payment (Clicks Button)
 
 	if request.method == "POST":
 		print("Payment POST received")
 		Number = request.POST.get("cardnumber")
-		print(Number)
+		# print(Number)
 		token = request.POST.get('stripeToken') # Using Flask
 		print(token)
+
+		# Create Customer and start subscription/charge
+
 		try:
 			customer = stripe.Customer.create(
-				# email=_Username,
-				source=token,
+				email = User.username, 
+				#source = 'tok_visa',
+				source = token
 			)
 			_ID = customer.id
-			charge = stripe.Charge.create(
-				amount=Charge_Amount, # new_order.total * 100
-			    currency="usd",
-			    customer=_ID,
-			          # source=token,
-			    description="Gold",
-			    )
+
+			# Create subscription for Gold and Silver Packages
+
+			if is_subscription: 
+				stripe.Subscription.create(
+					customer = _ID,
+					items = [
+						{
+							"plan": plan_id,
+						},
+						]
+					)
+
+			# Create Charge for Bronze Package
+
+			else:
+				stripe.Charge.create(
+					amount=Charge_Amount,
+			    	currency="usd",
+			    	customer=_ID,
+			    	description=payment_description)
+
 			print("New Customer ID: " + str(_ID))
-			print("New Customer Charged: " + str(charge.amount))
+			# print("New Customer Charged: " + str(charge.amount))
 			_Member.Paid = True
 			_Member.New = False
 			_Member.Signup_Date = datetime.now()
@@ -397,6 +429,98 @@ def SignUp_Confirmation(request):
 		print("Payment Button Pressed")
 		return HttpResponseRedirect("/Welcome")
 	return render(request, "signup_confirmation.html", context)
+
+
+# @user_passes_test(Member_Exists, login_url="/")
+# @user_passes_test(New_Check, login_url="/")
+# def SignUp_Confirmation_Old (request):
+# 	context = {}
+# 	User = request.user
+# 	_Member = Member.objects.get(User=User)
+# 	stripe.api_key = resolve_api_key()
+# 	# LIVE!!
+# 	# stripe.api_key = "pk_live_1PfxQb8lvkPeO1ogUgp2V5Ly"
+
+# 	Package_Description = "Gold"
+# 	print("RPE Test: " + str(Get_Weight(200, 8, 8)))
+
+# 	Packages = [["Gold ($300.00)", "G", 300, timedelta(days=365)], ["Silver ($180.00)", "S", 180, timedelta(days=180)], ["Bronze ($40.00)", "B", 40, timedelta(days=30)]]
+# 	request.session["Package"] = "G"
+# 	context["Packages"] = [] 
+
+# 	Processing_Fee = 0
+# 	context["Processing_Fee"] = Processing_Fee 
+
+# 	Total = 0
+# 	Subscription_Time = timedelta(days=30)
+
+# 	# for i in stripe.Customer.all():
+# 	# 	print("Stripe Customer: " + str(i.id))
+
+# 	# if request.POST.get("Payment_Btn"):
+# 	if request.GET.get("Package"):
+# 		Package = request.GET.get("Package")
+# 		print("Package: " + str(Package))
+# 		request.session["Package"] = Package
+
+# 	# if "Package" not in request.session.keys():
+# 	# 	request.session["Package"] = "G"
+
+# 	for i in Packages:
+# 		if i[1] == request.session["Package"]:
+# 			context["Packages"].append(i)
+# 			Total = i[2] + Processing_Fee
+# 			context["Total"] = '{:.2f}'.format((i[2] + Processing_Fee))
+# 			context["End_Date"] = (datetime.now() + i[3]).date()
+# 			Subscription_Time = i[3]
+# 			# print(datetime.now())
+# 			# print(datetime.now() + i[3])
+# 	for i in Packages:
+# 		if i[1] != request.session["Package"]:
+# 			context["Packages"].append(i)
+
+# 	Charge_Amount = int(Total*100)
+
+# 	if request.method == "POST":
+# 		print("Payment POST received")
+# 		Number = request.POST.get("cardnumber")
+# 		print(Number) # TODO: remove this from production code
+# 		token = request.POST.get('stripeToken') # Using Flask
+# 		print(token)
+# 		try:
+# 			customer = stripe.Customer.create(
+# 				# email=_Username, 
+# 				source=token,
+# 			)
+# 			_ID = customer.id
+# 			charge = stripe.Charge.create(
+# 				amount=Charge_Amount, # new_order.total * 100
+# 			    currency="usd",
+# 			    customer=_ID,
+# 			          # source=token,
+# 			    description="Gold",
+# 			    )
+# 			print("New Customer ID: " + str(_ID))
+# 			print("New Customer Charged: " + str(charge.amount))
+# 			_Member.Paid = True
+# 			_Member.New = False
+# 			_Member.Signup_Date = datetime.now()
+# 			_Member.Expiry_Date = datetime.now() + Subscription_Time
+# 			_Member.save()
+# 			print(_Member.Signup_Date)
+# 			print(_Member.Expiry_Date)
+# 			# print("New Customer Charged! " + str(_ID) + " Amount: " + str(charge.amount))
+# 			return HttpResponseRedirect("/waiver")
+
+# 		except stripe.error.CardError:
+# 			print("Card Error - PAYMENT DECLINED")
+# 			context["Payment_Status"] = "Payment Failed!"
+# 			return render(request, "signup_confirmation.html", context)
+
+# 	if request.GET.get("Payment_btn"):
+# 		print("Payment Button Pressed")
+# 		return HttpResponseRedirect("/Welcome")
+# 	return render(request, "signup_confirmation.html", context)
 
 # @user_passes_test(Tier_2, login_url="/")
 @user_passes_test(Member_Exists, login_url="/")
