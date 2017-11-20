@@ -14,6 +14,7 @@ from checks import *
 from RPE_Dict import *
 import re
 from Shared_Functions import *
+from stripe_config import keys_dict
 
 Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -22,8 +23,8 @@ Exercise_Types = ["UB Hor Push", "UB Vert Push",  "UB Hor Pull", "UB Vert Pull",
 
 Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 
-STRIPE_API_TEST_KEY = 'sk_test_KTmWLzrdvb6Zt6K0SLOD22Zk'
-STRIPE_API_LIVE_KEY = 'sk_live_rDFsGbC9IPjseHT9GhF0xDic'
+STRIPE_API_TEST_KEY = keys_dict['sec_key_test']
+STRIPE_API_LIVE_KEY = keys_dict['sec_key_live']
 use_live_key = True
 
 def resolve_api_key():
@@ -82,6 +83,9 @@ def Create_Test_Users():
 def coach_biographies(request):
 	return render (request, "coach_biographies.html")
 
+def contact (request):
+	return render (request, "contact.html")
+
 def Home(request):
 	context = {}
 	Current_User = request.user
@@ -136,7 +140,7 @@ def Home(request):
 		user = authenticate(username=_Username, password=_Password)
 		if user is not None:
 			print("User authenticated")
-		    	login(request, user)
+			login(request, user)
 			return HttpResponseRedirect('/userpage')
 		else:
 			print ('Amount monthly.')
@@ -307,7 +311,7 @@ def Home(request):
 
 				user = authenticate(username=Email, password=P_Word_1)
 				if user is not None:
-				    	login(request, user)
+				    login(request, user)
 				# return HttpResponseRedirect("/terms-conditions")
 				return HttpResponseRedirect("/waiver")
 				# return HttpResponseRedirect("/sign-up-confirmation")
