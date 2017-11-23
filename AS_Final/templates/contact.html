@@ -1,79 +1,40 @@
-<!-- {% load static %} -->
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
-
-
-<!-- Include Vue.js Source Code -->
-<script src='https://unpkg.com/vue'></script>
-<!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
-
-
-<!-- Include HTML Code -->
-<!-- Head --> 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js"></script>
-
-
-    <!-- Material Design code -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-   <!--  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-indigo.min.css" /> -->
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  
-    <!-- Style Sheets -->
-    <link rel="stylesheet" href="{% static 'userpage/userpage.css' %}">
-    <link rel="stylesheet" href="{% static 'userpage/contact.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Cabin:400,600,700" rel="stylesheet">
-
-    <title>Contact & Support</title>
-
-</head>
-
-
-<!-- Body --> 
+        <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                <title>Contact</title>
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+                <link rel="stylesheet" href="{% static 'homepage/contact.css' %}">
+            </head>
 <body>
-    <div id='header-left'>
-        <h1>Contact & Support</h1>
-    </div>
 
-    <div id='header-right'>
-        <ul id='nav-bar'>
-            <li><a href="{%url 'userpage' %}">Home</a></li>
-            <li><a href="{%url 'userpage' %}">Videos</a></li>
-            <li><a href="{%url 'userpage' %}">Past Workouts</a></li>
-            <li><a href="{%url 'userprofile' %}">Profile</a></li>
-            <li><a href="{%url 'contact' %}" class='page-active'>Contact & Support</a></li>
-            <li><a href="{%url 'logout' %}">Logout</a></li>
-        </ul>
-    </div>
-
-    <hr>
-
-    <img id='user_design_img' src='{% static "userpage/header_design.svg" %}'>
-
-    <h1>Staff Information</h1>
-    <hr class='title-divider'>
-
-    <div id='contact-container'>
-        <div id='contact-container-left'>
-            <p><span class='contact-name'>Name</span> | Email</p>
-            <p><span class='contact-name'>Name</span> | Email</p>
-            <p><span class='contact-name'>Name</span> | Email</p>
-            <p><span class='contact-name'>Name</span> | Email</p>
-        </div>
-
-        <div id='contact-container-right'>
-            <p>Please fill out the form below with any questions or concerns you may have.</p>
-            <textarea id='contact-textarea' placeholder='How can we help you?'></textarea>
-            <input type='button' value='SUBMIT FORM' id='submit-form'></input>
+    <div class="h-100 row align-items-center">
+        <div class="col">
+            <div class = "text-center h1" style = "font-size: 40px">
+                CONTACT US
+            </div>
+            <div class = "text-center" style = "font-size: 20px">
+                Our Coaches are always ready to help. If you have any queries, please email to
+                <br><i class="fa fa-envelope" aria-hidden="true"></i>
+                alloystrengthtraining@gmail.com
+            </div>
         </div>
     </div>
-    
+
+    <div class = "row" style = "height: 80px; background-color: black;">
+        <div class = "col-md-1 col-sm-1" style = "height: 70px; width : 80px">
+            <img class = "alloylogo" src = "{% static 'homepage/Alloy_logo.jpg' %}" alt = "Alloy Logo">
+        </div>
+        <div class = "col-md-11 col-sm-11 text-center" style = "font-size:20px; font-family:inherit; padding: 2%;">
+            Alloy Strength Training : An Online Strength Training System
+        </div>
+    </div>
 </body>
-
 </html>
-
-

@@ -1009,7 +1009,7 @@ Days_Of_Week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturda
 @user_passes_test(Inside_Access, login_url="/")
 @user_passes_test(Member_Not_Expired, login_url="/renew-membership")
 def Contact_And_Support(request): 
-	return render(request, "contact.html")
+	return render(request, "contact_and_support.html")
 
 @user_passes_test(Inside_Access, login_url="/")
 @user_passes_test(Member_Not_Expired, login_url="/renew-membership")

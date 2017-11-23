@@ -35,7 +35,11 @@ urlpatterns = [
 
 
     url(r'^$', Home, name='Home'),
-    url(r'^coach-biographies', coach_biographies, name='coach_biographies'),    
+    url(r'^coach-biographies', coach_biographies, name='coach_biogrpahies'), 
+    url(r'^contact', contact, name='contact'),
+    url(r'^why-alloy-strength', why_alloy_strength, name='why_alloy_strength'),
+    
+
     url(r'^waiver/', Waiver, name='SignUpConfirmation'),
     url(r'^terms-conditions/', Terms_Conditions, name='SignUpConfirmation'),
 
@@ -52,7 +56,7 @@ urlpatterns = [
     url(r'^userpage/', User_Page, name="userpage"),
     # url(r'^userpage/', User_Page_Test, name="userpage"),
 
-    url(r'^contact/', Contact_And_Support, name="contact"),
+    url(r'^contact_and_support/', Contact_And_Support, name="contact_and_support"),
     url(r'^progress-report/', Level_Up, name="levelup"),
     url(r'^get-workouts/', Get_Workout_Block, name='get_workout_block'),
 

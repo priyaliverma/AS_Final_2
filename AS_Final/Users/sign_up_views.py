@@ -86,6 +86,9 @@ def coach_biographies(request):
 def contact (request):
 	return render (request, "contact.html")
 
+def why_alloy_strength (request):
+	return render (request, "why_alloy_strength.html")
+
 def Home(request):
 	context = {}
 	Current_User = request.user
