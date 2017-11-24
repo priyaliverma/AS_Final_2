@@ -89,6 +89,12 @@ def contact (request):
 def why_alloy_strength (request):
 	return render (request, "why_alloy_strength.html")
 
+def terms_and_conditions (request):
+	return render (request, "terms_and_conditions.html")
+
+def home (request):
+	return render (request, "homepage_3.html")
+
 def Home(request):
 	context = {}
 	Current_User = request.user

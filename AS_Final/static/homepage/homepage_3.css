@@ -61,9 +61,9 @@ hr {
 
 #desc{
 	text-align: center;
-	margin-top: 36%;
+	margin-top: 32%;
 	z-index: 9999;
-	width: 40%;
+	width: 50%;
 }
 
 #right_desc {
@@ -223,4 +223,8 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: transparent;
 } 
 
-
+.btn-primary {
+    color: #fff;
+	/* background-color: rgb(83,109,254); */
+	background-color: green;
+}

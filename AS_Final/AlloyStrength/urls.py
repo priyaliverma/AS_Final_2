@@ -38,6 +38,9 @@ urlpatterns = [
     url(r'^coach-biographies', coach_biographies, name='coach_biogrpahies'), 
     url(r'^contact', contact, name='contact'),
     url(r'^why-alloy-strength', why_alloy_strength, name='why_alloy_strength'),
+    url(r'^terms-and-conditions', terms_and_conditions, name='terms_and_conditions'),
+    url(r'^home', home, name='home'),
+    
     
 
     url(r'^waiver/', Waiver, name='SignUpConfirmation'),

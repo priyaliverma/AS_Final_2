@@ -22,6 +22,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,600" rel="stylesheet">
 
+    <!-- Bootstrap -->
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+-->
+
     <title>Alloy Strength | Homepage</title>
 </head>
 
@@ -32,8 +37,8 @@
 
     <div style="width: 100%">
         <ul id='nav_bar'>
-            <li style="margin-left:17%">
-                <a href="#"  style="color:white; font-size:1.5vw; font-weight:bold;">
+            <li style="margin-left:13%">
+                <a href="home"  style="color:white; font-size:1.5vw; font-weight:bold;">
                 <i class="fa fa-caret-right" style="color:#00a9ff; margin-right:1vw;"></i> HOME &nbsp;</a>    
             </li> 
             <li>
@@ -51,8 +56,9 @@
                 <i class="fa fa-caret-right" style="color:#00a9ff; margin-right:1vw;"></i>COACH BIOGRAPHIES &nbsp;</a>    
             </li>
             <li>
-                <a href="#"  style="color:white; font-size:1.5vw; font-weight:bold;">
-                <i class="fa fa-caret-right" style="color:#00a9ff; margin-right:1vw;"></i> GALLERY &nbsp;</a>    
+                <a href="https://www.instagram.com/alloy_strength/?hl=en"  style="color:white; font-size:1.5vw; font-weight:bold;">
+                <i class="fa fa-caret-right" style="color:#00a9ff; margin-right:1vw;"></i> 
+                <i class="fa fa-instagram" aria-hidden="true"></i>&nbsp; INSTAGRAM &nbsp;</a>    
             </li>
             <li>
                 <a href="contact"  style="color:white; font-size:1.5vw; font-weight:bold;">
@@ -322,7 +328,7 @@
                         <!-- Accent-colored raised button with ripple -->
                         <button id='show-modal' @click='showModal5 = true' style="margin-top:2vw; margin-left:3vw;"
                                 class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent'>LOG IN</button>
-                        <!-- Test -->
+                                <!-- Test -->
                         <form method="POST">{% csrf_token %}
                             <modal v-if='showModal5' @close='showModal5=false'>
                                 <h3 slot='header'>${ header5 }
@@ -350,6 +356,8 @@
                     </div>
                 </div>
             </div>
+            <a href = "terms-and-conditions">TERMS AND CONDITIONS</a>
+
         </div>
 
          <div id="right_desc" style="z-index: 2;">
