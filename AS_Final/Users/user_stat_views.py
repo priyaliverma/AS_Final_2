@@ -203,8 +203,8 @@ def User_Profile(request):
 	context["Stats"] = []	
 	for i in _Stats:
 		_Exercise, Created = Exercise.objects.get_or_create(Type=i.Type, Level=_Member.Level)
-		# if i.Type == "Squat" or i.Type == "UB Hor Press" or i.Type == "Hinge":
-		if True:
+		if i.Type == "Squat" or i.Type == "UB Hor Push" or i.Type == "Hinge":
+			# if True:
 			print("Stat: " + i.Type)
 			Stat_Dict = {}
 			Stat_Dict["Type"] = i.Type
