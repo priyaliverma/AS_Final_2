@@ -95,6 +95,62 @@ def terms_and_conditions (request):
 def home (request):
 	return render (request, "homepage_3.html")
 
+def forgot_password (request):
+	return render (request, "forgot_password.html")
+
+def forgot_password_email (request):
+	errors = []
+	success = []
+	context = {}
+	Email = request.POST["email"]
+	# Validate email here
+	if Email == '':
+		msg = "Email cannot be left blank"
+		errors.append(msg)
+		print (msg)
+		context = {'errors': errors[0]}
+
+	# Generate Password
+	import uuid, random, string
+	lst1 = string.ascii_lowercase
+	pwd = ''
+	for i in range (3):
+		pwd = pwd + random.choice(lst1)
+	new_pwd = pwd + uuid.uuid4().hex[0:7]
+	print ('Password1: '), new_pwd
+	
+	# Retrieving the matched field
+	user_query_set = User.objects.filter(username = Email)
+	print user_query_set
+	print len(user_query_set)
+
+	# For non null query set:
+	if len(user_query_set) > 0:
+		# Getting the user from entered email
+		user = user_query_set[0]
+		print(user)
+		# Setting the new password and saving it
+		user.set_password(new_pwd)
+		user.save()
+
+		# Sending email
+		from django.core.mail import send_mail
+		send_mail('Forgot Password: Alloystrength Training', 'The new password is: ' + new_pwd, 'alloystrengthtraining@gmail.com', [Email], fail_silently=False)
+		msg = "New Password has been successfully sent to the provided email."
+		success.append(msg)
+		context = {'success': success[0]}
+
+	elif len(user_query_set) == 0:
+		msg = "Email was not found in our database. Please try again."
+		errors.append(msg)
+		context = {'errors': errors[0]}
+
+	print (context)
+	return render (request, "forgot_password.html", context)
+	# return HttpResponseRedirect("/forgot-password")
+
+	
+
 def Home(request):
 	context = {}
 	Current_User = request.user

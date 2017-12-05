@@ -40,9 +40,10 @@ urlpatterns = [
     url(r'^why-alloy-strength', why_alloy_strength, name='why_alloy_strength'),
     url(r'^terms-and-conditions', terms_and_conditions, name='terms_and_conditions'),
     url(r'^home', home, name='home'),
+    url(r'^forgot-password', forgot_password, name='forgot_password'),
+    url(r'^forgot_password_email', forgot_password_email, name = 'forgot_password_email'),
     
     
-
     url(r'^waiver/', Waiver, name='SignUpConfirmation'),
     url(r'^terms-conditions/', Terms_Conditions, name='SignUpConfirmation'),
 
